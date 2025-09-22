@@ -1,0 +1,11 @@
+{
+  "fileDirections": {
+    "משפטי יום בחיי.md": "rtl"
+  },
+  "defaultDirection": "auto",
+  "rememberPerFile": true,
+  "setNoteTitleDirection": true,
+  "setYamlDirection": false,
+  "preventRTLFrontmatter": false,
+  "statusBar": true
+}
