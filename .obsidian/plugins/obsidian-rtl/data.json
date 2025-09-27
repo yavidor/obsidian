@@ -1,6 +1,7 @@
 {
   "fileDirections": {
-    "משפטי יום בחיי.md": "rtl"
+    "משפטי יום בחיי.md": "rtl",
+    "Mongodb.md": "rtl"
   },
   "defaultDirection": "auto",
   "rememberPerFile": true,
