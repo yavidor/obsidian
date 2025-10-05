@@ -1,0 +1,199 @@
+{
+  "main": {
+    "id": "e5dba10825b1b11e",
+    "type": "split",
+    "children": [
+      {
+        "id": "aaf69733ac189651",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "2d6e818a6ea7881c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "כיבוי והדלקת היתלויות.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "כיבוי והדלקת היתלויות"
+            }
+          },
+          {
+            "id": "b4dce24415f91075",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.9.14"
+              },
+              "icon": "lucide-book-up",
+              "title": "Release Notes 1.9.14"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "dcbf27f25e27e6a0",
+    "type": "split",
+    "children": [
+      {
+        "id": "85bbb77c2228a7ca",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "dc0b401b9bea17b9",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "636d9c52220f0a09",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "c4a36e70880d24df",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "d286d840255a9581",
+    "type": "split",
+    "children": [
+      {
+        "id": "b907e9caf0ddb429",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "9571dffc01107fc1",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "כיבוי והדלקת היתלויות.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for כיבוי והדלקת היתלויות"
+            }
+          },
+          {
+            "id": "6705914d76caadb3",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "כיבוי והדלקת היתלויות.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from כיבוי והדלקת היתלויות"
+            }
+          },
+          {
+            "id": "8a342d44a595cb6f",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "67948447571a5a0e",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "כיבוי והדלקת היתלויות.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of כיבוי והדלקת היתלויות"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "publish:Publish changes...": false,
+      "bases:Create new base": false,
+      "mermaid-tools:Open Mermaid Toolbar": false,
+      "obsidian-excalidraw-plugin:New drawing": false,
+      "obsidian-git:Open Git source control": false,
+      "table-editor-obsidian:Advanced Tables Toolbar": false,
+      "webpage-html-export:Export as HTML": false
+    }
+  },
+  "active": "2d6e818a6ea7881c",
+  "lastOpenFiles": [
+    "Welcome.md",
+    "shity.md",
+    "משפטי יום בחיי.md",
+    "מצרי צועק.md",
+    "Mongodb.md",
+    "כיבוי והדלקת היתלויות.md"
+  ]
+}
