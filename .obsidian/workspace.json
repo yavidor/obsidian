@@ -22,6 +22,20 @@
             }
           },
           {
+            "id": "c42759fb63221e43",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "וקטור.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "וקטור"
+            }
+          },
+          {
             "id": "b4dce24415f91075",
             "type": "leaf",
             "state": {
@@ -33,7 +47,8 @@
               "title": "Release Notes 1.9.14"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -187,8 +202,10 @@
       "webpage-html-export:Export as HTML": false
     }
   },
-  "active": "2d6e818a6ea7881c",
+  "active": "c42759fb63221e43",
   "lastOpenFiles": [
+    "וקטור.md",
+    "סקלאר.md",
     "Welcome.md",
     "shity.md",
     "משפטי יום בחיי.md",
