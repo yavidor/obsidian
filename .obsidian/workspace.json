@@ -27,24 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "וקטור.md",
+                "file": "import.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "וקטור"
-            }
-          },
-          {
-            "id": "b4dce24415f91075",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.9.14"
-              },
-              "icon": "lucide-book-up",
-              "title": "Release Notes 1.9.14"
+              "title": "import"
             }
           }
         ],
@@ -204,6 +192,7 @@
   },
   "active": "c42759fb63221e43",
   "lastOpenFiles": [
+    "import.md",
     "וקטור.md",
     "סקלאר.md",
     "Welcome.md",
