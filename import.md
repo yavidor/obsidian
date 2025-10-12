@@ -23,3 +23,8 @@
 
 ```
 תהי $a_n$ סדרה הנדסית עם $q\ne1$ אזי $S_n=\frac{a_1(a^n-1)}{q-1}$
+$S_{n}=\frac{1}{2}$
+
+$$
+\vec{a}\hat{a}\dot{a}\underline{a}
+$$
