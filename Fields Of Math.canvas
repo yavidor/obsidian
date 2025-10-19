@@ -1,0 +1,10 @@
+{
+	"nodes":[
+		{"id":"1a152405e414b268","type":"file","file":"משפטי יום בחיי.md","x":-440,"y":-30,"width":212,"height":230},
+		{"id":"7e4e06f9ffa86860","type":"file","file":"סקלאר.md","x":-140,"y":-160,"width":165,"height":160,"color":"6"}
+	],
+	"edges":[
+		{"id":"25ffe04af943f6ed","fromNode":"7e4e06f9ffa86860","fromSide":"right","toNode":"1a152405e414b268","toSide":"right"},
+		{"id":"71130b99c39afa6d","fromNode":"7e4e06f9ffa86860","fromSide":"bottom","toNode":"1a152405e414b268","toSide":"top"}
+	]
+}
