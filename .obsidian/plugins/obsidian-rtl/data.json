@@ -1,8 +1,8 @@
 {
   "fileDirections": {
-    "משפטי יום בחיי.md": "rtl",
-    "Mongodb.md": "rtl",
-    "בינום ניוטון.md": "auto"
+    "בינום ניוטון.md": "auto",
+    "אישי/Mongodb.md": "rtl",
+    "אישי/משפטי יום בחיי.md": "rtl"
   },
   "defaultDirection": "auto",
   "rememberPerFile": true,

@@ -1,6 +1,6 @@
 {
 	"nodes":[
-		{"id":"1a152405e414b268","type":"file","file":"משפטי יום בחיי.md","x":-357,"y":-40,"width":259,"height":270},
+		{"id":"1a152405e414b268","type":"file","file":"אישי/משפטי יום בחיי.md","x":-357,"y":-40,"width":259,"height":270},
 		{"id":"7e4e06f9ffa86860","type":"file","file":"סקלאר.md","x":-310,"y":-280,"width":165,"height":160,"color":"6"}
 	],
 	"edges":[
