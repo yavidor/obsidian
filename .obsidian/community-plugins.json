@@ -9,5 +9,6 @@
   "obsidian-enhancing-export",
   "obsidian-tikzjax",
   "obsidian-tasks-plugin",
-  "obsidian-latex"
+  "obsidian-latex",
+  "obsidian-pandoc"
 ]
