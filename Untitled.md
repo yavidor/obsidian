@@ -8,7 +8,7 @@ $$
 \end{gather}
 $$
 $$
-\begin{gather} \\
+\begin{align} \\
  1 \\
 1    & 1 \\
 1 &  2 &   1 \\
@@ -17,7 +17,7 @@ $$
 1 & 5 & 10 & 10 & 5 & 1 \\
 1 & 6 & 15 & 20 & 15 &6 &  1
 
-\end{gather}
+\end{align}
 $$
 $$
 x^6+6x^5y+15x^4y^2+20x^3y^3+15x^{2}y^4+6xy^5+y^6
@@ -30,4 +30,16 @@ $$
 +6\sqrt{ 2 }+1$$
 $$
 99+70\sqrt{ 2 }
+$$
+$$
+\begin{multline} \framebox[.65\columnwidth]{A}\\ \framebox[.5\columnwidth]{B}\\ \shoveright{\framebox[.55\columnwidth]{C}}\\ \framebox[.65\columnwidth]{D} \end{multline}
+$$
+$$
+\begin{equation}
+\begin{split} H_c&=\frac{1}{2n}
+\sum^n_{l=0}(-1)^{l}(n-{l})^{p-2} \sum_{l _1+\dots+ l _p=l}\prod^p_{i=1} \binom{n_i}{l _i}\\ &\quad\cdot[(n-l )-(n_i-l _i)]^{n_i-l _i}\cdot \Bigl[(n-l )^2-\sum^p_{j=1}(n_i-l _i)^2\Bigr]. \end{split}
+\end{equation}
+$$
+$$
+
 $$
