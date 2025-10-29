@@ -3,6 +3,7 @@
   "cssTheme": "Catppuccin",
   "textFontFamily": "Arial",
   "enabledCssSnippets": [
-    "theme-override"
+    "theme-override",
+    "adaptive_images"
   ]
 }
