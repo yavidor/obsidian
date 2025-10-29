@@ -1,6 +1,4 @@
 ---
-title: yourmom
+title: Yavidor's Digital Garden
 ---
-
-Hello world
-search for #תואר 
+WIP
