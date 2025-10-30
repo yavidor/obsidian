@@ -1,6 +1,6 @@
 ---
 title: Yavidor's Digital Garden
 ---
-WIP
-שיט אישי וdigital gardening: [[אישי/index|אישי]]
+WIP  
+שיט אישי וdigital gardening: [[אישי/index|אישי]]  
 דברים לתואר, סיכומים, מסקנות, הרצאות, מונחים: [[תואר/index|תואר]]
