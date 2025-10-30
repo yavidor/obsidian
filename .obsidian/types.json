@@ -3,6 +3,7 @@
     "aliases": "aliases",
     "cssclasses": "multitext",
     "tags": "tags",
-    "uni_subjects": "multitext"
+    "uni_subjects": "multitext",
+    "draft": "text"
   }
 }

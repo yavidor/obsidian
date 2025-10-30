@@ -1,3 +1,7 @@
+---
+draft: "true"
+---
+
 $$
 \begin{gather}
 
@@ -37,13 +41,13 @@ x_{2}=-10
 \end{gather}
 $$
 $$
-(x-7)(x+10)(x-1)<0
+(x-7)(x+5)(x-1)<0
 $$
 יש לבדוק חיוביות ב
-$$
+$$o
 \begin{cases}
--\infty<x\lt-10: \\
--10<x<1 \\
-1<x<7
+-\infty<x\lt-10: f(-5)=(-5-7)(-5+10)(-5-1)=(-12)(-5)(-6)\implies x \text{ is negative}\\
+-10<x<1:f(0)=(-7)(10)(-1)\implies x\text{ is positive}\\
+1<x<7: f(5)=(5-7)(5+10)(5-1)=(-2)(15)(4)=x\text{ is negative}
 \end{cases}
 $$
