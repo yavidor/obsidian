@@ -1,5 +1,7 @@
 ---
 title: Yavidor's Digital Garden
+tags:
+  - index
 ---
 WIP  
 שיט אישי וdigital gardening: [[אישי/index|אישי]]  
