@@ -1,5 +1,5 @@
 ---
-title: אני עייף
+title: תואר
 tags:
   - index
 ---
