@@ -82,3 +82,11 @@ x-5-x+7,5\leq x< 7: x-5-x+7 \leq 18 \iff 2\leq 18\to \infty\to 5\leq x< 7 \\
 15\geq x\geq 7 ~ \cup ~7\gt x\geq 5~\cup~5>x\geq-3
 \end{gather}
 $$
+
+$$
+\begin{gather}
+|z|=|\bar{z}| \\
+z\bar{z} = |z|^{2} \\
+z+\bar{z}=2
+\end{gather}
+$$
