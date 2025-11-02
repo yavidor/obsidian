@@ -1,8 +1,5 @@
 {
-  "fileDirections": {
-    "אישי/Mongodb.md": "rtl",
-    "אישי/משפטי יום בחיי.md": "rtl"
-  },
+  "fileDirections": {},
   "defaultDirection": "auto",
   "rememberPerFile": true,
   "setNoteTitleDirection": true,
