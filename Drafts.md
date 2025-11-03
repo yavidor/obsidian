@@ -66,13 +66,27 @@ $$
 ראשית נחפש את הוייב הכללי של an
 $$
 \begin{gather}
-\frac{8}{3}, \frac{16}{5}
+\frac{8}{3}, \frac{16}{5}, \frac{24}{7}, \frac{32}{9}
 \end{gather}
 $$
 $$
 \begin{gather}
 n=? \\
-a_{n}\in \left( 3.817,4 \right)  \\
+a_{n}\in \left( 3.817,4 \right)\\
+\frac{8n}{2n+1}>3.817 \\
+8n>\left( 2n+1 \right) \cdot 3.817 \\
+8n > 7.634n+3.817 \\
+0.366n>3.817
+\end{gather}
+$$
+נחלק את שני החלקים ב0.366
+יצא ש $n>10.\left( \dots \right)$ יאללה n גדול מעשר נודר אבל צריך לעגל למעלה אז יאללהה 11 נודר נדררררר
 
+
+$$
+\begin{gather}
+\frac{8n}{2n+1}<2.6667+0.1830\iff\frac{8n}{2n+1}<2.8497\iff \\
+8n<\left( 2n+1 \right)\cdot2.8497 \iff 8n < 5.6994n+2.8497 \iff \\ 
+2.3006n<2.8497 \iff n < 1.(\dots)
 \end{gather}
 $$
