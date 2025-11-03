@@ -63,30 +63,16 @@ $$
 <line x1="0" x2="100" y1="50" y2="50" stroke="white" />
 <line x1="50" x2="50" y1="0" y2="100" stroke="white" />
 </svg>
+ראשית נחפש את הוייב הכללי של an
 $$
 \begin{gather}
-\left| x-5 \right| + \left| x-7 \right| \leq 18\\
-\begin{cases}
-x-5,x\geq5 \\
--x+5,x<5
-\end{cases} \\
-\begin{cases}
-x-7,x\geq 7 \\
--x+7, x < 7
-\end{cases} \\
-\begin{cases}
-x-5+x-7,x\geq 7:x-5+x-7\leq 18 \iff 2x \leq 30 \iff x\leq 15 \to 7\leq x\leq 15\\
-x-5-x+7,5\leq x< 7: x-5-x+7 \leq 18 \iff 2\leq 18\to \infty\to 5\leq x< 7 \\
--x+5-x+7,x<5:-x+5-x+7 \leq 18 \iff -2x \leq 6 \iff x \geq -3\to-3\leq x< 5
-\end{cases} \\
-15\geq x\geq 7 ~ \cup ~7\gt x\geq 5~\cup~5>x\geq-3
+\frac{8}{3}, \frac{16}{5}
 \end{gather}
 $$
-
 $$
 \begin{gather}
-|z|=|\bar{z}| \\
-z\bar{z} = |z|^{2} \\
-z+\bar{z}=2
+n=? \\
+a_{n}\in \left( 3.817,4 \right)  \\
+
 \end{gather}
 $$
