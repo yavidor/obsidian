@@ -36,7 +36,7 @@ $n = k \cdot m, 1<k<n, 1 < m<n$
 עכשיו נוכיח שאם $n$ כן ראשוני אז $\mathbb{Z}_{n}$ שדה ($\implies$)
 
 יהי $n$ ראשוני. צ"ל $\mathbb{Z}_{n}$ שדה
-יהי $0 \neq a \in \mathbb{Z}_{n}$ מחפשים $b \in \mathbb{Z}_{n}$ כך ש $a \cdot b =1$ (כש$\cdot$ זה כפל במודולו $n$$)
+יהי $0 \neq a \in \mathbb{Z}_{n}$ מחפשים $b \in \mathbb{Z}_{n}$ כך ש $a \cdot b =1$ (כש$\cdot$ זה כפל במודולו $n$)
 נגדיר $A=\left\{ a \cdot 1, a \cdot 2, a \cdot 3,\dots,a \cdot (n-1) \right\}$
 צ"ל $1 \in A$
 נראה ש$A \subseteq \mathbb{Z}_{n}$
