@@ -18,5 +18,6 @@ jobs:
         with:
           repo: yavidor/digital-garden
           workflow: update-contents.yaml
+          ref: v4
           token: "${{ secrets.GARDEN_ACCESS_TOKEN }}"
 
