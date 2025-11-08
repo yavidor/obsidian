@@ -1,4 +1,4 @@
-name: Update the Digital Garden
+name: Update the Digital Garden Repository
 
 on:
   push:
