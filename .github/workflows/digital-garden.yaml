@@ -11,5 +11,5 @@ concurrency:
 
 jobs:
   call-garden-workflow:
-    uses: yavidor/digital-garden/.github/workflows/.github/workflows/update-contents.yaml
+    uses: yavidor/digital-garden/.github/workflows/.github/workflows/update-contents.yaml@v4
 
