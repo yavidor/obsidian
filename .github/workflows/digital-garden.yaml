@@ -10,10 +10,10 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  call-garden-workflow:
-  uses: benc-uk/workflow-dispatch@v1
-  with:
-    repo: yavidor/digital-garden
-    workflow: update-contents.yaml
-    token: "${{ secrets.GARDEN_ACCESS_TOKEN }}"
+  - name: call-garden-workflow
+    uses: benc-uk/workflow-dispatch@v1
+    with:
+      repo: yavidor/digital-garden
+      workflow: update-contents.yaml
+      token: "${{ secrets.GARDEN_ACCESS_TOKEN }}"
 
