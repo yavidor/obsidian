@@ -11,7 +11,7 @@ concurrency:
 
 jobs:
   garden:
-    run-on: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - name: call-garden-workflow
         uses: benc-uk/workflow-dispatch@v1
