@@ -1,0 +1,17 @@
+name: Update the Digital Garden
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+
+concurrency:
+  group: "updates"
+  cancel-in-progress: false
+
+jobs:
+  call-garden-workflow:
+    uses: yavidor/digital-garden/.github/workflows/.github/workflows/update-contents.yaml
+
