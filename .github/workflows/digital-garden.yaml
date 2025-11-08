@@ -9,12 +9,12 @@ concurrency:
   group: "updates"
   cancel-in-progress: false
 
-permissions:
-  contents: write
-  pages: write
-  id-token: write
-
 jobs:
   call-garden-workflow:
-    uses: yavidor/digital-garden/.github/workflows/update-contents.yaml@v4
+  run: |
+    curl -L \
+    -X POST \
+    -H "Accept: application/vnd.github+json" \
+    -H "Authorization: Bearer ${{ secrets.GARDEN_ACCESS_TOKEN }}" \
+    https://api.github.com/repos/yavidor/digital-garden/actions/workflows/update-contents.yaml/dispatches
 
