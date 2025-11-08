@@ -9,6 +9,9 @@ concurrency:
   group: "updates"
   cancel-in-progress: false
 
+permissions:
+  contents: write
+
 jobs:
   call-garden-workflow:
     uses: yavidor/digital-garden/.github/workflows/update-contents.yaml@v4
