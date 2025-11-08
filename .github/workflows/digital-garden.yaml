@@ -11,10 +11,9 @@ concurrency:
 
 jobs:
   call-garden-workflow:
-  run: |
-    curl -L \
-    -X POST \
-    -H "Accept: application/vnd.github+json" \
-    -H "Authorization: Bearer ${{ secrets.GARDEN_ACCESS_TOKEN }}" \
-    https://api.github.com/repos/yavidor/digital-garden/actions/workflows/update-contents.yaml/dispatches
+  uses: benc-uk/workflow-dispatch@v1
+  with:
+    repo: yavidor/digital-garden
+    workflow: update-contents.yaml
+    token: "${{ secrets.GARDEN_ACCESS_TOKEN }}"
 
