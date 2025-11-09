@@ -28,34 +28,17 @@ $$
 </svg>
 $$
 \begin{gather}
-P(x)=8x^{3}+16x^{2}-200x-400 \\
-P(-2)=0 \\
-\text{Let's divide} \\
-\begin{array}{l}
-\phantom{8x^{3}+1}8x^{2}+\phantom{20}0x-200\\
-\overline{8x^{3}+16x^{2}-200x-400\smash{\big(}}x+2 \\
-\underline{8x^{3}+16x^{2}} \\ \\
-\underline{\phantom{8x^{3}+16x^{2}}-200x-400} \\
-\phantom{8x^{3}+16x^{2}-200x-40}0 \\
-\end{array} \\ \\
-
-(x+2)(8x^{2}-200) \\
-(x+2)8(x^{2}-25) \\
-8(x+2)(x-5)(x+5)
+g(z) = z^7 + a_6 z^6 + a_5 z^5 + a_4 z^4 + a_3 z^3 + a_2 z^2 + a_1 z + a_0 \\
+a_{0},a_{1},\dots,a_{6} \\
+z_{1}=2+i \\
+a_{0}=91 \\
+(2+i)(2+i)(2+i)(2-i)(2-i)(2-i)(-0.728) \\
+2+i+2+i+2+i+2-i+2-i+2-i-0.728 \\
+-11.272 1d
 \end{gather}
 $$
-
 $$
 \begin{gather}
-p(x)=x^3 - (a + 1)x^2 + (a - 6)x + 6a \\
-p(a)=a^{3}-a^{3}+a^{2}+a^{2}-6a+6a=0 \\ \\
-\begin{array}{l}
-x^{2}-x-6\\
-\overline{x^{3}-(a+1)x^{2}+(a-6) x+6a\smash{\big(}}x-a \\
-\underline{x^{3}-ax^{2}} \\
-0\phantom{^3}- x^{2}+(a-6)x \\
-\underline{\phantom{0^{3}}-x^{2}+ax} \\
-\phantom{0^{3}-x^{2}}-6x
-\end{array}
+(2+5i)(2+5i)=4+10i+10i-10 =
 \end{gather}
 $$
