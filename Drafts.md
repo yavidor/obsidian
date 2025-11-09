@@ -2,15 +2,7 @@
 draft: "true"
 ---
 
-$$
-\begin{gather}
 
-f(x)=x^{3}-3x^{2}-33x+35>0 \\
-f(1)+1-3-33+35=0 \\
-\frac{f(x)}{(x-1)}=q(x) \\
-\frac{x^{3}-3x^{2}-33x+35}{x-1}
-\end{gather}
-$$
 $$
 \begin{array}{l} \\ 
 \phantom{x^{3}-3}x^{2}-2x-35 \\
@@ -27,30 +19,6 @@ $$
 \phantom{x^{3}-3x^{2}-33x+}0
 \end{array}
 $$
-$$
-f(x)=(x^{2}-2x-35)(x-1)<0
-$$
-$$
-\begin{gather}
-g(x)=(x^{2}-2x-35) \\
-g(x_{1,2})=0 \\
-x_{1,2}=\frac{2\pm\sqrt{ 4+140 }}{2} \\
-x_{1,2}=\frac{2\pm 12}{2} \\
-x_{1}=7 \\
-x_{2}=-10
-\end{gather}
-$$
-$$
-(x-7)(x+5)(x-1)<0
-$$
-יש לבדוק חיוביות ב
-$$
-\begin{cases}
--\infty<x\lt-10: f(-5)=(-5-7)(-5+10)(-5-1)=(-12)(-5)(-6)\implies x \text{ is negative}\\
--10<x<1:f(0)=(-7)(10)(-1)\implies x\text{ is positive}\\
-1<x<7: f(5)=(5-7)(5+10)(5-1)=(-2)(15)(4)=x\text{ is negative}
-\end{cases}
-$$
 
 <svg viewBox="0 0 110 110" xmlns="http://www.w3.org/2000/svg">
 <circle cx="25" cy="50" r="25" fill="none"  stroke="black" /> 
@@ -58,35 +26,36 @@ $$
 <circle cx="50" cy="25" r="25" fill="none"  stroke="black" /> 
 <circle cx="50" cy="75" r="25" fill="none"  stroke="black" /> 
 </svg>
-
-<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-<line x1="0" x2="100" y1="50" y2="50" stroke="white" />
-<line x1="50" x2="50" y1="0" y2="100" stroke="white" />
-</svg>
-ראשית נחפש את הוייב הכללי של an
 $$
 \begin{gather}
-\frac{8}{3}, \frac{16}{5}, \frac{24}{7}, \frac{32}{9}
+P(x)=8x^{3}+16x^{2}-200x-400 \\
+P(-2)=0 \\
+\text{Let's divide} \\
+\begin{array}{l}
+\phantom{8x^{3}+1}8x^{2}+\phantom{20}0x-200\\
+\overline{8x^{3}+16x^{2}-200x-400\smash{\big(}}x+2 \\
+\underline{8x^{3}+16x^{2}} \\ \\
+\underline{\phantom{8x^{3}+16x^{2}}-200x-400} \\
+\phantom{8x^{3}+16x^{2}-200x-40}0 \\
+\end{array} \\ \\
+
+(x+2)(8x^{2}-200) \\
+(x+2)8(x^{2}-25) \\
+8(x+2)(x-5)(x+5)
 \end{gather}
 $$
-$$
-\begin{gather}
-n=? \\
-a_{n}\in \left( 3.817,4 \right)\\
-\frac{8n}{2n+1}>3.817 \\
-8n>\left( 2n+1 \right) \cdot 3.817 \\
-8n > 7.634n+3.817 \\
-0.366n>3.817
-\end{gather}
-$$
-נחלק את שני החלקים ב0.366
-יצא ש $n>10.\left( \dots \right)$ יאללה n גדול מעשר נודר אבל צריך לעגל למעלה אז יאללהה 11 נודר נדררררר
-
 
 $$
 \begin{gather}
-\frac{8n}{2n+1}<2.6667+0.1830\iff\frac{8n}{2n+1}<2.8497\iff \\
-8n<\left( 2n+1 \right)\cdot2.8497 \iff 8n < 5.6994n+2.8497 \iff \\ 
-2.3006n<2.8497 \iff n < 1.(\dots)
+p(x)=x^3 - (a + 1)x^2 + (a - 6)x + 6a \\
+p(a)=a^{3}-a^{3}+a^{2}+a^{2}-6a+6a=0 \\ \\
+\begin{array}{l}
+x^{2}-x-6\\
+\overline{x^{3}-(a+1)x^{2}+(a-6) x+6a\smash{\big(}}x-a \\
+\underline{x^{3}-ax^{2}} \\
+0\phantom{^3}- x^{2}+(a-6)x \\
+\underline{\phantom{0^{3}}-x^{2}+ax} \\
+\phantom{0^{3}-x^{2}}-6x
+\end{array}
 \end{gather}
 $$
