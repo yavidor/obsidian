@@ -26,20 +26,3 @@ $$
 <circle cx="50" cy="25" r="25" fill="none"  stroke="black" /> 
 <circle cx="50" cy="75" r="25" fill="none"  stroke="black" /> 
 </svg>
-$$
-\begin{gather}
-z_1 = 2+5i, \quad z_2 = 1+4i \\
-(2+5i)(1+4i)=2+8i+5i-20 \\
-(-18+13i )- (-16+16i)=-2-3i \\
-\left|\left( -2-3i \right)^{3}\right|=\left| \left( -2-3i \right)  \left( -2-3i \right) \left( -2-3i \right)\right|=\left| 4+6i+6i-9 \right| \\
- =\left| \left(-5+12i \right) \left( -2-3i \right) \right|=\left| 10+15i-24i+36 \right|=\left| 46-9i \right|   \\
-=\sqrt{ 46^{2} +81}=\sqrt{ 2116+81 } = \sqrt{ 2197 }
-\end{gather}
-$$
-
-$$
-\begin{gather}
-z = 1 - i \cos( {90}^{\degree} ) + \sin( {90}^{\degree} ) \\
-
-\end{gather}
-$$
