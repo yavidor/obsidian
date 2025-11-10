@@ -28,17 +28,18 @@ $$
 </svg>
 $$
 \begin{gather}
-g(z) = z^7 + a_6 z^6 + a_5 z^5 + a_4 z^4 + a_3 z^3 + a_2 z^2 + a_1 z + a_0 \\
-a_{0},a_{1},\dots,a_{6} \\
-z_{1}=2+i \\
-a_{0}=91 \\
-(2+i)(2+i)(2+i)(2-i)(2-i)(2-i)(-0.728) \\
-2+i+2+i+2+i+2-i+2-i+2-i-0.728 \\
--11.272 1d
+z_1 = 2+5i, \quad z_2 = 1+4i \\
+(2+5i)(1+4i)=2+8i+5i-20 \\
+(-18+13i )- (-16+16i)=-2-3i \\
+\left|\left( -2-3i \right)^{3}\right|=\left| \left( -2-3i \right)  \left( -2-3i \right) \left( -2-3i \right)\right|=\left| 4+6i+6i-9 \right| \\
+ =\left| \left(-5+12i \right) \left( -2-3i \right) \right|=\left| 10+15i-24i+36 \right|=\left| 46-9i \right|   \\
+=\sqrt{ 46^{2} +81}=\sqrt{ 2116+81 } = \sqrt{ 2197 }
 \end{gather}
 $$
+
 $$
 \begin{gather}
-(2+5i)(2+5i)=4+10i+10i-10 =
+z = 1 - i \cos( {90}^{\degree} ) + \sin( {90}^{\degree} ) \\
+
 \end{gather}
 $$
