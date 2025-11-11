@@ -148,6 +148,8 @@
     { trigger: "RR", replacement: "\\mathbb{R}", options: "mA" },
     { trigger: "ZZ", replacement: "\\mathbb{Z}", options: "mA" },
     { trigger: "NN", replacement: "\\mathbb{N}", options: "mA" },
+    { trigger: "QQ", replacement: "\\mathbb{Q}", options: "mA", "description": "Rational (Quotient)" },
+    { trigger: "FF", replacement: "\\mathbb{F}", options: "mA", "description": "Field" },
 
     // Handle spaces and backslashes
 
