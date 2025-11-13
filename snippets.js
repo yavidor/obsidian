@@ -45,7 +45,7 @@
     { trigger: "rd", replacement: "^{$0}$1", options: "mA" },
     { trigger: "_", replacement: "_{$0}$1", options: "mA" },
     { trigger: "sts", replacement: "_\\text{$0}", options: "mA" },
-    { trigger: "sq", replacement: "\\sqrt{ $0 }$1", options: "mA" },
+    // { trigger: "sq", replacement: "\\sqrt{ $0 }$1", options: "mA" },
     { trigger: "//", replacement: "\\frac{$0}{$1}$2", options: "mA" },
     { trigger: "ee", replacement: "e^{ $0 }$1", options: "mA" },
     { trigger: "invs", replacement: "^{-1}", options: "mA" },
@@ -313,5 +313,14 @@
     // yavidor's snippets
     { trigger: "binom", replacement: "\\binom{${0:n}}{${1:k}} $2", options: "mA" },
     { trigger: "gather", replacement: "\\begin{gather}\n$0\n\\end{gather}", options: "mA" },
-    { trigger: "black\\sqrt{ uare }", replacement: "\\blacksquare$0", options: "mA" }
+    { trigger: "blacksquare", replacement: "\\blacksquare$0", options: "mA", "description": "QED", priority: 1 },
+    {
+        trigger: "([2-9|n|m|k]?)sqr", replacement: (match) => {
+            let order = match[1];
+
+            if (order != "") order = `[${order}]`;
+            return "\\sqrt" + order + "{$0}";
+        },
+        options: "rmA"
+    },
 ]
