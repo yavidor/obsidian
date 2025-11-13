@@ -312,5 +312,6 @@
     },
     // yavidor's snippets
     { trigger: "binom", replacement: "\\binom{${0:n}}{${1:k}} $2", options: "mA" },
-    { trigger: "gather", replacement: "\\begin{gather}\n$0\n\\end{gather}", options: "mA" }
+    { trigger: "gather", replacement: "\\begin{gather}\n$0\n\\end{gather}", options: "mA" },
+    { trigger: "black\\sqrt{ uare }", replacement: "\\blacksquare$0", options: "mA" }
 ]
