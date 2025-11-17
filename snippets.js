@@ -574,4 +574,7 @@
     options: "rmA",
   },
   { trigger: '"', replacement: "\\text{${VISUAL}}", options: "mA" },
+  { trigger: "ann", replacement: "a_{n}", options: "mA" },
+  { trigger: "aii", replacement: "a_{i}", options: "mA", priority: 1 },
+  { trigger: "ap1", replacement: "a_{n+1}", options: "mA" },
 ];
