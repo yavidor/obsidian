@@ -26,7 +26,3 @@ $$
 <circle cx="50" cy="25" r="25" fill="none"  stroke="black" /> 
 <circle cx="50" cy="75" r="25" fill="none"  stroke="black" /> 
 </svg>
-יהי $\epsilon > 0$
-$$
-\left| a_{n}b_{n}-LK \right| \geq 
-$$
