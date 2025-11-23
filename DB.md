@@ -2,3 +2,8 @@
 TABLE uni_subjects
 FROM #סיכומים/הרצאות 
 ```
+```dataview
+TABLE uni_classes
+FROM #תואר 
+```
+```
