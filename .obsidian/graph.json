@@ -1,38 +1,24 @@
 {
   "collapse-filter": false,
   "search": "",
-  "showTags": false,
+  "showTags": true,
   "showAttachments": true,
   "hideUnresolved": true,
   "showOrphans": true,
   "collapse-color-groups": false,
   "colorGroups": [
     {
-      "query": "tag:#אישי  ",
-      "color": {
-        "a": 1,
-        "rgb": 14725458
-      }
-    },
-    {
-      "query": "[\"uni_subjects\":אלגברה]",
-      "color": {
-        "a": 1,
-        "rgb": 4669814
-      }
-    },
-    {
       "query": "tag:#מונחים  ",
       "color": {
         "a": 1,
-        "rgb": 8750469
+        "rgb": 4620655
       }
     },
     {
-      "query": "tag:#אינפי  ",
+      "query": "tag:#סיכומים",
       "color": {
         "a": 1,
-        "rgb": 5431473
+        "rgb": 14720594
       }
     }
   ],
@@ -46,6 +32,6 @@
   "repelStrength": 10.1041666666667,
   "linkStrength": 0.786458333333333,
   "linkDistance": 414,
-  "scale": 0.5103903433244271,
+  "scale": 0.7155585325309161,
   "close": false
 }

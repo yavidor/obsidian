@@ -8,5 +8,8 @@
   "code-styler",
   "obsidian-tikzjax",
   "obsidian-latex",
-  "dataview"
+  "dataview",
+  "note_uid_generator",
+  "obsidian-pandoc",
+  "vim-yank-highlight"
 ]

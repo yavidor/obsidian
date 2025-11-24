@@ -26,3 +26,24 @@ $$
 <circle cx="50" cy="25" r="25" fill="none"  stroke="black" /> 
 <circle cx="50" cy="75" r="25" fill="none"  stroke="black" /> 
 </svg>
+$$
+\begin{pmatrix}
+-4 & -2 & -6 \\
+-2 & 6 & -2
+\end{pmatrix}
+$$
+$$
+\underbrace{ \begin{pmatrix}
+3 & 0 & 0 \\
+2 & -1 & -5 \\
+-4 & -7 & 3
+\end{pmatrix} }_{ A }=\underbrace{ \begin{pmatrix}
+3 & 1 & -2 \\
+1 & -1 & -6 \\
+-2 & -6 & 3
+\end{pmatrix} }_{ S \left( \text{Symmetric} \right)  }+\underbrace{ \begin{pmatrix}
+0 & -1 & 2 \\
+1 & 0 & 1 \\
+-2 & -1 & 0
+\end{pmatrix} }_{ K\text{ Anti-Symmetric} }
+$$
