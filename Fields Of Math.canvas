@@ -1,11 +1,12 @@
 {
 	"nodes":[
-		{"id":"1a152405e414b268","type":"file","file":"אישי/משפטי יום בחיי.md","x":-357,"y":-40,"width":259,"height":270},
-		{"id":"7e4e06f9ffa86860","type":"file","file":"תואר/סקלאר.md","x":-310,"y":-280,"width":165,"height":160,"color":"6"}
+		{"id":"0593d3523779520d","x":-80,"y":-280,"width":400,"height":400,"type":"file","file":"תואר/מספרים ממשיים.md"},
+		{"id":"51786a2343d283cf","x":520,"y":120,"width":400,"height":400,"type":"file","file":"תואר/מספרים טבעיים.md"},
+		{"id":"6a114c723f8020dc","x":-960,"y":-400,"width":400,"height":400,"type":"file","file":"תואר/מספרים מרוכבים.md"},
+		{"id":"f507bc882355b635","x":-400,"y":220,"width":140,"height":100,"type":"text","text":"קבוצות מספרים"}
 	],
 	"edges":[
-		{"id":"25ffe04af943f6ed","fromNode":"7e4e06f9ffa86860","fromSide":"right","toNode":"1a152405e414b268","toSide":"right"},
-		{"id":"71130b99c39afa6d","fromNode":"7e4e06f9ffa86860","fromSide":"left","toNode":"1a152405e414b268","toSide":"left"},
-		{"id":"9c73120d9f458590","fromNode":"1a152405e414b268","fromSide":"top","toNode":"7e4e06f9ffa86860","toSide":"bottom"}
+		{"id":"5ed9a713d8dc4ecc","fromNode":"0593d3523779520d","fromSide":"right","toNode":"51786a2343d283cf","toSide":"top","label":"מכיל"},
+		{"id":"b6a0c0ee7fc35df9","fromNode":"6a114c723f8020dc","fromSide":"right","toNode":"0593d3523779520d","toSide":"left","label":"מכיל"}
 	]
 }
