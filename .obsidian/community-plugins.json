@@ -11,5 +11,6 @@
   "dataview",
   "note_uid_generator",
   "obsidian-pandoc",
-  "vim-yank-highlight"
+  "vim-yank-highlight",
+  "quartz-syncer"
 ]

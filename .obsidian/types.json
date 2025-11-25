@@ -4,6 +4,7 @@
     "cssclasses": "multitext",
     "tags": "tags",
     "uni_subjects": "multitext",
-    "draft": "text"
+    "draft": "text",
+    "publish": "checkbox"
   }
 }
