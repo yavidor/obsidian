@@ -6,9 +6,4 @@ aliases:
   - הרצאות של אינפי
 ---
 חשבון אינפיטסימלי 01040195
-```dataview
-LIST
-FROM ""
-WHERE aliases
-```
 
