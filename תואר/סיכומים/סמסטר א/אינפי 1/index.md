@@ -1,0 +1,14 @@
+---
+tags:
+  - תואר
+uid: 9faf1549-eb93-4c02-b2d8-d2b2ba25cc3f
+aliases:
+  - הרצאות של אינפי
+---
+חשבון אינפיטסימלי 01040195
+```dataview
+LIST
+FROM ""
+WHERE aliases
+```
+

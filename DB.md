@@ -1,3 +1,6 @@
+---
+publish: false
+---
 ```dataview
 TABLE name, uid
 FROM #תואר 
