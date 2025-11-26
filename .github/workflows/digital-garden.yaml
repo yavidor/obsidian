@@ -1,23 +1,23 @@
-# name: Update the Digital Garden Repository
-#
-# on:
-#   push:
-#     branches:
-#       - main
-#
-# concurrency:
-#   group: "updates"
-#   cancel-in-progress: false
-#
-# jobs:
-#   garden:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: call-garden-workflow
-#         uses: benc-uk/workflow-dispatch@v1
-#         with:
-#           repo: yavidor/digital-garden
-#           workflow: deploy.yaml
-#           ref: v4
-#           token: "${{ secrets.GARDEN_ACCESS_TOKEN }}"
+name: Update the Digital Garden Repository
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: "updates"
+  cancel-in-progress: false
+
+jobs:
+  garden:
+    runs-on: ubuntu-latest
+    steps:
+      - name: call-garden-workflow
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          repo: yavidor/digital-garden
+          workflow: deploy.yaml
+          ref: v4
+          token: "${{ secrets.GARDEN_ACCESS_TOKEN }}"
 
