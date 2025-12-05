@@ -7,23 +7,9 @@ tags:
 ---
 Since my goals is to get better with the restrictions posed by the course #מבוא-למדעי-המחשב I will not use `strlib.h`, which is not really a big deal. Mostly writing some of the functions myself, pretty _trivial_.
 
-# Utils
-```C
-char *readLines(int day, bool isRealInput);
-```
-To read the lines of the input and get them a single string
 
-```C
-int getFileSize(const char *fileName);
-```
-Get the file size in characters
-
-```C
-int nextNewline(const char* str, int pos, int end);
-```
-Get the position of the next '\n', if there are not newlines left, return the end position of the string
-
-```C
-int lenstr(const char* str);
-```
-Get the length of a string, like strlen but mine (:
+# Part 1
+The problem itself was pretty _trivial_, if the first character is R, add a positive number, if L, negative
+If the result is negative add 100 to simulate circling back from the left, then modulo 100 to simulate circling back from the right.
+# Part 2
+Exactly the same as part one but rotate one click at a time.
