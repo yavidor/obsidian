@@ -10,7 +10,7 @@
   "obsidian-latex",
   "dataview",
   "note_uid_generator",
-  "obsidian-pandoc",
   "vim-yank-highlight",
-  "dataview-serializer"
+  "dataview-serializer",
+  "opener"
 ]
