@@ -20,3 +20,7 @@
 \end{document}
 ```
 
+
+$$
+f\left( x \right) =\frac{\tan \frac{10^{24}}{6}}{\frac{10^{24}}{6}}
+$$
