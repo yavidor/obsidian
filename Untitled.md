@@ -79,3 +79,12 @@ $$
 10. סגירות כפל
 11. דיסטריבוטיביות
 12. אפס הוא לא 1
+
+$$
+\begin{gather}
+\lim_{x\to a} \frac{\cos(x) - \cos(a)}{x-a}  \\
+=\lim_{x\to a} \frac{-2\sin \left( \frac{x+a}{2}  \right) \sin \left( \frac{x-a}{2} \right) }{x-a} \\
+=\lim_{x\to a}-\sin\left( \frac{x+a}{2} \right)\cdot \underbrace{ \frac{\sin \left( \frac{x-a}{2} \right) }{\frac{x-a}{2}} }_{ \frac{\sin(\theta)}{\theta}\to 1 } \\
+=\lim_{ x \to a } -\sin \left( \frac{x+a}{2} \right) =-\sin\left( \frac{2a}{2} \right)=-\sin(a)
+\end{gather}
+$$
