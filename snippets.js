@@ -577,4 +577,5 @@
   { trigger: "ann", replacement: "a_{n}", options: "mA" },
   { trigger: "aii", replacement: "a_{i}", options: "mA", priority: 1 },
   { trigger: "ap1", replacement: "a_{n+1}", options: "mA" },
+  { trigger: "xra", replacement: "\\xrightarrow{ $0 }", options: "mA" },
 ];
