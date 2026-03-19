@@ -1,3 +1,13 @@
+---
+tags:
+  - מבוא-למדעי-המחשב
+---
+If you're not Zoe or Mark, why are you reading this?
+
+
+Hey guys! You asked for the weird question I talked about, here is a translation of the answer.
+Note, I did not understand it **AT ALL** <3
+love ya
 Bla bla this code
 ```c
 void f2(int n) {
