@@ -4,5 +4,5 @@ tags:
   - index
 ---
 WIP  
-שיט אישי וdigital gardening: [[אישי/index|אישי]]  
+שיט אישי וdigital gardening: [[הגינה שלי/index|אישי]]  
 דברים לתואר, סיכומים, מסקנות, הרצאות, מונחים: [[תואר/index|תואר]]
