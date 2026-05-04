@@ -1,16 +1,16 @@
 [
-  "obsidian-rtl",
-  "mermaid-tools",
-  "obsidian-latex-suite",
-  "obsidian-excalidraw-plugin",
-  "obsidian-git",
   "table-editor-obsidian",
   "code-styler",
-  "obsidian-tikzjax",
-  "obsidian-latex",
   "dataview",
-  "note_uid_generator",
-  "vim-yank-highlight",
   "dataview-serializer",
-  "opener"
+  "obsidian-excalidraw-plugin",
+  "obsidian-latex",
+  "obsidian-git",
+  "note_uid_generator",
+  "mermaid-tools",
+  "obsidian-latex-suite",
+  "opener",
+  "obsidian-rtl",
+  "obsidian-tikzjax",
+  "vim-yank-highlight"
 ]
