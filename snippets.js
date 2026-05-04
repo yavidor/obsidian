@@ -580,4 +580,16 @@
   { trigger: "xra", replacement: "\\xrightarrow{ $0 }", options: "mA" },
   // x in, to avoid accidental xi nn
   { trigger: "\\xi nn", replacement: "x \\in", options: "mA", priority: 1 },
+  //Change of basis matrix
+  {
+    trigger: "P([a-zA-Z])([a-zA-Z]?)",
+    replacement: (match) => {
+      let firstBasis = match[1];
+      let secondBasis = match[2];
+      console.log(secondBasis);
+      if (secondBasis == "") secondBasis = firstBasis;
+      return `P_{\\mathcal{${firstBasis}}\\to\\mathcal{${secondBasis}}}`;
+    },
+    options: "rm",
+  },
 ];
