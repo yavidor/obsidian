@@ -545,6 +545,18 @@
     options: "mA",
     description: "N x N identity matrix",
   },
+  // Imported snippets
+  {
+    trigger: "([2-9|n|m|k]?)sqr",
+    replacement: (match) => {
+      let order = match[1];
+
+      if (order != "") order = `[${order}]`;
+      return "\\sqrt" + order + "{$0}";
+    },
+    options: "rmA",
+  },
+
   // yavidor's snippets
   {
     trigger: "binom",
@@ -563,16 +575,6 @@
     description: "QED",
     priority: 1,
   },
-  {
-    trigger: "([2-9|n|m|k]?)sqr",
-    replacement: (match) => {
-      let order = match[1];
-
-      if (order != "") order = `[${order}]`;
-      return "\\sqrt" + order + "{$0}";
-    },
-    options: "rmA",
-  },
   { trigger: '"', replacement: "\\text{${VISUAL}}", options: "mA" },
   { trigger: "ann", replacement: "a_{n}", options: "mA" },
   { trigger: "aii", replacement: "a_{i}", options: "mA", priority: 1 },
@@ -582,13 +584,12 @@
   { trigger: "\\xi nn", replacement: "x \\in", options: "mA", priority: 1 },
   //Change of basis matrix
   {
-    trigger: "P([a-zA-Z])([a-zA-Z]?)",
+    trigger: "M([a-zA-Z])([a-zA-Z])",
     replacement: (match) => {
       let firstBasis = match[1];
       let secondBasis = match[2];
-      console.log(secondBasis);
       if (secondBasis == "") secondBasis = firstBasis;
-      return `P_{\\mathcal{${firstBasis}}\\to\\mathcal{${secondBasis}}}`;
+      return `\\left[M\\right]_{\\mathcal{${firstBasis}}}^{\\mathcal{${secondBasis}}}`;
     },
     options: "rm",
   },
