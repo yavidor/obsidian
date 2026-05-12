@@ -580,8 +580,10 @@
   { trigger: "aii", replacement: "a_{i}", options: "mA", priority: 1 },
   { trigger: "ap1", replacement: "a_{n+1}", options: "mA" },
   { trigger: "xra", replacement: "\\xrightarrow{ $0 }", options: "mA" },
+
   // x in, to avoid accidental xi nn
   { trigger: "\\xi nn", replacement: "x \\in", options: "mA", priority: 1 },
+
   //Change of basis matrix
   {
     trigger: "M([a-zA-Z])([a-zA-Z])",
