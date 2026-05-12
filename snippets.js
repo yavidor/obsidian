@@ -167,7 +167,7 @@
   },
   { trigger: "+-", replacement: "\\pm", options: "mA" },
   { trigger: "-+", replacement: "\\mp", options: "mA" },
-  { trigger: "...", replacement: "\\dots", options: "mA" },
+  { trigger: "...", replacement: "\\ldots", options: "mA" },
   { trigger: "nabl", replacement: "\\nabla", options: "mA" },
   { trigger: "del", replacement: "\\nabla", options: "mA" },
   { trigger: "xx", replacement: "\\times", options: "mA" },
