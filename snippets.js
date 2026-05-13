@@ -384,6 +384,14 @@
     description: "Add space after hyperbolic trig funcs",
   },
 
+  {
+    trigger: /(arccsc|arcsec|arccot)/,
+    replacement: "\\operatorname{[[0]]}$0",
+    options: "mA",
+    description: "Inverse trig functions, Are not built-in MathJax functions",
+    priority: 1,
+  },
+
   // Visual operations
   {
     trigger: "U",
@@ -425,82 +433,28 @@
   { trigger: "iso", replacement: "{}^{${0:4}}_{${1:2}}${2:He}", options: "mA" },
 
   // Environments
+  // Here the regex syntax [pbBvV]mat is used to match pmat, bmat, Bmat, vmat, Vmat
   {
-    trigger: "pmat",
-    replacement: "\\begin{pmatrix}\n$0\n\\end{pmatrix}",
-    options: "MA",
+    trigger: /([pbBvV]mat)/,
+    replacement: "\\begin{[[0]]rix}\n$0\n\\end{[[0]]rix}",
+    options: "rMA",
+    description: "Matrix environments with new lines",
   },
   {
-    trigger: "bmat",
-    replacement: "\\begin{bmatrix}\n$0\n\\end{bmatrix}",
-    options: "MA",
+    trigger: /(matrix|cases|align|array)/,
+    replacement: "\\begin{[[0]]}\n$0\n\\end{[[0]]}",
+    options: "rMA",
+    description: "Miscellaneous environments with new lines",
   },
   {
-    trigger: "Bmat",
-    replacement: "\\begin{Bmatrix}\n$0\n\\end{Bmatrix}",
-    options: "MA",
+    trigger: /([pbBvV]mat)/,
+    replacement: "\\begin{[[0]]rix}$0\\end{[[0]]rix}",
+    options: "rnA",
   },
   {
-    trigger: "vmat",
-    replacement: "\\begin{vmatrix}\n$0\n\\end{vmatrix}",
-    options: "MA",
-  },
-  {
-    trigger: "Vmat",
-    replacement: "\\begin{Vmatrix}\n$0\n\\end{Vmatrix}",
-    options: "MA",
-  },
-  {
-    trigger: "matrix",
-    replacement: "\\begin{matrix}\n$0\n\\end{matrix}",
-    options: "MA",
-  },
-
-  {
-    trigger: "pmat",
-    replacement: "\\begin{pmatrix}$0\\end{pmatrix}",
-    options: "nA",
-  },
-  {
-    trigger: "bmat",
-    replacement: "\\begin{bmatrix}$0\\end{bmatrix}",
-    options: "nA",
-  },
-  {
-    trigger: "Bmat",
-    replacement: "\\begin{Bmatrix}$0\\end{Bmatrix}",
-    options: "nA",
-  },
-  {
-    trigger: "vmat",
-    replacement: "\\begin{vmatrix}$0\\end{vmatrix}",
-    options: "nA",
-  },
-  {
-    trigger: "Vmat",
-    replacement: "\\begin{Vmatrix}$0\\end{Vmatrix}",
-    options: "nA",
-  },
-  {
-    trigger: "matrix",
-    replacement: "\\begin{matrix}$0\\end{matrix}",
-    options: "nA",
-  },
-
-  {
-    trigger: "cases",
-    replacement: "\\begin{cases}\n$0\n\\end{cases}",
-    options: "mA",
-  },
-  {
-    trigger: "align",
-    replacement: "\\begin{align}\n$0\n\\end{align}",
-    options: "mA",
-  },
-  {
-    trigger: "array",
-    replacement: "\\begin{array}\n$0\n\\end{array}",
-    options: "mA",
+    trigger: /(matrix|cases|align|array)/,
+    replacement: "\\begin{[[0]]}$0\\end{[[0]]}",
+    options: "rnA",
   },
 
   // Brackets
@@ -519,6 +473,7 @@
   },
   { trigger: "ceil", replacement: "\\lceil $0 \\rceil $1", options: "mA" },
   { trigger: "floor", replacement: "\\lfloor $0 \\rfloor $1", options: "mA" },
+  // For the modulo operator, see the section "More operations" above
   { trigger: "mod", replacement: "|$0|$1", options: "mA" },
   { trigger: "(", replacement: "(${VISUAL})", options: "mA" },
   { trigger: "[", replacement: "[${VISUAL}]", options: "mA" },
