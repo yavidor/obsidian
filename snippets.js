@@ -292,32 +292,32 @@
     options: "rmA",
   },
   {
-    trigger: "\\\\(${GREEK}|${SYMBOL}) hat",
+    trigger: "\\\\(${GREEK}) hat",
     replacement: "\\hat{\\[[0]]}",
     options: "rmA",
   },
   {
-    trigger: "\\\\(${GREEK}|${SYMBOL}) dot",
+    trigger: "\\\\(${GREEK}) dot",
     replacement: "\\dot{\\[[0]]}",
     options: "rmA",
   },
   {
-    trigger: "\\\\(${GREEK}|${SYMBOL}) bar",
+    trigger: "\\\\(${GREEK}) bar",
     replacement: "\\bar{\\[[0]]}",
     options: "rmA",
   },
   {
-    trigger: "\\\\(${GREEK}|${SYMBOL}) vec",
+    trigger: "\\\\(${GREEK}) vec",
     replacement: "\\vec{\\[[0]]}",
     options: "rmA",
   },
   {
-    trigger: "\\\\(${GREEK}|${SYMBOL}) tilde",
+    trigger: "\\\\(${GREEK}) tilde",
     replacement: "\\tilde{\\[[0]]}",
     options: "rmA",
   },
   {
-    trigger: "\\\\(${GREEK}|${SYMBOL}) und",
+    trigger: "\\\\(${GREEK}) und",
     replacement: "\\underline{\\[[0]]}",
     options: "rmA",
   },
@@ -531,6 +531,19 @@
     options: "mA",
     description: "N x N identity matrix",
   },
+  {
+    trigger:
+      /(?<=(?:\n|^)[ \t]*>*)(?<marker>\d+[.)]|[-*+])(?<whitespace>[ \t]+)(?<text>.*)dm/,
+    replacement: (m) => {
+      const { whitespace, text, marker } = m.groups;
+      const firstLine = marker + whitespace + text;
+      const indent = " ".repeat(marker.length) + whitespace;
+      return `${firstLine}\n${indent}$$\n${indent}\t$0\n${indent}$$`;
+    },
+    options: "rtA",
+    priority: 2,
+    description: "Display math when in a list",
+  },
   // Imported snippets
   {
     trigger: "([2-9|n|m|k]?)sqr",
@@ -542,7 +555,6 @@
     },
     options: "rmA",
   },
-
   // yavidor's snippets
   {
     trigger: "QQ",
