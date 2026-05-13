@@ -1,8 +1,24 @@
 [
   // Math mode
   { trigger: "mk", replacement: "$$0$", options: "tA" },
-  { trigger: "dm", replacement: "$$\n$0\n$$", options: "tAw" },
-  { trigger: "beg", replacement: "\\begin{$0}\n$1\n\\end{$0}", options: "mA" },
+  { trigger: "dm", replacement: "$$\n\t$0\n$$", options: "tAw" },
+  {
+    trigger: /(?<=\S.*)dm/,
+    replacement: "\n$$\n\t$0\n$$",
+    options: "tAw",
+    priority: 1,
+  },
+
+  {
+    trigger: /([^\\])beg/,
+    replacement: "[[0]]\\begin{$0}\n\t$1\n\\end{$0}",
+    options: "MA",
+  },
+  {
+    trigger: /([^\\])beg/,
+    replacement: "[[0]]\\begin{$0} $1 \\end{$0}",
+    options: "nA",
+  },
 
   // Dashes
   // {trigger: "--", replacement: "–", options: "tA"},
@@ -49,13 +65,6 @@
   { trigger: "//", replacement: "\\frac{$0}{$1}$2", options: "mA" },
   { trigger: "ee", replacement: "e^{ $0 }$1", options: "mA" },
   { trigger: "invs", replacement: "^{-1}", options: "mA" },
-  {
-    trigger: /([A-Za-z])(\d)/,
-    replacement: "[[0]]_{[[1]]}",
-    options: "rmA",
-    description: "Auto letter subscript",
-    priority: -1,
-  },
 
   {
     trigger: /([^\\])(exp|log|ln)/,
@@ -115,27 +124,60 @@
   { trigger: "tilde", replacement: "\\tilde{$0}$1", options: "mA" },
   { trigger: "und", replacement: "\\underline{$0}$1", options: "mA" },
   { trigger: "vec", replacement: "\\vec{$0}$1", options: "mA" },
-
-  // More auto letter subscript
   {
-    trigger: /([A-Za-z])_(\d\d)/,
+    trigger: "pmod",
+    replacement: "\\pmod{${0:n}}$1",
+    options: "mA",
+    description: "Parenthesized modulo (\\pmod{n})",
+  },
+
+  // Auto letter subscript
+  //
+  // x3 -> x_{3}, \alpha3 -> \alpha_{3}
+  {
+    trigger: "(\\\\${GREEK}|[A-Za-z])(\\d)",
     replacement: "[[0]]_{[[1]]}",
     options: "rmA",
+    priority: -1,
   },
+  // x_{3}4 -> x_{34}, \alpha_{3}4 -> \alpha_{34}
   {
-    trigger: /\\hat{([A-Za-z])}(\d)/,
-    replacement: "\\hat{[[0]]}_{[[1]]}",
+    trigger: "(\\\\${GREEK}|[A-Za-z])_{(\\d+)}(\\d)",
+    replacement: "[[0]]_{[[1]][[2]]}",
     options: "rmA",
+    priority: -1,
   },
+
+  // \dot{x}3 -> \dot{x}_{3}, \dot{\alpha}3 -> \dot{\alpha}_{3}
   {
-    trigger: /\\vec{([A-Za-z])}(\d)/,
-    replacement: "\\vec{[[0]]}_{[[1]]}",
+    trigger: "\\\\(${ACCENT})\\{(\\\\${GREEK}|[A-Za-z])\\}(\\d)",
+    replacement: "\\[[0]]{[[1]]}_{[[2]]}",
     options: "rmA",
+    priority: -1,
   },
+
+  // \dot{x}_{3}4 -> \dot{x}_{34}
   {
-    trigger: /\\mathbf{([A-Za-z])}(\d)/,
-    replacement: "\\mathbf{[[0]]}_{[[1]]}",
+    trigger: "\\\\(${ACCENT})\\{(\\\\${GREEK}|[A-Za-z])\\}_\\{(\\d+)\\}(\\d)",
+    replacement: "\\[[0]]{[[1]]}_{[[2]][[3]]}",
     options: "rmA",
+    priority: -1,
+  },
+  // \dot{\vec{a}}3 -> \dot{\vec{a}}_{3}
+  {
+    trigger:
+      "\\\\(${ACCENT})\\{\\\\(${ACCENT})\\{(\\\\${GREEK}|[A-Za-z])\\}\\}(\\d)",
+    replacement: "\\[[0]]{\\[[1]]{[[2]]}}_{[[3]]}",
+    options: "rmA",
+    priority: -1,
+  },
+  // \dot{\vec{a}}_{3}4 -> \dot{\vec{a}}_{34}
+  {
+    trigger:
+      "\\\\(${ACCENT})\\{\\\\(${ACCENT})\\{(\\\\${GREEK}|[A-Za-z])\\}\\}_\\{(\\d+)\\}(\\d)",
+    replacement: "\\[[0]]{\\[[1]]{[[2]]}}_{[[3]][[4]]}",
+    options: "rmA",
+    priority: -1,
   },
 
   { trigger: "xnn", replacement: "x_{n}", options: "mA" },
@@ -169,7 +211,8 @@
   { trigger: "-+", replacement: "\\mp", options: "mA" },
   { trigger: "...", replacement: "\\ldots", options: "mA" },
   { trigger: "nabl", replacement: "\\nabla", options: "mA" },
-  { trigger: "del", replacement: "\\nabla", options: "mA" },
+  // The operator nabla is also called del, but using "del" as a trigger conflicts with the greek letter delta.
+  // { trigger: "del", replacement: "\\nabla", options: "mA" },
   { trigger: "xx", replacement: "\\times", options: "mA" },
   { trigger: "**", replacement: "\\cdot", options: "mA" },
   { trigger: "para", replacement: "\\parallel", options: "mA" },
@@ -207,18 +250,6 @@
   { trigger: "RR", replacement: "\\mathbb{R}", options: "mA" },
   { trigger: "ZZ", replacement: "\\mathbb{Z}", options: "mA" },
   { trigger: "NN", replacement: "\\mathbb{N}", options: "mA" },
-  {
-    trigger: "QQ",
-    replacement: "\\mathbb{Q}",
-    options: "mA",
-    description: "Rational (Quotient)",
-  },
-  {
-    trigger: "FF",
-    replacement: "\\mathbb{F}",
-    options: "mA",
-    description: "Field",
-  },
 
   // Handle spaces and backslashes
 
@@ -558,6 +589,19 @@
   },
 
   // yavidor's snippets
+  {
+    trigger: "QQ",
+    replacement: "\\mathbb{Q}",
+    options: "mA",
+    description: "Rational (Quotient)",
+  },
+  {
+    trigger: "FF",
+    replacement: "\\mathbb{F}",
+    options: "mA",
+    description: "Field",
+  },
+
   {
     trigger: "binom",
     replacement: "\\binom{${0:n}}{${1:k}} $2",
