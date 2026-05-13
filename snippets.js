@@ -1,8 +1,24 @@
 [
   // Math mode
   { trigger: "mk", replacement: "$$0$", options: "tA" },
-  { trigger: "dm", replacement: "$$\n$0\n$$", options: "tAw" },
-  { trigger: "beg", replacement: "\\begin{$0}\n$1\n\\end{$0}", options: "mA" },
+  { trigger: "dm", replacement: "$$\n\t$0\n$$", options: "tAw" },
+  {
+    trigger: /(?<=\S.*)dm/,
+    replacement: "\n$$\n\t$0\n$$",
+    options: "tAw",
+    priority: 1,
+  },
+
+  {
+    trigger: /([^\\])beg/,
+    replacement: "[[0]]\\begin{$0}\n\t$1\n\\end{$0}",
+    options: "MA",
+  },
+  {
+    trigger: /([^\\])beg/,
+    replacement: "[[0]]\\begin{$0} $1 \\end{$0}",
+    options: "nA",
+  },
 
   // Dashes
   // {trigger: "--", replacement: "–", options: "tA"},
@@ -49,13 +65,6 @@
   { trigger: "//", replacement: "\\frac{$0}{$1}$2", options: "mA" },
   { trigger: "ee", replacement: "e^{ $0 }$1", options: "mA" },
   { trigger: "invs", replacement: "^{-1}", options: "mA" },
-  {
-    trigger: /([A-Za-z])(\d)/,
-    replacement: "[[0]]_{[[1]]}",
-    options: "rmA",
-    description: "Auto letter subscript",
-    priority: -1,
-  },
 
   {
     trigger: /([^\\])(exp|log|ln)/,
@@ -115,27 +124,60 @@
   { trigger: "tilde", replacement: "\\tilde{$0}$1", options: "mA" },
   { trigger: "und", replacement: "\\underline{$0}$1", options: "mA" },
   { trigger: "vec", replacement: "\\vec{$0}$1", options: "mA" },
-
-  // More auto letter subscript
   {
-    trigger: /([A-Za-z])_(\d\d)/,
+    trigger: "pmod",
+    replacement: "\\pmod{${0:n}}$1",
+    options: "mA",
+    description: "Parenthesized modulo (\\pmod{n})",
+  },
+
+  // Auto letter subscript
+  //
+  // x3 -> x_{3}, \alpha3 -> \alpha_{3}
+  {
+    trigger: "(\\\\${GREEK}|[A-Za-z])(\\d)",
     replacement: "[[0]]_{[[1]]}",
     options: "rmA",
+    priority: -1,
   },
+  // x_{3}4 -> x_{34}, \alpha_{3}4 -> \alpha_{34}
   {
-    trigger: /\\hat{([A-Za-z])}(\d)/,
-    replacement: "\\hat{[[0]]}_{[[1]]}",
+    trigger: "(\\\\${GREEK}|[A-Za-z])_{(\\d+)}(\\d)",
+    replacement: "[[0]]_{[[1]][[2]]}",
     options: "rmA",
+    priority: -1,
   },
+
+  // \dot{x}3 -> \dot{x}_{3}, \dot{\alpha}3 -> \dot{\alpha}_{3}
   {
-    trigger: /\\vec{([A-Za-z])}(\d)/,
-    replacement: "\\vec{[[0]]}_{[[1]]}",
+    trigger: "\\\\(${ACCENT})\\{(\\\\${GREEK}|[A-Za-z])\\}(\\d)",
+    replacement: "\\[[0]]{[[1]]}_{[[2]]}",
     options: "rmA",
+    priority: -1,
   },
+
+  // \dot{x}_{3}4 -> \dot{x}_{34}
   {
-    trigger: /\\mathbf{([A-Za-z])}(\d)/,
-    replacement: "\\mathbf{[[0]]}_{[[1]]}",
+    trigger: "\\\\(${ACCENT})\\{(\\\\${GREEK}|[A-Za-z])\\}_\\{(\\d+)\\}(\\d)",
+    replacement: "\\[[0]]{[[1]]}_{[[2]][[3]]}",
     options: "rmA",
+    priority: -1,
+  },
+  // \dot{\vec{a}}3 -> \dot{\vec{a}}_{3}
+  {
+    trigger:
+      "\\\\(${ACCENT})\\{\\\\(${ACCENT})\\{(\\\\${GREEK}|[A-Za-z])\\}\\}(\\d)",
+    replacement: "\\[[0]]{\\[[1]]{[[2]]}}_{[[3]]}",
+    options: "rmA",
+    priority: -1,
+  },
+  // \dot{\vec{a}}_{3}4 -> \dot{\vec{a}}_{34}
+  {
+    trigger:
+      "\\\\(${ACCENT})\\{\\\\(${ACCENT})\\{(\\\\${GREEK}|[A-Za-z])\\}\\}_\\{(\\d+)\\}(\\d)",
+    replacement: "\\[[0]]{\\[[1]]{[[2]]}}_{[[3]][[4]]}",
+    options: "rmA",
+    priority: -1,
   },
 
   { trigger: "xnn", replacement: "x_{n}", options: "mA" },
@@ -167,9 +209,10 @@
   },
   { trigger: "+-", replacement: "\\pm", options: "mA" },
   { trigger: "-+", replacement: "\\mp", options: "mA" },
-  { trigger: "...", replacement: "\\dots", options: "mA" },
+  { trigger: "...", replacement: "\\ldots", options: "mA" },
   { trigger: "nabl", replacement: "\\nabla", options: "mA" },
-  { trigger: "del", replacement: "\\nabla", options: "mA" },
+  // The operator nabla is also called del, but using "del" as a trigger conflicts with the greek letter delta.
+  // { trigger: "del", replacement: "\\nabla", options: "mA" },
   { trigger: "xx", replacement: "\\times", options: "mA" },
   { trigger: "**", replacement: "\\cdot", options: "mA" },
   { trigger: "para", replacement: "\\parallel", options: "mA" },
@@ -207,18 +250,6 @@
   { trigger: "RR", replacement: "\\mathbb{R}", options: "mA" },
   { trigger: "ZZ", replacement: "\\mathbb{Z}", options: "mA" },
   { trigger: "NN", replacement: "\\mathbb{N}", options: "mA" },
-  {
-    trigger: "QQ",
-    replacement: "\\mathbb{Q}",
-    options: "mA",
-    description: "Rational (Quotient)",
-  },
-  {
-    trigger: "FF",
-    replacement: "\\mathbb{F}",
-    options: "mA",
-    description: "Field",
-  },
 
   // Handle spaces and backslashes
 
@@ -261,32 +292,32 @@
     options: "rmA",
   },
   {
-    trigger: "\\\\(${GREEK}|${SYMBOL}) hat",
+    trigger: "\\\\(${GREEK}) hat",
     replacement: "\\hat{\\[[0]]}",
     options: "rmA",
   },
   {
-    trigger: "\\\\(${GREEK}|${SYMBOL}) dot",
+    trigger: "\\\\(${GREEK}) dot",
     replacement: "\\dot{\\[[0]]}",
     options: "rmA",
   },
   {
-    trigger: "\\\\(${GREEK}|${SYMBOL}) bar",
+    trigger: "\\\\(${GREEK}) bar",
     replacement: "\\bar{\\[[0]]}",
     options: "rmA",
   },
   {
-    trigger: "\\\\(${GREEK}|${SYMBOL}) vec",
+    trigger: "\\\\(${GREEK}) vec",
     replacement: "\\vec{\\[[0]]}",
     options: "rmA",
   },
   {
-    trigger: "\\\\(${GREEK}|${SYMBOL}) tilde",
+    trigger: "\\\\(${GREEK}) tilde",
     replacement: "\\tilde{\\[[0]]}",
     options: "rmA",
   },
   {
-    trigger: "\\\\(${GREEK}|${SYMBOL}) und",
+    trigger: "\\\\(${GREEK}) und",
     replacement: "\\underline{\\[[0]]}",
     options: "rmA",
   },
@@ -353,6 +384,14 @@
     description: "Add space after hyperbolic trig funcs",
   },
 
+  {
+    trigger: /(arccsc|arcsec|arccot)/,
+    replacement: "\\operatorname{[[0]]}$0",
+    options: "mA",
+    description: "Inverse trig functions, Are not built-in MathJax functions",
+    priority: 1,
+  },
+
   // Visual operations
   {
     trigger: "U",
@@ -394,82 +433,28 @@
   { trigger: "iso", replacement: "{}^{${0:4}}_{${1:2}}${2:He}", options: "mA" },
 
   // Environments
+  // Here the regex syntax [pbBvV]mat is used to match pmat, bmat, Bmat, vmat, Vmat
   {
-    trigger: "pmat",
-    replacement: "\\begin{pmatrix}\n$0\n\\end{pmatrix}",
-    options: "MA",
+    trigger: /([pbBvV]mat)/,
+    replacement: "\\begin{[[0]]rix}\n$0\n\\end{[[0]]rix}",
+    options: "rMA",
+    description: "Matrix environments with new lines",
   },
   {
-    trigger: "bmat",
-    replacement: "\\begin{bmatrix}\n$0\n\\end{bmatrix}",
-    options: "MA",
+    trigger: /(matrix|cases|align|array)/,
+    replacement: "\\begin{[[0]]}\n$0\n\\end{[[0]]}",
+    options: "rMA",
+    description: "Miscellaneous environments with new lines",
   },
   {
-    trigger: "Bmat",
-    replacement: "\\begin{Bmatrix}\n$0\n\\end{Bmatrix}",
-    options: "MA",
+    trigger: /([pbBvV]mat)/,
+    replacement: "\\begin{[[0]]rix}$0\\end{[[0]]rix}",
+    options: "rnA",
   },
   {
-    trigger: "vmat",
-    replacement: "\\begin{vmatrix}\n$0\n\\end{vmatrix}",
-    options: "MA",
-  },
-  {
-    trigger: "Vmat",
-    replacement: "\\begin{Vmatrix}\n$0\n\\end{Vmatrix}",
-    options: "MA",
-  },
-  {
-    trigger: "matrix",
-    replacement: "\\begin{matrix}\n$0\n\\end{matrix}",
-    options: "MA",
-  },
-
-  {
-    trigger: "pmat",
-    replacement: "\\begin{pmatrix}$0\\end{pmatrix}",
-    options: "nA",
-  },
-  {
-    trigger: "bmat",
-    replacement: "\\begin{bmatrix}$0\\end{bmatrix}",
-    options: "nA",
-  },
-  {
-    trigger: "Bmat",
-    replacement: "\\begin{Bmatrix}$0\\end{Bmatrix}",
-    options: "nA",
-  },
-  {
-    trigger: "vmat",
-    replacement: "\\begin{vmatrix}$0\\end{vmatrix}",
-    options: "nA",
-  },
-  {
-    trigger: "Vmat",
-    replacement: "\\begin{Vmatrix}$0\\end{Vmatrix}",
-    options: "nA",
-  },
-  {
-    trigger: "matrix",
-    replacement: "\\begin{matrix}$0\\end{matrix}",
-    options: "nA",
-  },
-
-  {
-    trigger: "cases",
-    replacement: "\\begin{cases}\n$0\n\\end{cases}",
-    options: "mA",
-  },
-  {
-    trigger: "align",
-    replacement: "\\begin{align}\n$0\n\\end{align}",
-    options: "mA",
-  },
-  {
-    trigger: "array",
-    replacement: "\\begin{array}\n$0\n\\end{array}",
-    options: "mA",
+    trigger: /(matrix|cases|align|array)/,
+    replacement: "\\begin{[[0]]}$0\\end{[[0]]}",
+    options: "rnA",
   },
 
   // Brackets
@@ -488,6 +473,7 @@
   },
   { trigger: "ceil", replacement: "\\lceil $0 \\rceil $1", options: "mA" },
   { trigger: "floor", replacement: "\\lfloor $0 \\rfloor $1", options: "mA" },
+  // For the modulo operator, see the section "More operations" above
   { trigger: "mod", replacement: "|$0|$1", options: "mA" },
   { trigger: "(", replacement: "(${VISUAL})", options: "mA" },
   { trigger: "[", replacement: "[${VISUAL}]", options: "mA" },
@@ -545,7 +531,44 @@
     options: "mA",
     description: "N x N identity matrix",
   },
+  {
+    trigger:
+      /(?<=(?:\n|^)[ \t]*>*)(?<marker>\d+[.)]|[-*+])(?<whitespace>[ \t]+)(?<text>.*)dm/,
+    replacement: (m) => {
+      const { whitespace, text, marker } = m.groups;
+      const firstLine = marker + whitespace + text;
+      const indent = " ".repeat(marker.length) + whitespace;
+      return `${firstLine}\n${indent}$$\n${indent}\t$0\n${indent}$$`;
+    },
+    options: "rtA",
+    priority: 2,
+    description: "Display math when in a list",
+  },
+  // Imported snippets
+  {
+    trigger: "([2-9|n|m|k]?)sqr",
+    replacement: (match) => {
+      let order = match[1];
+
+      if (order != "") order = `[${order}]`;
+      return "\\sqrt" + order + "{$0}";
+    },
+    options: "rmA",
+  },
   // yavidor's snippets
+  {
+    trigger: "QQ",
+    replacement: "\\mathbb{Q}",
+    options: "mA",
+    description: "Rational (Quotient)",
+  },
+  {
+    trigger: "FF",
+    replacement: "\\mathbb{F}",
+    options: "mA",
+    description: "Field",
+  },
+
   {
     trigger: "binom",
     replacement: "\\binom{${0:n}}{${1:k}} $2",
@@ -563,32 +586,23 @@
     description: "QED",
     priority: 1,
   },
-  {
-    trigger: "([2-9|n|m|k]?)sqr",
-    replacement: (match) => {
-      let order = match[1];
-
-      if (order != "") order = `[${order}]`;
-      return "\\sqrt" + order + "{$0}";
-    },
-    options: "rmA",
-  },
   { trigger: '"', replacement: "\\text{${VISUAL}}", options: "mA" },
   { trigger: "ann", replacement: "a_{n}", options: "mA" },
   { trigger: "aii", replacement: "a_{i}", options: "mA", priority: 1 },
   { trigger: "ap1", replacement: "a_{n+1}", options: "mA" },
   { trigger: "xra", replacement: "\\xrightarrow{ $0 }", options: "mA" },
+
   // x in, to avoid accidental xi nn
   { trigger: "\\xi nn", replacement: "x \\in", options: "mA", priority: 1 },
+
   //Change of basis matrix
   {
-    trigger: "P([a-zA-Z])([a-zA-Z]?)",
+    trigger: "M([a-zA-Z])([a-zA-Z])",
     replacement: (match) => {
       let firstBasis = match[1];
       let secondBasis = match[2];
-      console.log(secondBasis);
       if (secondBasis == "") secondBasis = firstBasis;
-      return `P_{\\mathcal{${firstBasis}}\\to\\mathcal{${secondBasis}}}`;
+      return `\\left[M\\right]_{\\mathcal{${firstBasis}}}^{\\mathcal{${secondBasis}}}`;
     },
     options: "rm",
   },

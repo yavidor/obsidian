@@ -1,6 +1,7 @@
 ---
 tags:
   - מבוא-למדעי-המחשב
+uid: e24cbcbf-510a-4e02-bf04-572fc8121a62
 ---
 If you're not Zoe or Mark, why are you reading this?
 

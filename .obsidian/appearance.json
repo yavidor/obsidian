@@ -6,5 +6,6 @@
     "theme-override",
     "adaptive_images"
   ],
-  "accentColor": ""
+  "accentColor": "",
+  "interfaceFontFamily": ""
 }
