@@ -568,7 +568,12 @@
     options: "mA",
     description: "Field",
   },
-
+  {
+    trigger: "BB",
+    replacement: "\\mathcal{B}",
+    options: "mA",
+    description: "A basis for a vector space",
+  },
   {
     trigger: "binom",
     replacement: "\\binom{${0:n}}{${1:k}} $2",
