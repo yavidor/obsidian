@@ -596,6 +596,8 @@
   { trigger: "aii", replacement: "a_{i}", options: "mA", priority: 1 },
   { trigger: "ap1", replacement: "a_{n+1}", options: "mA" },
   { trigger: "xra", replacement: "\\xrightarrow{ $0 }", options: "mA" },
+  { trigger: "aip1", replacement: "a_{i+1}", options: "mA", priority: 1 },
+  { trigger: "aim1", replacement: "a_{i-1}", options: "mA", priority: 1 },
 
   // x in, to avoid accidental xi nn
   { trigger: "\\xi nn", replacement: "x \\in", options: "mA", priority: 1 },
