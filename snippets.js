@@ -602,7 +602,6 @@
   // x in, to avoid accidental xi nn
   { trigger: "\\xi nn", replacement: "x \\in", options: "mA", priority: 1 },
 
-  //Change of basis matrix
   {
     trigger: "M([a-zA-Z])([a-zA-Z])",
     replacement: (match) => {
@@ -611,6 +610,14 @@
       if (secondBasis == "") secondBasis = firstBasis;
       return `\\left[M\\right]_{\\mathcal{${firstBasis}}}^{\\mathcal{${secondBasis}}}`;
     },
+    description: "Change of basis matrix",
     options: "rm",
+  },
+  {
+    trigger: "reim",
+    replacement:
+      "R\\left(${0:f}, ${1:P},\\left\\{${2:t}_i\\right\\}\\right) $3",
+    description: "Reimann Sum",
+    options: "m",
   },
 ];
