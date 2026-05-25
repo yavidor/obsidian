@@ -79,7 +79,7 @@
 
   // Linear algebra
   { trigger: /([^\\])(det)/, replacement: "[[0]]\\[[1]]", options: "rmA" },
-  { trigger: "trace", replacement: "\\mathrm{Tr}", options: "mA" },
+  { trigger: "trace", replacement: "\\mathrm{tr}", options: "mA" },
 
   // More operations
   { trigger: "([a-zA-Z])hat", replacement: "\\hat{[[0]]}", options: "rmA" },
