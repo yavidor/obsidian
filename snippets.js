@@ -626,4 +626,9 @@
     description: "n Choose k",
     options: "rm",
   },
+  {
+    trigger: /(\d+)/,
+    replacement: "$[[0]]$",
+    options: "tA",
+  },
 ];
