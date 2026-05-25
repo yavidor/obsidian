@@ -620,4 +620,10 @@
     description: "Reimann Sum",
     options: "m",
   },
+  {
+    trigger: "(\\w)c(\\w)",
+    replacement: "\\binom{[[0]]}{[[1]]}$0",
+    description: "n Choose k",
+    options: "rm",
+  },
 ];

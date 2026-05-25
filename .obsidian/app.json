@@ -9,5 +9,6 @@
   "vimMode": true,
   "rightToLeft": false,
   "attachmentFolderPath": "Attachments",
-  "alwaysUpdateLinks": true
+  "alwaysUpdateLinks": true,
+  "autoPairBrackets": false
 }
