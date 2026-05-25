@@ -627,8 +627,8 @@
     options: "rm",
   },
   {
-    trigger: /(\d+)/,
-    replacement: "$[[0]]$",
-    options: "tA",
+    trigger: "(\\d+)([\\n\\s.,?!:'])",
+    replacement: "$[[0]]$[[1]]",
+    options: "rtAw",
   },
 ];
