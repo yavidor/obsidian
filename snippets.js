@@ -626,9 +626,10 @@
     description: "n Choose k",
     options: "rm",
   },
+  ,
   {
-    trigger: "(\\d+)([\\n\\s.,?!:'])",
+    trigger: /(\d+)([\n\s.,?!:'])/,
     replacement: "$[[0]]$[[1]]",
-    options: "rtAw",
+    options: "tAw",
   },
 ];
