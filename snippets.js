@@ -629,7 +629,7 @@
   ,
   {
     trigger: /(\d+)([\n\s.,?!:'])/,
-    replacement: "$[[0]]$[[1]]",
+    replacement: "$[[0]]$$0",
     options: "tAw",
   },
 ];

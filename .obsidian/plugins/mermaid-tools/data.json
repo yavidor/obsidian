@@ -788,5 +788,17 @@
   "customCategories": [],
   "selectedCategoryId": "c4Diagram",
   "defaultCategorySortOrders": {},
-  "categoryModifications": {}
+  "categoryModifications": {},
+  "defaultElementCategoryIds": [
+    "mindmap",
+    "timeline",
+    "quadrantChart",
+    "c4Diagram",
+    "sankeyDiagram",
+    "xyChart",
+    "packet",
+    "kanban",
+    "block",
+    "architecture"
+  ]
 }
