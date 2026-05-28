@@ -14,7 +14,7 @@
   "snippetsFileLocation": "snippets.js",
   "snippetVariablesFileLocation": "",
   "concealEnabled": true,
-  "concealRevealTimeout": 300,
+  "concealRevealTimeout": 100,
   "colorPairedBracketsEnabled": true,
   "highlightCursorBracketsEnabled": true,
   "mathPreviewEnabled": true,
