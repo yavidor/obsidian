@@ -13,7 +13,7 @@
   "loadSnippetVariablesFromFile": false,
   "snippetsFileLocation": "snippets.js",
   "snippetVariablesFileLocation": "",
-  "concealEnabled": true,
+  "concealEnabled": false,
   "concealRevealTimeout": 100,
   "colorPairedBracketsEnabled": true,
   "highlightCursorBracketsEnabled": true,
