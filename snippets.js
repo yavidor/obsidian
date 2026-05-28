@@ -244,13 +244,13 @@
   { trigger: "set", replacement: "\\{ $0 \\}$1", options: "mA" },
   { trigger: "e\\xi sts", replacement: "\\exists", options: "mA", priority: 1 },
 
-  { trigger: "LL", replacement: "\\mathcal{L}", options: "mA" },
-  { trigger: "HH", replacement: "\\mathcal{H}", options: "mA" },
-  { trigger: "CC", replacement: "\\mathbb{C}", options: "mA" },
-  { trigger: "RR", replacement: "\\mathbb{R}", options: "mA" },
-  { trigger: "ZZ", replacement: "\\mathbb{Z}", options: "mA" },
-  { trigger: "NN", replacement: "\\mathbb{N}", options: "mA" },
-
+  // { trigger: "LL", replacement: "\\mathcal{L}", options: "mA" },
+  // { trigger: "HH", replacement: "\\mathcal{H}", options: "mA" },
+  // { trigger: "CC", replacement: "\\mathbb{C}", options: "mA" },
+  // { trigger: "RR", replacement: "\\mathbb{R}", options: "mA" },
+  // { trigger: "ZZ", replacement: "\\mathbb{Z}", options: "mA" },
+  // { trigger: "NN", replacement: "\\mathbb{N}", options: "mA" },
+  //
   // Handle spaces and backslashes
 
   // Snippet variables can be used as shortcuts when writing snippets.
@@ -557,24 +557,6 @@
   },
   // yavidor's snippets
   {
-    trigger: "QQ",
-    replacement: "\\mathbb{Q}",
-    options: "mA",
-    description: "Rational (Quotient)",
-  },
-  {
-    trigger: "FF",
-    replacement: "\\mathbb{F}",
-    options: "mA",
-    description: "Field",
-  },
-  {
-    trigger: "BB",
-    replacement: "\\mathcal{B}",
-    options: "mA",
-    description: "A basis for a vector space",
-  },
-  {
     trigger: "binom",
     replacement: "\\binom{${0:n}}{${1:k}} $2",
     options: "mA",
@@ -627,4 +609,10 @@
     options: "rm",
   },
   { trigger: /([^\\])(dim)/, replacement: "[[0]]\\[[1]]", options: "rmA" },
+  { trigger: /([A-Z])\1/, replacement: "\\mathbb{[[0]]}", options: "mA" },
+  {
+    trigger: /\\mathbb{([A-Z])}\1/,
+    replacement: "\\mathcal{[[0]]}",
+    options: "mA",
+  },
 ];
