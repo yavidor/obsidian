@@ -615,4 +615,9 @@
     replacement: "\\mathcal{[[0]]}",
     options: "mA",
   },
+  {
+    trigger: "isum",
+    replacement: "\\sum_{n=1}^{\\infty}  $1",
+    options: "mA",
+  },
 ];
