@@ -12,5 +12,6 @@
   "opener",
   "obsidian-rtl",
   "vim-yank-highlight",
-  "easy-tikz"
+  "easy-tikz",
+  "obsidian-tikzjax"
 ]
