@@ -617,7 +617,7 @@
   },
   {
     trigger: "isum",
-    replacement: "\\sum_{n=1}^{\\infty}  $1",
+    replacement: "\\sum_{n=${{0:1}}}^{\\infty}  $1",
     options: "mA",
   },
 ];
