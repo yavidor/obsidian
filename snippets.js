@@ -590,7 +590,7 @@
       let firstBasis = match[1];
       let secondBasis = match[2];
       if (secondBasis == "") secondBasis = firstBasis;
-      return `\\left[M\\right]_{\\mathcal{${firstBasis}}}^{\\mathcal{${secondBasis}}}`;
+      return `M_{\\mathcal{${firstBasis}}}^{\\mathcal{${secondBasis}}}`;
     },
     description: "Change of basis matrix",
     options: "rm",

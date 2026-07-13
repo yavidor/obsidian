@@ -14,5 +14,6 @@
   "vim-yank-highlight",
   "easy-tikz",
   "obsidian-tikzjax",
-  "typst"
+  "typst",
+  "pseudocode-in-obs"
 ]
