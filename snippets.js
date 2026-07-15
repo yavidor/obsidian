@@ -415,7 +415,7 @@
   // Quantum mechanics
   { trigger: "dag", replacement: "^{\\dagger}", options: "mA" },
   { trigger: "o+", replacement: "\\oplus ", options: "mA" },
-  { trigger: "ox", replacement: "\\otimes ", options: "mA" },
+  // { trigger: "ox", replacement: "\\otimes ", options: "mA" },
   { trigger: "bra", replacement: "\\bra{$0} $1", options: "mA" },
   { trigger: "ket", replacement: "\\ket{$0} $1", options: "mA" },
   { trigger: "brk", replacement: "\\braket{ $0 | $1 } $2", options: "mA" },
@@ -491,7 +491,11 @@
 
   // Automatically convert standalone letters in text to math (except a, A, I).
   // (Un-comment to enable)
-  // {trigger: /([^'])\b([B-HJ-Zb-z])\b([\n\s.,?!:'])/, replacement: "[[0]]$[[1]]$[[2]]", options: "tA"},
+  {
+    trigger: /([^'])\b([B-HJ-Zb-z])\b([\n\s.,?!:'])/,
+    replacement: "[[0]]$[[1]]$[[2]]",
+    options: "tA",
+  },
 
   // Automatically convert Greek letters in text to math.
   // {trigger: "(${GREEK})([\\n\\s.,?!:'])", replacement: "$\\[[0]]$[[1]]", options: "rtAw"},
@@ -617,7 +621,7 @@
   },
   {
     trigger: "isum",
-    replacement: "\\sum_{n=${{0:1}}}^{\\infty}  $1",
-    options: "mA",
+    replacement: "\\sum_{n=${0:1}}^{\\infty}  $1",
+    options: "mrA",
   },
 ];
