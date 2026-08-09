@@ -2,11 +2,12 @@
   "theme": "obsidian",
   "cssTheme": "Catppuccin",
   "textFontFamily": "Arial",
+  "accentColor": "",
   "enabledCssSnippets": [
     "theme-override",
     "adaptive_images"
   ],
-  "accentColor": "",
-  "interfaceFontFamily": "",
-  "monospaceFontFamily": ""
+  "baseFontSize": 20,
+  "interfaceFontFamily": "AtkynsonMono Nerd Font",
+  "monospaceFontFamily": "AtkynsonMono Nerd Font"
 }

@@ -68,15 +68,751 @@ var __async = (__this, __arguments, generator) => {
 __export(exports, {
   default: () => EasyTikzPlugin
 });
-var import_obsidian2 = __toModule(require("obsidian"));
+var import_obsidian3 = __toModule(require("obsidian"));
 
 // src/modal.ts
-var import_obsidian = __toModule(require("obsidian"));
+var import_obsidian2 = __toModule(require("obsidian"));
+
+// src/util.ts
+function niceInterval(range, targetTicks) {
+  const rough = range / targetTicks;
+  const mag = Math.pow(10, Math.floor(Math.log10(rough)));
+  const norm = rough / mag;
+  let nice;
+  if (norm <= 1.5)
+    nice = 1;
+  else if (norm <= 3)
+    nice = 2;
+  else if (norm <= 7)
+    nice = 5;
+  else
+    nice = 10;
+  return nice * mag;
+}
+function formatTick(value) {
+  if (Math.abs(value) < 1e-10)
+    return "0";
+  if (Math.abs(value) >= 1e3 || Math.abs(value) < 0.01 && value !== 0) {
+    return value.toExponential(1);
+  }
+  const s = value.toPrecision(4);
+  return parseFloat(s).toString();
+}
+var SYMBOL_MAP = {
+  "\\sum": "\u2211",
+  "\\prod": "\u220F",
+  "\\int": "\u222B",
+  "\\oint": "\u222E",
+  "\\infty": "\u221E",
+  "\\partial": "\u2202",
+  "\\nabla": "\u2207",
+  "\\pm": "\xB1",
+  "\\mp": "\u2213",
+  "\\times": "\xD7",
+  "\\div": "\xF7",
+  "\\cdot": "\xB7",
+  "\\ast": "\u2217",
+  "\\circ": "\u2218",
+  "\\bullet": "\u2022",
+  "\\leq": "\u2264",
+  "\\le": "\u2264",
+  "\\geq": "\u2265",
+  "\\ge": "\u2265",
+  "\\neq": "\u2260",
+  "\\ne": "\u2260",
+  "\\approx": "\u2248",
+  "\\equiv": "\u2261",
+  "\\sim": "\u223C",
+  "\\simeq": "\u2243",
+  "\\cong": "\u2245",
+  "\\propto": "\u221D",
+  "\\ll": "\u226A",
+  "\\gg": "\u226B",
+  "\\forall": "\u2200",
+  "\\exists": "\u2203",
+  "\\nexists": "\u2204",
+  "\\in": "\u2208",
+  "\\notin": "\u2209",
+  "\\ni": "\u220B",
+  "\\subset": "\u2282",
+  "\\subseteq": "\u2286",
+  "\\supset": "\u2283",
+  "\\supseteq": "\u2287",
+  "\\cup": "\u222A",
+  "\\cap": "\u2229",
+  "\\setminus": "\u2216",
+  "\\emptyset": "\u2205",
+  "\\varnothing": "\u2205",
+  "\\wedge": "\u2227",
+  "\\land": "\u2227",
+  "\\vee": "\u2228",
+  "\\lor": "\u2228",
+  "\\neg": "\xAC",
+  "\\lnot": "\xAC",
+  "\\oplus": "\u2295",
+  "\\otimes": "\u2297",
+  "\\perp": "\u22A5",
+  "\\parallel": "\u2225",
+  "\\angle": "\u2220",
+  "\\degree": "\xB0",
+  "\\to": "\u2192",
+  "\\rightarrow": "\u2192",
+  "\\longrightarrow": "\u27F6",
+  "\\Rightarrow": "\u21D2",
+  "\\Longrightarrow": "\u27F9",
+  "\\leftarrow": "\u2190",
+  "\\longleftarrow": "\u27F5",
+  "\\Leftarrow": "\u21D0",
+  "\\leftrightarrow": "\u2194",
+  "\\Leftrightarrow": "\u21D4",
+  "\\mapsto": "\u21A6",
+  "\\cdots": "\u22EF",
+  "\\ldots": "\u2026",
+  "\\dots": "\u2026",
+  "\\vdots": "\u22EE",
+  "\\ddots": "\u22F1",
+  "\\prime": "\u2032",
+  "\\hbar": "\u210F",
+  "\\ell": "\u2113",
+  "\\Re": "\u211C",
+  "\\Im": "\u2111",
+  "\\aleph": "\u2135",
+  "\\wp": "\u2118",
+  "\\alpha": "\u03B1",
+  "\\beta": "\u03B2",
+  "\\gamma": "\u03B3",
+  "\\delta": "\u03B4",
+  "\\epsilon": "\u03B5",
+  "\\varepsilon": "\u03B5",
+  "\\zeta": "\u03B6",
+  "\\eta": "\u03B7",
+  "\\theta": "\u03B8",
+  "\\vartheta": "\u03D1",
+  "\\iota": "\u03B9",
+  "\\kappa": "\u03BA",
+  "\\lambda": "\u03BB",
+  "\\mu": "\u03BC",
+  "\\nu": "\u03BD",
+  "\\xi": "\u03BE",
+  "\\pi": "\u03C0",
+  "\\varpi": "\u03D6",
+  "\\rho": "\u03C1",
+  "\\varrho": "\u03F1",
+  "\\sigma": "\u03C3",
+  "\\varsigma": "\u03C2",
+  "\\tau": "\u03C4",
+  "\\upsilon": "\u03C5",
+  "\\phi": "\u03C6",
+  "\\varphi": "\u03D5",
+  "\\chi": "\u03C7",
+  "\\psi": "\u03C8",
+  "\\omega": "\u03C9",
+  "\\Gamma": "\u0393",
+  "\\Delta": "\u0394",
+  "\\Theta": "\u0398",
+  "\\Lambda": "\u039B",
+  "\\Xi": "\u039E",
+  "\\Pi": "\u03A0",
+  "\\Sigma": "\u03A3",
+  "\\Upsilon": "\u03A5",
+  "\\Phi": "\u03A6",
+  "\\Psi": "\u03A8",
+  "\\Omega": "\u03A9"
+};
+var SUPERSCRIPT_MAP = {
+  "0": "\u2070",
+  "1": "\xB9",
+  "2": "\xB2",
+  "3": "\xB3",
+  "4": "\u2074",
+  "5": "\u2075",
+  "6": "\u2076",
+  "7": "\u2077",
+  "8": "\u2078",
+  "9": "\u2079",
+  "+": "\u207A",
+  "-": "\u207B",
+  "\u2212": "\u207B",
+  "=": "\u207C",
+  "(": "\u207D",
+  ")": "\u207E",
+  a: "\u1D43",
+  b: "\u1D47",
+  c: "\u1D9C",
+  d: "\u1D48",
+  e: "\u1D49",
+  f: "\u1DA0",
+  g: "\u1D4D",
+  h: "\u02B0",
+  i: "\u2071",
+  j: "\u02B2",
+  k: "\u1D4F",
+  l: "\u02E1",
+  m: "\u1D50",
+  n: "\u207F",
+  o: "\u1D52",
+  p: "\u1D56",
+  r: "\u02B3",
+  s: "\u02E2",
+  t: "\u1D57",
+  u: "\u1D58",
+  v: "\u1D5B",
+  w: "\u02B7",
+  x: "\u02E3",
+  y: "\u02B8",
+  z: "\u1DBB"
+};
+var SUBSCRIPT_MAP = {
+  "0": "\u2080",
+  "1": "\u2081",
+  "2": "\u2082",
+  "3": "\u2083",
+  "4": "\u2084",
+  "5": "\u2085",
+  "6": "\u2086",
+  "7": "\u2087",
+  "8": "\u2088",
+  "9": "\u2089",
+  "+": "\u208A",
+  "-": "\u208B",
+  "\u2212": "\u208B",
+  "=": "\u208C",
+  "(": "\u208D",
+  ")": "\u208E",
+  a: "\u2090",
+  e: "\u2091",
+  h: "\u2095",
+  i: "\u1D62",
+  j: "\u2C7C",
+  k: "\u2096",
+  l: "\u2097",
+  m: "\u2098",
+  n: "\u2099",
+  o: "\u2092",
+  p: "\u209A",
+  r: "\u1D63",
+  s: "\u209B",
+  t: "\u209C",
+  u: "\u1D64",
+  v: "\u1D65",
+  x: "\u2093"
+};
+function readBraceGroup(text, start) {
+  let depth = 0;
+  for (let i = start; i < text.length; i++) {
+    if (text[i] === "{")
+      depth++;
+    else if (text[i] === "}") {
+      depth--;
+      if (depth === 0)
+        return [text.slice(start + 1, i), i + 1];
+    }
+  }
+  return [text.slice(start + 1), text.length];
+}
+function readScriptArg(text, i) {
+  var _a;
+  if (text[i] === "{")
+    return readBraceGroup(text, i);
+  if (text[i] === "\\") {
+    const m = /^\\[a-zA-Z]+/.exec(text.slice(i));
+    if (m)
+      return [m[0], i + m[0].length];
+  }
+  return [(_a = text[i]) != null ? _a : "", i + 1];
+}
+function toScriptUnicode(content, map) {
+  let out = "";
+  for (const ch of content) {
+    const mapped = map[ch];
+    if (!mapped)
+      return null;
+    out += mapped;
+  }
+  return out;
+}
+function wrapIfCompound(s) {
+  return /[+\-×÷/ ]/.test(s) ? `(${s})` : s;
+}
+function stripLatexInner(text) {
+  var _a;
+  let out = "";
+  let i = 0;
+  while (i < text.length) {
+    const ch = text[i];
+    if (ch === "\\") {
+      const rest = text.slice(i);
+      const leftRight = /^\\(left|right)/.exec(rest);
+      if (leftRight) {
+        i += leftRight[0].length;
+        if (text[i] === ".")
+          i += 1;
+        continue;
+      }
+      if (rest.startsWith("\\frac")) {
+        i += 5;
+        if (text[i] === "{") {
+          const [num, afterNum] = readBraceGroup(text, i);
+          i = afterNum;
+          if (text[i] === "{") {
+            const [den, afterDen] = readBraceGroup(text, i);
+            i = afterDen;
+            out += `${wrapIfCompound(stripLatexInner(num))}/${wrapIfCompound(stripLatexInner(den))}`;
+            continue;
+          }
+          out += stripLatexInner(num);
+          continue;
+        }
+        out += "frac";
+        continue;
+      }
+      if (rest.startsWith("\\sqrt")) {
+        i += 5;
+        let index = "";
+        if (text[i] === "[") {
+          const close = text.indexOf("]", i);
+          if (close !== -1) {
+            index = text.slice(i + 1, close);
+            i = close + 1;
+          }
+        }
+        if (text[i] === "{") {
+          const [content, afterContent] = readBraceGroup(text, i);
+          i = afterContent;
+          const inner = stripLatexInner(content);
+          if (index === "3")
+            out += `\u221B(${inner})`;
+          else if (index === "4")
+            out += `\u221C(${inner})`;
+          else if (index && index !== "2")
+            out += `${index}\u221A(${inner})`;
+          else
+            out += `\u221A(${inner})`;
+          continue;
+        }
+        out += "\u221A";
+        continue;
+      }
+      const macroMatch = /^\\[a-zA-Z]+/.exec(rest);
+      if (macroMatch) {
+        const macro = macroMatch[0];
+        out += SYMBOL_MAP[macro] || macro.slice(1);
+        i += macro.length;
+        continue;
+      }
+      if (rest.startsWith("\\\\")) {
+        i += 2;
+        continue;
+      }
+      if ("(){}".includes((_a = text[i + 1]) != null ? _a : "")) {
+        i += 2;
+        continue;
+      }
+      i += 1;
+      continue;
+    }
+    if ((ch === "^" || ch === "_") && i + 1 < text.length) {
+      const map = ch === "^" ? SUPERSCRIPT_MAP : SUBSCRIPT_MAP;
+      const [arg, next] = readScriptArg(text, i + 1);
+      const stripped = stripLatexInner(arg);
+      if (ch === "^" && stripped === "\u2218") {
+        out += "\xB0";
+        i = next;
+        continue;
+      }
+      const converted = toScriptUnicode(stripped, map);
+      out += converted !== null ? converted : ch + (stripped.length > 1 ? `(${stripped})` : stripped);
+      i = next;
+      continue;
+    }
+    if (ch === "$" || ch === "{" || ch === "}") {
+      i += 1;
+      continue;
+    }
+    out += ch;
+    i += 1;
+  }
+  return out;
+}
+function stripLatex(text) {
+  return stripLatexInner(text);
+}
+function hexToRgb(hex) {
+  const m = hex.match(/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i);
+  if (!m)
+    return null;
+  return { r: parseInt(m[1], 16), g: parseInt(m[2], 16), b: parseInt(m[3], 16) };
+}
+function rgbStringToRgb(rgb) {
+  const m = rgb.match(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/);
+  if (!m)
+    return null;
+  return { r: parseInt(m[1], 10), g: parseInt(m[2], 10), b: parseInt(m[3], 10) };
+}
 
 // src/math.ts
 var DERIVATIVE_STEP = 1e-4;
 var EXTREMA_SAMPLES = 100;
-var MATH_PRELUDE = "const {sin,cos,tan,asin,acos,atan,atan2,sinh,cosh,tanh,asinh,acosh,atanh,exp,log,log2,log10,sqrt,cbrt,pow,abs,sign,floor,ceil,round,trunc,min,max,hypot,PI,E,LN2,LN10,LOG2E,LOG10E,SQRT2}=Math;";
+var BARE_FUNCTIONS = {
+  sin: Math.sin,
+  cos: Math.cos,
+  tan: Math.tan,
+  asin: Math.asin,
+  acos: Math.acos,
+  atan: Math.atan,
+  atan2: Math.atan2,
+  sinh: Math.sinh,
+  cosh: Math.cosh,
+  tanh: Math.tanh,
+  asinh: Math.asinh,
+  acosh: Math.acosh,
+  atanh: Math.atanh,
+  exp: Math.exp,
+  log: Math.log,
+  log2: Math.log2,
+  log10: Math.log10,
+  sqrt: Math.sqrt,
+  cbrt: Math.cbrt,
+  pow: Math.pow,
+  abs: Math.abs,
+  sign: Math.sign,
+  floor: Math.floor,
+  ceil: Math.ceil,
+  round: Math.round,
+  trunc: Math.trunc,
+  min: Math.min,
+  max: Math.max,
+  hypot: Math.hypot
+};
+var BARE_CONSTANTS = {
+  PI: Math.PI,
+  E: Math.E,
+  LN2: Math.LN2,
+  LN10: Math.LN10,
+  LOG2E: Math.LOG2E,
+  LOG10E: Math.LOG10E,
+  SQRT2: Math.SQRT2
+};
+var MATH_MEMBER_FUNCTIONS = __spreadProps(__spreadValues({}, BARE_FUNCTIONS), {
+  log1p: Math.log1p,
+  expm1: Math.expm1,
+  fround: Math.fround,
+  random: Math.random
+});
+var MATH_MEMBER_CONSTANTS = __spreadProps(__spreadValues({}, BARE_CONSTANTS), {
+  SQRT1_2: Math.SQRT1_2
+});
+function ownFunction(table, name) {
+  return Object.prototype.hasOwnProperty.call(table, name) ? table[name] : void 0;
+}
+function ownConstant(table, name) {
+  return Object.prototype.hasOwnProperty.call(table, name) ? table[name] : void 0;
+}
+var PUNCTUATORS = [
+  "===",
+  "!==",
+  "**",
+  "==",
+  "!=",
+  "<=",
+  ">=",
+  "&&",
+  "||",
+  "<",
+  ">",
+  "+",
+  "-",
+  "*",
+  "/",
+  "%",
+  "^",
+  "(",
+  ")",
+  ",",
+  "?",
+  ":",
+  ".",
+  "!"
+];
+var NUM_RE = /(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?/y;
+var IDENT_RE = /[A-Za-z_$][A-Za-z0-9_$]*/y;
+function tokenize(src) {
+  const tokens = [];
+  let i = 0;
+  while (i < src.length) {
+    const code = src.charCodeAt(i);
+    if (code === 32 || code === 9 || code === 10 || code === 13) {
+      i++;
+      continue;
+    }
+    NUM_RE.lastIndex = i;
+    const num = NUM_RE.exec(src);
+    if (num) {
+      tokens.push({ kind: "num", text: num[0], value: Number(num[0]), pos: i });
+      i = NUM_RE.lastIndex;
+      continue;
+    }
+    IDENT_RE.lastIndex = i;
+    const ident = IDENT_RE.exec(src);
+    if (ident) {
+      tokens.push({ kind: "ident", text: ident[0], value: 0, pos: i });
+      i = IDENT_RE.lastIndex;
+      continue;
+    }
+    const punct = PUNCTUATORS.find((p) => src.startsWith(p, i));
+    if (!punct) {
+      throw new Error(`Unexpected character '${src[i]}' at position ${i}`);
+    }
+    tokens.push({ kind: "punct", text: punct, value: 0, pos: i });
+    i += punct.length;
+  }
+  tokens.push({ kind: "end", text: "", value: 0, pos: src.length });
+  return tokens;
+}
+var ExprParser = class {
+  constructor(src, vars) {
+    this.i = 0;
+    this.tokens = tokenize(src);
+    this.vars = vars;
+  }
+  compile() {
+    const fn = this.parseTernary();
+    const t = this.peek();
+    if (t.kind !== "end") {
+      throw new Error(`Unexpected '${t.text}' at position ${t.pos}`);
+    }
+    return fn;
+  }
+  peek() {
+    return this.tokens[this.i];
+  }
+  next() {
+    return this.tokens[this.i++];
+  }
+  at(text) {
+    const t = this.tokens[this.i];
+    return t.kind === "punct" && t.text === text;
+  }
+  eat(text) {
+    if (this.at(text)) {
+      this.i++;
+      return true;
+    }
+    return false;
+  }
+  expect(text) {
+    if (!this.eat(text)) {
+      const t = this.peek();
+      const found = t.kind === "end" ? "end of expression" : `'${t.text}'`;
+      throw new Error(`Expected '${text}' but found ${found} at position ${t.pos}`);
+    }
+  }
+  parseTernary() {
+    const cond = this.parseOr();
+    if (!this.eat("?"))
+      return cond;
+    const whenTrue = this.parseTernary();
+    this.expect(":");
+    const whenFalse = this.parseTernary();
+    return (x, y) => cond(x, y) ? whenTrue(x, y) : whenFalse(x, y);
+  }
+  parseOr() {
+    let left = this.parseAnd();
+    while (this.eat("||")) {
+      const l = left;
+      const r = this.parseAnd();
+      left = (x, y) => {
+        const v = l(x, y);
+        return v ? v : r(x, y);
+      };
+    }
+    return left;
+  }
+  parseAnd() {
+    let left = this.parseEquality();
+    while (this.eat("&&")) {
+      const l = left;
+      const r = this.parseEquality();
+      left = (x, y) => {
+        const v = l(x, y);
+        return v ? r(x, y) : v;
+      };
+    }
+    return left;
+  }
+  parseEquality() {
+    let left = this.parseRelational();
+    for (; ; ) {
+      const eq = this.eat("==") || this.eat("===");
+      const ne = !eq && (this.eat("!=") || this.eat("!=="));
+      if (!eq && !ne)
+        return left;
+      const l = left;
+      const r = this.parseRelational();
+      left = eq ? (x, y) => l(x, y) === r(x, y) ? 1 : 0 : (x, y) => l(x, y) !== r(x, y) ? 1 : 0;
+    }
+  }
+  parseRelational() {
+    let left = this.parseAdditive();
+    for (; ; ) {
+      const l = left;
+      if (this.eat("<=")) {
+        const r = this.parseAdditive();
+        left = (x, y) => l(x, y) <= r(x, y) ? 1 : 0;
+      } else if (this.eat(">=")) {
+        const r = this.parseAdditive();
+        left = (x, y) => l(x, y) >= r(x, y) ? 1 : 0;
+      } else if (this.eat("<")) {
+        const r = this.parseAdditive();
+        left = (x, y) => l(x, y) < r(x, y) ? 1 : 0;
+      } else if (this.eat(">")) {
+        const r = this.parseAdditive();
+        left = (x, y) => l(x, y) > r(x, y) ? 1 : 0;
+      } else {
+        return left;
+      }
+    }
+  }
+  parseAdditive() {
+    let left = this.parseMultiplicative();
+    for (; ; ) {
+      const l = left;
+      if (this.eat("+")) {
+        const r = this.parseMultiplicative();
+        left = (x, y) => l(x, y) + r(x, y);
+      } else if (this.eat("-")) {
+        const r = this.parseMultiplicative();
+        left = (x, y) => l(x, y) - r(x, y);
+      } else {
+        return left;
+      }
+    }
+  }
+  parseMultiplicative() {
+    let left = this.parseUnary();
+    for (; ; ) {
+      const l = left;
+      if (this.eat("*")) {
+        const r = this.parseUnary();
+        left = (x, y) => l(x, y) * r(x, y);
+      } else if (this.eat("/")) {
+        const r = this.parseUnary();
+        left = (x, y) => l(x, y) / r(x, y);
+      } else if (this.eat("%")) {
+        const r = this.parseUnary();
+        left = (x, y) => l(x, y) % r(x, y);
+      } else {
+        return left;
+      }
+    }
+  }
+  parseUnary() {
+    if (this.eat("-")) {
+      const operand = this.parseUnary();
+      return (x, y) => -operand(x, y);
+    }
+    if (this.eat("+")) {
+      return this.parseUnary();
+    }
+    if (this.eat("!")) {
+      const operand = this.parseUnary();
+      return (x, y) => operand(x, y) ? 0 : 1;
+    }
+    return this.parsePower();
+  }
+  parsePower() {
+    const base = this.parsePrimary();
+    if (this.eat("^") || this.eat("**")) {
+      const exponent = this.parseUnary();
+      return (x, y) => Math.pow(base(x, y), exponent(x, y));
+    }
+    return base;
+  }
+  parsePrimary() {
+    const t = this.next();
+    if (t.kind === "num") {
+      const v = t.value;
+      return () => v;
+    }
+    if (t.kind === "punct" && t.text === "(") {
+      const inner = this.parseTernary();
+      this.expect(")");
+      return inner;
+    }
+    if (t.kind === "ident") {
+      return this.resolveName(t);
+    }
+    const found = t.kind === "end" ? "end of expression" : `'${t.text}'`;
+    throw new Error(`Unexpected ${found} at position ${t.pos}`);
+  }
+  parseArgs() {
+    this.expect("(");
+    const args = [];
+    if (this.eat(")"))
+      return args;
+    do {
+      args.push(this.parseTernary());
+    } while (this.eat(","));
+    this.expect(")");
+    return args;
+  }
+  callClosure(fn, args) {
+    if (args.length === 1) {
+      const a = args[0];
+      return (x, y) => fn(a(x, y));
+    }
+    if (args.length === 2) {
+      const a = args[0];
+      const b = args[1];
+      return (x, y) => fn(a(x, y), b(x, y));
+    }
+    if (args.length === 0)
+      return () => fn();
+    return (x, y) => fn(...args.map((a) => a(x, y)));
+  }
+  unknownName(name) {
+    return () => {
+      throw new Error(`Unknown name '${name}' in expression`);
+    };
+  }
+  resolveName(t) {
+    const name = t.text;
+    if (name === "Math" && this.eat(".")) {
+      const member = this.next();
+      if (member.kind !== "ident") {
+        throw new Error(`Expected a Math member name at position ${member.pos}`);
+      }
+      if (this.at("(")) {
+        const args = this.parseArgs();
+        const fn = ownFunction(MATH_MEMBER_FUNCTIONS, member.text);
+        return fn ? this.callClosure(fn, args) : this.unknownName(`Math.${member.text}`);
+      }
+      const constant2 = ownConstant(MATH_MEMBER_CONSTANTS, member.text);
+      if (constant2 !== void 0)
+        return () => constant2;
+      return this.unknownName(`Math.${member.text}`);
+    }
+    if (this.at("(")) {
+      const args = this.parseArgs();
+      const fn = ownFunction(BARE_FUNCTIONS, name);
+      return fn ? this.callClosure(fn, args) : this.unknownName(name);
+    }
+    if (name === this.vars[0])
+      return (x) => x;
+    if (name === this.vars[1])
+      return (_x, y) => y;
+    const constant = ownConstant(BARE_CONSTANTS, name);
+    if (constant !== void 0)
+      return () => constant;
+    if (name === "true")
+      return () => 1;
+    if (name === "false")
+      return () => 0;
+    return this.unknownName(name);
+  }
+};
+var VARS_1D = ["x"];
+var VARS_2D = ["x", "y"];
 var COMPILE_CACHE_MAX = 128;
 var COMPILE_CACHE_1D = new Map();
 var COMPILE_CACHE_2D = new Map();
@@ -108,8 +844,8 @@ function compile1D(expression) {
   const cached = COMPILE_CACHE_1D.get(expression);
   if (cached)
     return cached;
-  const body = expression.replace(/\^/g, "**");
-  const fn = new Function("x", `${MATH_PRELUDE}return (${body});`);
+  const compiled = new ExprParser(expression, VARS_1D).compile();
+  const fn = (x) => compiled(x, 0);
   COMPILE_CACHE_1D.set(expression, fn);
   pruneCache(COMPILE_CACHE_1D);
   return fn;
@@ -118,8 +854,8 @@ function compile2D(expression) {
   const cached = COMPILE_CACHE_2D.get(expression);
   if (cached)
     return cached;
-  const body = expression.replace(/\^/g, "**");
-  const fn = new Function("x", "y", `${MATH_PRELUDE}return (${body});`);
+  const compiled = new ExprParser(expression, VARS_2D).compile();
+  const fn = (x, y) => compiled(x, y);
   COMPILE_CACHE_2D.set(expression, fn);
   pruneCache(COMPILE_CACHE_2D);
   return fn;
@@ -273,6 +1009,11 @@ function tikzPatternFor(p) {
     default:
       return "";
   }
+}
+function legendEntryCode(func, defaultLabelLatex) {
+  const custom = func.legendLabel && func.legendLabel.trim();
+  return `
+\\addlegendentry{${custom || defaultLabelLatex}}`;
 }
 function arrowSpec(arrow) {
   switch (arrow) {
@@ -526,8 +1267,7 @@ var TIKZ_SETTINGS = [
         let code = `
 \\addplot[domain=${func.domain}, ${style.join(",")}, samples=300] {${func.expression}};`;
         if (func.showLegend) {
-          code += `
-\\addlegendentry{\\(${func.expression}\\)}`;
+          code += legendEntryCode(func, `\\(${func.expression}\\)`);
         }
         if (func.tangent && func.tangentPoint) {
           try {
@@ -689,8 +1429,7 @@ var SettingsManager = class {
         out += `
 \\addplot[parametric, domain=${func.domain}, ${styleParts.join(",")}, samples=300] ({${func.expression}}, {${func.expressionY}});`;
         if (func.showLegend) {
-          out += `
-\\addlegendentry{\\((${func.expression},\\ ${func.expressionY})\\)}`;
+          out += legendEntryCode(func, `\\((${func.expression},\\ ${func.expressionY})\\)`);
         }
       } else if (isPolar) {
         const expr = func.expression.replace(/\b(?:theta|x)\b/g, "\\t");
@@ -704,8 +1443,7 @@ var SettingsManager = class {
         out += `
 \\addplot[domain=${func.domain}, variable=\\t, ${styleParts.join(",")}, samples=300] ({(${expr})*cos(deg(\\t))}, {(${expr})*sin(deg(\\t))});`;
         if (func.showLegend) {
-          out += `
-\\addlegendentry{\\(r = ${func.expression}\\)}`;
+          out += legendEntryCode(func, `\\(r = ${func.expression}\\)`);
         }
       } else {
         if (pathId) {
@@ -722,8 +1460,7 @@ var SettingsManager = class {
           out += `
 \\addplot[domain=${func.domain}, ${styleParts.join(",")}, samples=300] {${func.expression}};`;
           if (func.showLegend) {
-            out += `
-\\addlegendentry{\\(${func.expression}\\)}`;
+            out += legendEntryCode(func, `\\(${func.expression}\\)`);
           }
         } else {
           const setting = TIKZ_SETTINGS.find((s) => s.id === "functions");
@@ -1112,65 +1849,50 @@ function resolveCssColor(cssValue) {
   return resolved || cssValue;
 }
 
-// src/util.ts
-function niceInterval(range, targetTicks) {
-  const rough = range / targetTicks;
-  const mag = Math.pow(10, Math.floor(Math.log10(rough)));
-  const norm = rough / mag;
-  let nice;
-  if (norm <= 1.5)
-    nice = 1;
-  else if (norm <= 3)
-    nice = 2;
-  else if (norm <= 7)
-    nice = 5;
-  else
-    nice = 10;
-  return nice * mag;
-}
-function formatTick(value) {
-  if (Math.abs(value) < 1e-10)
-    return "0";
-  if (Math.abs(value) >= 1e3 || Math.abs(value) < 0.01 && value !== 0) {
-    return value.toExponential(1);
+// src/mathlabel.ts
+var import_obsidian = __toModule(require("obsidian"));
+function extractMathSource(text) {
+  const t = text.trim();
+  if (t.length < 2)
+    return null;
+  if (t.startsWith("$") && t.endsWith("$")) {
+    const inner = t.slice(1, -1);
+    if (inner.length > 0 && !inner.includes("$"))
+      return inner;
+    return null;
   }
-  const s = value.toPrecision(4);
-  return parseFloat(s).toString();
+  const m = /^\\\(([\s\S]*)\\\)$/.exec(t);
+  return m ? m[1] : null;
 }
-var GREEK_MAP = {
-  "\\sum": "\u2211",
-  "\\int": "\u222B",
-  "\\infty": "\u221E",
-  "\\pi": "\u03C0",
-  "\\alpha": "\u03B1",
-  "\\beta": "\u03B2",
-  "\\gamma": "\u03B3",
-  "\\delta": "\u03B4",
-  "\\theta": "\u03B8",
-  "\\lambda": "\u03BB",
-  "\\mu": "\u03BC",
-  "\\sigma": "\u03C3",
-  "\\phi": "\u03C6",
-  "\\omega": "\u03C9"
-};
-function stripLatex(text) {
-  return text.replace(/\\[({]/g, "").replace(/\\[)}]/g, "").replace(/\\\\/g, "").replace(/\\[a-zA-Z]+/g, (m) => GREEK_MAP[m] || m.replace("\\", ""));
+var measureHost = null;
+function getMeasureHost() {
+  if (!measureHost || !measureHost.isConnected) {
+    measureHost = document.body.createEl("div", { cls: "easy-tikz-measure-host" });
+  }
+  return measureHost;
 }
-function hexToRgb(hex) {
-  const m = hex.match(/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i);
-  if (!m)
-    return null;
-  return { r: parseInt(m[1], 16), g: parseInt(m[2], 16), b: parseInt(m[3], 16) };
+var MATH_SIZE_MULTIPLIER = 1.8;
+function renderMathLabel(mathSource, color, fontSizePx) {
+  const el = (0, import_obsidian.renderMath)(mathSource, false);
+  el.setCssStyles({
+    color,
+    fontSize: `${fontSizePx * MATH_SIZE_MULTIPLIER}px`,
+    display: "inline-block",
+    pointerEvents: "none"
+  });
+  const host = getMeasureHost();
+  host.appendChild(el);
+  const rect = el.getBoundingClientRect();
+  host.removeChild(el);
+  if (rect.width === 0 && rect.height === 0)
+    throw new Error("MathJax produced an empty render");
+  return { el, width: rect.width, height: rect.height };
 }
-function rgbStringToRgb(rgb) {
-  const m = rgb.match(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/);
-  if (!m)
-    return null;
-  return { r: parseInt(m[1], 10), g: parseInt(m[2], 10), b: parseInt(m[3], 10) };
+function flushMathRenders() {
+  void (0, import_obsidian.finishRenderMath)();
 }
 
 // src/renderer.ts
-var SVG_NS = "http://www.w3.org/2000/svg";
 var PADDING_TOP = 45;
 var PADDING_RIGHT = 30;
 var PADDING_BOTTOM = 45;
@@ -1184,6 +1906,7 @@ var SVGRenderer = class {
     this.defs = null;
     this.patternIds = new Map();
     this.patternCounter = 0;
+    this.usedMath = false;
     this.config = config;
     this.plotWidth = config.width - PADDING_LEFT - PADDING_RIGHT;
     this.plotHeight = config.height - PADDING_TOP - PADDING_BOTTOM;
@@ -1195,7 +1918,7 @@ var SVGRenderer = class {
     return this.config.height - PADDING_BOTTOM - (mathY - this.config.ymin) / (this.config.ymax - this.config.ymin) * this.plotHeight;
   }
   el(tag, attrs = {}) {
-    const e = document.createElementNS(SVG_NS, tag);
+    const e = createSvg(tag);
     for (const [k, v] of Object.entries(attrs)) {
       e.setAttribute(k, v);
     }
@@ -1237,13 +1960,58 @@ var SVGRenderer = class {
     }));
     defs.appendChild(marker);
     svg.appendChild(defs);
+    this.usedMath = false;
     this.drawGrid(svg);
     this.drawAxes(svg);
     this.drawFunctions(svg);
     this.drawTools(svg);
     this.drawAnnotations(svg);
     this.drawTitle(svg);
+    if (this.usedMath)
+      flushMathRenders();
     return svg;
+  }
+  drawMathOrText(parent, text, x, y, opts) {
+    const mathSource = extractMathSource(text);
+    if (mathSource !== null) {
+      try {
+        const { el, width, height } = renderMathLabel(mathSource, opts.color, opts.fontSize);
+        this.usedMath = true;
+        let fx = x;
+        if (opts.anchor === "middle")
+          fx = x - width / 2;
+        else if (opts.anchor === "end")
+          fx = x - width;
+        const fo = this.el("foreignObject", __spreadValues({
+          x: String(fx),
+          y: String(y - height / 2),
+          width: String(Math.max(width, 1)),
+          height: String(Math.max(height, 1)),
+          style: "overflow: visible; pointer-events: all;",
+          "data-export-text": text,
+          "data-export-x": String(x),
+          "data-export-y": String(y),
+          "data-export-anchor": opts.anchor,
+          "data-export-fill": opts.color,
+          "data-export-font-size": String(opts.fontSize)
+        }, opts.extraAttrs || {}));
+        fo.appendChild(el);
+        parent.appendChild(fo);
+        return fo;
+      } catch (e) {
+      }
+    }
+    const t = this.el("text", __spreadValues({
+      x: String(x),
+      y: String(y),
+      "text-anchor": opts.anchor,
+      fill: opts.color,
+      "font-size": String(opts.fontSize),
+      "font-family": "var(--font-text)"
+    }, opts.extraAttrs || {}));
+    t.textContent = stripLatex(text);
+    parent.appendChild(t);
+    return t;
   }
   getOrCreatePattern(style, color) {
     if (!style || style === "solid" || !this.defs)
@@ -1399,7 +2167,7 @@ var SVGRenderer = class {
           "text-anchor": "middle",
           fill: "var(--text-muted)",
           "font-size": "11",
-          "font-family": "var(--font-monospace)"
+          "font-family": "var(--font-text)"
         });
         label.textContent = formatTick(x);
         axisGroup.appendChild(label);
@@ -1423,7 +2191,7 @@ var SVGRenderer = class {
           "text-anchor": "end",
           fill: "var(--text-muted)",
           "font-size": "11",
-          "font-family": "var(--font-monospace)"
+          "font-family": "var(--font-text)"
         });
         label.textContent = formatTick(y);
         axisGroup.appendChild(label);
@@ -1464,7 +2232,7 @@ var SVGRenderer = class {
           "text-anchor": "middle",
           fill: "var(--text-muted)",
           "font-size": "11",
-          "font-family": "var(--font-monospace)"
+          "font-family": "var(--font-text)"
         });
         label.textContent = formatTick(x);
         axisGroup.appendChild(label);
@@ -1486,7 +2254,7 @@ var SVGRenderer = class {
           "text-anchor": "end",
           fill: "var(--text-muted)",
           "font-size": "11",
-          "font-family": "var(--font-monospace)"
+          "font-family": "var(--font-text)"
         });
         label.textContent = formatTick(y);
         axisGroup.appendChild(label);
@@ -1526,7 +2294,7 @@ var SVGRenderer = class {
           "text-anchor": "middle",
           fill: "var(--text-muted)",
           "font-size": "11",
-          "font-family": "var(--font-monospace)"
+          "font-family": "var(--font-text)"
         });
         label.textContent = formatTick(x);
         axisGroup.appendChild(label);
@@ -1556,7 +2324,7 @@ var SVGRenderer = class {
           "text-anchor": "end",
           fill: "var(--text-muted)",
           "font-size": "11",
-          "font-family": "var(--font-monospace)"
+          "font-family": "var(--font-text)"
         });
         label.textContent = formatTick(y);
         axisGroup.appendChild(label);
@@ -1638,14 +2406,14 @@ var SVGRenderer = class {
             const t = domMin + i * step;
             const x = evalFn(t);
             const y = evalFnY(t);
-            xs[i] = x === x && x !== Infinity && x !== -Infinity ? x : NaN;
-            ys[i] = y === y && y !== Infinity && y !== -Infinity ? y : NaN;
+            xs[i] = Number.isFinite(x) ? x : NaN;
+            ys[i] = Number.isFinite(y) ? y : NaN;
           }
         } else if (isPolar) {
           for (let i = 0; i < sampleCount; i++) {
             const theta = domMin + i * step;
             const r = evalFn(theta);
-            if (r === r && r !== Infinity && r !== -Infinity) {
+            if (Number.isFinite(r)) {
               xs[i] = r * Math.cos(theta);
               ys[i] = r * Math.sin(theta);
             } else {
@@ -1658,14 +2426,14 @@ var SVGRenderer = class {
             const mx = domMin + i * step;
             xs[i] = mx;
             const my = evalFn(mx);
-            ys[i] = my === my && my !== Infinity && my !== -Infinity ? my : NaN;
+            ys[i] = Number.isFinite(my) ? my : NaN;
           }
         }
       } catch (e) {
         for (let i = 0; i < sampleCount; i++) {
-          if (!(ys[i] === ys[i]))
+          if (Number.isNaN(ys[i]))
             ys[i] = NaN;
-          if (!(xs[i] === xs[i]))
+          if (Number.isNaN(xs[i]))
             xs[i] = NaN;
         }
       }
@@ -1673,7 +2441,7 @@ var SVGRenderer = class {
       let inSegment = false;
       for (let i = 0; i < sampleCount; i++) {
         const y = ys[i];
-        if (y !== y || y > yClamp || y < -yClamp) {
+        if (Number.isNaN(y) || y > yClamp || y < -yClamp) {
           inSegment = false;
           continue;
         }
@@ -1691,7 +2459,7 @@ var SVGRenderer = class {
           let segInProgress = false;
           for (let i = 0; i < sampleCount; i++) {
             const y = ys[i];
-            if (y !== y || y > yClamp || y < -yClamp) {
+            if (Number.isNaN(y) || y > yClamp || y < -yClamp) {
               if (segInProgress) {
                 const closeSx = padLeft + (lastX - xmin) / xRange * plotW;
                 fillParts.push(`L${closeSx.toFixed(2)},${yAxisScreen.toFixed(2)} Z`);
@@ -1800,7 +2568,8 @@ var SVGRenderer = class {
         }
       }
       if (func.showLegend) {
-        legendEntries.push({ color: cssColor, label: func.expression });
+        const customLabel = func.legendLabel && func.legendLabel.trim();
+        legendEntries.push({ color: cssColor, label: customLabel || func.expression });
       }
     }
     svg.appendChild(funcGroup);
@@ -1837,15 +2606,11 @@ var SVGRenderer = class {
         stroke: entry.color,
         "stroke-width": "2.5"
       }));
-      const label = this.el("text", {
-        x: String(startX + 34),
-        y: String(y + 4),
-        fill: "var(--text-normal)",
-        "font-size": "11",
-        "font-family": "var(--font-monospace)"
+      this.drawMathOrText(legendGroup, entry.label, startX + 34, y + 4, {
+        color: "var(--text-normal)",
+        fontSize: 11,
+        anchor: "start"
       });
-      label.textContent = entry.label;
-      legendGroup.appendChild(label);
     });
     svg.appendChild(legendGroup);
   }
@@ -2029,7 +2794,7 @@ var SVGRenderer = class {
           y: String((sy - 6).toFixed(2)),
           fill: cssColor,
           "font-size": "11",
-          "font-family": "var(--font-monospace)"
+          "font-family": "var(--font-text)"
         });
         label.textContent = `(${r.x.toFixed(2)}, ${r.y.toFixed(2)})`;
         group.appendChild(label);
@@ -2293,41 +3058,33 @@ var SVGRenderer = class {
           dy = 4;
           break;
       }
-      const t = this.el("text", {
-        x: String(sx + dx),
-        y: String(sy + dy),
-        "text-anchor": textAnchor,
-        fill: color,
-        "font-size": fontSize,
-        "font-weight": "500",
-        "font-family": "var(--font-text)",
-        "data-annotation-idx": String(idx),
-        "pointer-events": "bounding-box"
+      const el = this.drawMathOrText(group, a.text, sx + dx, sy + dy, {
+        color,
+        fontSize: parseInt(fontSize, 10),
+        anchor: textAnchor,
+        extraAttrs: {
+          "font-weight": "500",
+          "data-annotation-idx": String(idx),
+          "pointer-events": "bounding-box"
+        }
       });
-      t.style.cursor = "grab";
-      t.textContent = a.text;
-      group.appendChild(t);
+      el.setCssStyles({ cursor: "grab" });
     }
     svg.appendChild(group);
   }
   drawTitle(svg) {
     if (!this.config.title)
       return;
-    const titleEl = this.el("text", {
-      x: String(this.config.width / 2),
-      y: String(PADDING_TOP - 12),
-      "text-anchor": "middle",
-      fill: "var(--text-normal)",
-      "font-size": "15",
-      "font-weight": "600"
+    this.drawMathOrText(svg, this.config.title, this.config.width / 2, PADDING_TOP - 12, {
+      color: "var(--text-normal)",
+      fontSize: 15,
+      anchor: "middle",
+      extraAttrs: { "font-weight": "600" }
     });
-    titleEl.textContent = stripLatex(this.config.title);
-    svg.appendChild(titleEl);
   }
 };
 
 // src/renderer3d.ts
-var SVG_NS2 = "http://www.w3.org/2000/svg";
 var PADDING_TOP2 = 40;
 var PADDING_RIGHT2 = 40;
 var PADDING_BOTTOM2 = 40;
@@ -2380,11 +3137,9 @@ var SVG3DRenderer = class {
       bgPrimary: "#fff"
     };
     this.lastFit = null;
-    this.root = document.createElement("div");
-    this.root.className = "tikz-3d-root";
-    this.svg = document.createElementNS(SVG_NS2, "svg");
-    this.svg.setAttribute("class", "tikz-3d-svg");
-    this.backgroundRect = document.createElementNS(SVG_NS2, "rect");
+    this.root = createDiv({ cls: "tikz-3d-root" });
+    this.svg = createSvg("svg", { cls: "tikz-3d-svg" });
+    this.backgroundRect = createSvg("rect");
     this.backgroundRect.setAttribute("fill", "var(--background-primary)");
     this.backgroundRect.setAttribute("rx", "4");
     this.svg.appendChild(this.backgroundRect);
@@ -2392,14 +3147,13 @@ var SVG3DRenderer = class {
     this.surfaceGroup = this.makeGroup("tikz-3d-surface");
     this.frontAxesGroup = this.makeGroup("tikz-3d-axes-front");
     this.annotationsGroup = this.makeGroup("tikz-3d-annotations");
-    this.titleEl = document.createElementNS(SVG_NS2, "text");
+    this.titleEl = createSvg("text");
     this.titleEl.setAttribute("text-anchor", "middle");
     this.titleEl.setAttribute("fill", "var(--text-normal)");
     this.titleEl.setAttribute("font-size", "15");
     this.titleEl.setAttribute("font-weight", "600");
     this.svg.appendChild(this.titleEl);
-    this.canvas = document.createElement("canvas");
-    this.canvas.className = "tikz-3d-canvas";
+    this.canvas = createEl("canvas", { cls: "tikz-3d-canvas" });
     const ctx = this.canvas.getContext("2d");
     if (!ctx)
       throw new Error("Canvas 2D context unavailable");
@@ -2408,8 +3162,7 @@ var SVG3DRenderer = class {
     this.root.appendChild(this.canvas);
   }
   makeGroup(cls) {
-    const g = document.createElementNS(SVG_NS2, "g");
-    g.setAttribute("class", cls);
+    const g = createSvg("g", { cls });
     this.svg.appendChild(g);
     return g;
   }
@@ -2470,9 +3223,7 @@ var SVG3DRenderer = class {
       return;
     }
     this.lastFit = { parentW, parentH, configW: aspectW, configH: aspectH, w, h };
-    this.root.style.width = w + "px";
-    this.root.style.height = h + "px";
-    this.root.style.aspectRatio = "";
+    this.root.setCssStyles({ width: w + "px", height: h + "px", aspectRatio: "" });
   }
   prepareScene(config) {
     this.config = config;
@@ -2655,12 +3406,12 @@ var SVG3DRenderer = class {
           xs[off] = x;
           ys[off] = y;
           const z = evalFn(x, y);
-          zs[off] = z === z && z !== Infinity && z !== -Infinity ? z : NaN;
+          zs[off] = Number.isFinite(z) ? z : NaN;
         }
       }
     } catch (e) {
       for (let k = 0; k < total; k++) {
-        if (!(zs[k] === zs[k]))
+        if (Number.isNaN(zs[k]))
           zs[k] = NaN;
       }
     }
@@ -2699,7 +3450,7 @@ var SVG3DRenderer = class {
     const zNF = this.zNormFactor;
     for (let k = 0; k < total; k++) {
       const z = data.zs[k];
-      if (z !== z) {
+      if (Number.isNaN(z)) {
         depthBuf[k] = -Infinity;
         continue;
       }
@@ -2768,7 +3519,7 @@ var SVG3DRenderer = class {
     const pool = this.surfacePool;
     const surfaceGroup = this.surfaceGroup;
     while (pool.length < quads.length) {
-      const poly = document.createElementNS(SVG_NS2, "polygon");
+      const poly = createSvg("polygon");
       surfaceGroup.appendChild(poly);
       pool.push(poly);
     }
@@ -2790,13 +3541,13 @@ var SVG3DRenderer = class {
         poly.setAttribute("stroke-width", "0.3");
         poly.setAttribute("stroke-opacity", "0.4");
       }
-      if (poly.style.display)
-        poly.style.display = "";
+      if (poly.hasAttribute("display"))
+        poly.removeAttribute("display");
     }
     for (let i = quads.length; i < pool.length; i++) {
       const poly = pool[i];
-      if (poly.style.display !== "none")
-        poly.style.display = "none";
+      if (poly.getAttribute("display") !== "none")
+        poly.setAttribute("display", "none");
     }
   }
   drawAnnotationsToSvg() {
@@ -2845,7 +3596,7 @@ var SVG3DRenderer = class {
           dy = 4;
           break;
       }
-      const t = document.createElementNS(SVG_NS2, "text");
+      const t = createSvg("text");
       t.setAttribute("x", String(p.sx + dx));
       t.setAttribute("y", String(p.sy + dy));
       t.setAttribute("text-anchor", textAnchor);
@@ -2853,7 +3604,7 @@ var SVG3DRenderer = class {
       t.setAttribute("font-size", fontSize);
       t.setAttribute("font-weight", "500");
       t.setAttribute("font-family", "var(--font-text)");
-      t.textContent = a.text;
+      t.textContent = stripLatex(a.text);
       group.appendChild(t);
     }
   }
@@ -2896,14 +3647,14 @@ var SVG3DRenderer = class {
       const markX2 = p.sx + edge.outwardX * TICK_LENGTH;
       const markY2 = p.sy + edge.outwardY * TICK_LENGTH;
       this.svgLine(group, p.sx, p.sy, markX2, markY2, tickColor, "1");
-      const label = document.createElementNS(SVG_NS2, "text");
+      const label = createSvg("text");
       label.setAttribute("x", String(p.sx + edge.outwardX * LABEL_OFFSET));
       label.setAttribute("y", String(p.sy + edge.outwardY * LABEL_OFFSET));
       label.setAttribute("text-anchor", "middle");
       label.setAttribute("dominant-baseline", "central");
       label.setAttribute("fill", tickColor);
       label.setAttribute("font-size", "10");
-      label.setAttribute("font-family", "var(--font-monospace)");
+      label.setAttribute("font-family", "var(--font-text)");
       label.textContent = formatTick(v);
       group.appendChild(label);
     }
@@ -2921,7 +3672,7 @@ var SVG3DRenderer = class {
         continue;
       const mx = (edge.p1.sx + edge.p2.sx) / 2;
       const my = (edge.p1.sy + edge.p2.sy) / 2;
-      const label = document.createElementNS(SVG_NS2, "text");
+      const label = createSvg("text");
       label.setAttribute("x", String(mx + edge.outwardX * AXIS_LABEL_OFFSET));
       label.setAttribute("y", String(my + edge.outwardY * AXIS_LABEL_OFFSET));
       label.setAttribute("text-anchor", "middle");
@@ -2934,7 +3685,7 @@ var SVG3DRenderer = class {
     }
   }
   svgLine(parent, x1, y1, x2, y2, stroke, width, opacity) {
-    const line = document.createElementNS(SVG_NS2, "line");
+    const line = createSvg("line");
     line.setAttribute("x1", String(x1));
     line.setAttribute("y1", String(y1));
     line.setAttribute("x2", String(x2));
@@ -3049,7 +3800,7 @@ var SVG3DRenderer = class {
     ctx.strokeStyle = this.themeColors.textMuted;
     ctx.fillStyle = this.themeColors.textMuted;
     ctx.lineWidth = 1;
-    ctx.font = "10px var(--font-monospace, monospace)";
+    ctx.font = "10px var(--font-text, sans-serif)";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     for (let v = start; v <= max + interval * 1e-6; v += interval) {
@@ -3133,7 +3884,7 @@ var SVG3DRenderer = class {
       ctx.font = `500 ${fontSize}px var(--font-text, sans-serif)`;
       ctx.textAlign = align;
       ctx.textBaseline = "alphabetic";
-      ctx.fillText(a.text, p.sx + dx, p.sy + dy);
+      ctx.fillText(stripLatex(a.text), p.sx + dx, p.sy + dy);
     }
   }
   drawTitleToCanvas() {
@@ -3236,7 +3987,7 @@ var SVG3DRenderer = class {
     const opacity = typeof tool.fillOpacity === "number" ? tool.fillOpacity : 0.2;
     const cssColor = resolveCssColor(COLOR_MAP[tool.color] || tool.color);
     const points = pts.map((p) => `${p.sx.toFixed(2)},${p.sy.toFixed(2)}`).join(" ");
-    const poly = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+    const poly = createSvg("polygon");
     poly.setAttribute("points", points);
     poly.setAttribute("fill", cssColor);
     poly.setAttribute("fill-opacity", String(opacity));
@@ -3273,7 +4024,7 @@ var SVG3DRenderer = class {
     const z = this.parseCoord3D(tool.z, 0);
     const p = this.project(x, y, z);
     const cssColor = resolveCssColor(COLOR_MAP[tool.color] || tool.color);
-    const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    const circle = createSvg("circle");
     circle.setAttribute("cx", p.sx.toFixed(2));
     circle.setAttribute("cy", p.sy.toFixed(2));
     circle.setAttribute("r", "4");
@@ -3282,12 +4033,12 @@ var SVG3DRenderer = class {
     circle.setAttribute("stroke-width", "1.5");
     this.annotationsGroup.appendChild(circle);
     if (tool.label) {
-      const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      const text = createSvg("text");
       text.setAttribute("x", (p.sx + 6).toFixed(2));
       text.setAttribute("y", (p.sy - 6).toFixed(2));
       text.setAttribute("fill", cssColor);
       text.setAttribute("font-size", "11");
-      text.setAttribute("font-family", "var(--font-monospace)");
+      text.setAttribute("font-family", "var(--font-text)");
       text.textContent = tool.label;
       this.annotationsGroup.appendChild(text);
     }
@@ -3308,7 +4059,7 @@ var SVG3DRenderer = class {
     ctx.stroke();
     if (tool.label) {
       ctx.fillStyle = cssColor;
-      ctx.font = "11px var(--font-monospace, monospace)";
+      ctx.font = "11px var(--font-text, sans-serif)";
       ctx.textAlign = "left";
       ctx.textBaseline = "alphabetic";
       ctx.fillText(tool.label, p.sx + 6, p.sy - 6);
@@ -3319,7 +4070,7 @@ var SVG3DRenderer = class {
     const p2 = this.project(this.parseCoord3D(tool.x2, 0), this.parseCoord3D(tool.y2, 0), this.parseCoord3D(tool.z2, 0));
     const cssColor = resolveCssColor(COLOR_MAP[tool.color] || tool.color);
     const sw = THICKNESS_MAP[tool.thickness] || 1.5;
-    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    const line = createSvg("line");
     line.setAttribute("x1", p1.sx.toFixed(2));
     line.setAttribute("y1", p1.sy.toFixed(2));
     line.setAttribute("x2", p2.sx.toFixed(2));
@@ -3428,10 +4179,55 @@ var DEFAULT_PLUGIN_DATA = {
   dragSensitivity2D: 1
 };
 
-// _f3rvf5g22:/home/runner/work/easy-tikz/easy-tikz/src/styles.css
-var styles_default = '/* TikZ Graph Helper: dashboard styles */\n\n/* Inline-rendered easy-tikz code blocks (markdown post-processor). */\n.tikz-rendered-chart {\n    display: block;\n    position: relative;\n    margin: 8px 0;\n    border-radius: 6px;\n    cursor: pointer;\n    transition: outline-color 0.12s ease, box-shadow 0.12s ease;\n    outline: 1px solid transparent;\n    max-width: 100%;\n    overflow: hidden;\n}\n\n.tikz-rendered-chart:hover,\n.tikz-rendered-chart:focus-visible {\n    outline-color: var(--interactive-accent);\n    box-shadow: 0 1px 4px color-mix(in srgb, var(--interactive-accent) 30%, transparent);\n}\n\n.tikz-rendered-chart svg,\n.tikz-rendered-chart .tikz-3d-root {\n    max-width: 100%;\n    height: auto;\n}\n\n/* Block-level alignment of the rendered chart inside its markdown\n   container. The chart itself is display: block with an explicit\n   width, so margin: auto handles centering / right-align. */\n.tikz-rendered-chart.align-left {\n    margin-left: 0;\n    margin-right: auto;\n}\n\n.tikz-rendered-chart.align-center {\n    margin-left: auto;\n    margin-right: auto;\n}\n\n.tikz-rendered-chart.align-right {\n    margin-left: auto;\n    margin-right: 0;\n}\n\n/* Hover overlays: align buttons (left) + size slider (bottom). Hidden\n   until the user hovers (or focuses) the chart so the static reading\n   experience stays clean. */\n.tikz-rendered-controls {\n    position: absolute;\n    opacity: 0;\n    pointer-events: none;\n    transition: opacity 0.12s ease;\n    z-index: 5;\n}\n\n.tikz-rendered-chart:hover .tikz-rendered-controls,\n.tikz-rendered-chart:focus-within .tikz-rendered-controls {\n    opacity: 1;\n    pointer-events: auto;\n}\n\n.tikz-rendered-align {\n    top: 50%;\n    left: 8px;\n    transform: translateY(-50%);\n    display: flex;\n    flex-direction: column;\n    gap: 4px;\n}\n\n.tikz-rendered-size {\n    bottom: 8px;\n    left: 50%;\n    transform: translateX(-50%);\n    width: min(70%, 320px);\n    display: flex;\n    align-items: center;\n    padding: 6px 10px;\n    background: color-mix(in srgb, var(--background-primary) 92%, transparent);\n    border-radius: 999px;\n    box-shadow: 0 1px 4px color-mix(in srgb, var(--background-modifier-border) 60%, transparent);\n}\n\n.tikz-rendered-btn {\n    width: 28px;\n    height: 28px;\n    border-radius: 6px;\n    border: 1px solid color-mix(in srgb, var(--background-modifier-border) 80%, transparent);\n    background: color-mix(in srgb, var(--background-primary) 92%, transparent);\n    color: var(--text-normal);\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    padding: 0;\n    box-shadow: 0 1px 3px color-mix(in srgb, var(--background-modifier-border) 50%, transparent);\n    transition: background 0.1s ease, color 0.1s ease;\n}\n\n.tikz-rendered-btn:hover {\n    background: var(--background-modifier-hover);\n    color: var(--interactive-accent);\n}\n\n.tikz-rendered-btn svg {\n    width: 16px;\n    height: 16px;\n}\n\n.tikz-rendered-slider {\n    flex: 1;\n    width: 100%;\n    cursor: ew-resize;\n    accent-color: var(--interactive-accent);\n}\n\n.tikz-block-error {\n    margin: 8px 0;\n    padding: 10px 12px;\n    border-radius: 6px;\n    border: 1px solid color-mix(in srgb, var(--text-error) 50%, transparent);\n    background: color-mix(in srgb, var(--background-modifier-error) 50%, transparent);\n    color: var(--text-error);\n    font-size: 13px;\n    line-height: 1.4;\n}\n\n\n/* Chained class for higher specificity (0,2,0) so width / max-width\n   override Obsidian\'s default `.modal` (0,1,0) rules without `!important`.\n   The selector still only matches our modal - chaining a class with\n   itself doesn\'t change what it targets, only its specificity. */\n.tikz-modal.tikz-modal {\n    display: flex;\n    flex-direction: column;\n    height: 80vh;\n    max-height: 80vh;\n    width: 92vw;\n    max-width: 1400px;\n}\n\n.tikz-modal.tikz-modal .modal-content {\n    display: flex;\n    flex: 1;\n    overflow: hidden;\n    padding: 0;\n}\n\n/* Split pane layout */\n.tikz-layout {\n    display: flex;\n    width: 100%;\n    height: 100%;\n    overflow: hidden;\n}\n\n.tikz-panel-left {\n    width: 42%;\n    min-width: 380px;\n    display: flex;\n    flex-direction: column;\n    border-right: 1px solid color-mix(in srgb, var(--background-modifier-border) 70%, transparent);\n    overflow: hidden;\n}\n\n.tikz-panel-right {\n    flex: 1;\n    display: flex;\n    flex-direction: column;\n    overflow: hidden;\n    min-width: 0;\n}\n\n/* Tab bar */\n.tikz-tab-bar {\n    display: flex;\n    gap: 4px;\n    padding: 12px 20px 0;\n    border-bottom: 1px solid color-mix(in srgb, var(--background-modifier-border) 70%, transparent);\n    background: var(--background-primary);\n    flex-shrink: 0;\n    overflow-x: auto;\n    overflow-y: hidden;\n    /* Standard CSS scrollbar styling. Older browsers fall back to the\n       platform default - Obsidian 1.4.5\'s Chromium supports this, and\n       skipping the `::-webkit-scrollbar` vendor selector avoids an\n       Obsidian validator "partially supported feature" warning. */\n    scrollbar-width: thin;\n}\n\n.tikz-tab-btn {\n    padding: 10px 14px;\n    border: none;\n    background: transparent;\n    box-shadow: none;\n    color: var(--text-muted);\n    font-size: 13px;\n    font-weight: 500;\n    cursor: pointer;\n    border-bottom: 2px solid transparent;\n    border-radius: 6px 6px 0 0;\n    transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;\n    white-space: nowrap;\n    margin: 0;\n    line-height: 1.2;\n    flex-shrink: 0;\n}\n\n/* Narrower screens (MacBook Air-ish): tighten tab padding so all tabs fit. */\n@media (max-width: 1280px) {\n    .tikz-tab-btn {\n        padding: 10px 10px;\n        font-size: 12.5px;\n    }\n    .tikz-tab-bar {\n        padding-left: 12px;\n        padding-right: 12px;\n    }\n}\n\n.tikz-tab-btn:hover {\n    color: var(--text-normal);\n    background: var(--background-modifier-hover);\n    box-shadow: none;\n}\n\n.tikz-tab-btn.active {\n    color: var(--interactive-accent);\n    border-bottom-color: var(--interactive-accent);\n    background: transparent;\n    box-shadow: none;\n}\n\n.tikz-tab-btn:focus-visible {\n    outline: none;\n    box-shadow: inset 0 0 0 2px var(--interactive-accent);\n}\n\n/* Tab content (for Code and Reference) */\n.tikz-tab-content {\n    flex: 1;\n    overflow-y: auto;\n    padding: 20px 24px;\n    min-height: 0;\n    display: flex;\n    flex-direction: column;\n}\n\n/* Settings column: continuous scroll across Graph, Axis, Functions, Grid */\n.tikz-settings-column {\n    flex: 1;\n    overflow-y: auto;\n    scroll-behavior: smooth;\n}\n\n.tikz-section {\n    padding: 24px 24px 32px;\n    border-bottom: 1px solid color-mix(in srgb, var(--background-modifier-border) 50%, transparent);\n}\n\n.tikz-section:last-child {\n    border-bottom: none;\n}\n\n.tikz-section-heading {\n    margin: 0 0 18px;\n    padding: 0;\n    font-size: 18px;\n    font-weight: 600;\n    color: var(--text-normal);\n    letter-spacing: -0.01em;\n    line-height: 1.2;\n}\n\n.tikz-section-blurb {\n    margin: 0 0 16px;\n    color: var(--text-muted);\n    font-size: 13px;\n    line-height: 1.5;\n}\n\n/* Preview area */\n.tikz-preview-area {\n    flex: 1;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    overflow: auto;\n    padding: 20px;\n    background: var(--background-primary);\n    outline: none;\n    position: relative;\n}\n\n/* 3D zoom controls overlay (only shown in 3D mode). */\n.tikz-3d-zoom-overlay {\n    position: absolute;\n    top: 16px;\n    right: 16px;\n    display: flex;\n    flex-direction: column;\n    gap: 6px;\n    z-index: 5;\n    pointer-events: auto;\n}\n\n.tikz-3d-zoom-btn {\n    width: 32px;\n    height: 32px;\n    border-radius: 6px;\n    border: 1px solid color-mix(in srgb, var(--background-modifier-border) 80%, transparent);\n    background: color-mix(in srgb, var(--background-primary) 90%, transparent);\n    color: var(--text-normal);\n    font-size: 18px;\n    line-height: 1;\n    font-weight: 600;\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    box-shadow: 0 1px 3px color-mix(in srgb, var(--background-modifier-border) 50%, transparent);\n    padding: 0;\n}\n\n.tikz-3d-zoom-btn:hover {\n    background: var(--background-modifier-hover);\n}\n\n.tikz-3d-zoom-btn:active {\n    transform: translateY(1px);\n}\n\n.tikz-3d-zoom-reset {\n    font-size: 14px;\n}\n\n/* Floating action icons (right edge of preview, vertically centered). */\n.tikz-floating-actions {\n    position: absolute;\n    top: 50%;\n    right: 16px;\n    transform: translateY(-50%);\n    display: flex;\n    flex-direction: column;\n    gap: 8px;\n    z-index: 5;\n    pointer-events: auto;\n}\n\n.tikz-floating-btn {\n    width: 34px;\n    height: 34px;\n    border-radius: 8px;\n    border: 1px solid color-mix(in srgb, var(--background-modifier-border) 80%, transparent);\n    background: color-mix(in srgb, var(--background-primary) 90%, transparent);\n    color: var(--text-normal);\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    padding: 0;\n    box-shadow: 0 1px 3px color-mix(in srgb, var(--background-modifier-border) 50%, transparent);\n    transition: background 0.12s ease, color 0.12s ease, transform 0.05s ease;\n}\n\n.tikz-floating-btn:hover {\n    background: var(--background-modifier-hover);\n    color: var(--interactive-accent);\n}\n\n.tikz-floating-btn:active {\n    transform: translateY(1px);\n}\n\n.tikz-floating-btn svg {\n    width: 18px;\n    height: 18px;\n}\n\n.tikz-preview-area:focus-visible {\n    box-shadow: inset 0 0 0 2px var(--interactive-accent);\n}\n\n.tikz-preview-area svg {\n    border-radius: 6px;\n    box-shadow: 0 1px 4px color-mix(in srgb, var(--background-modifier-border) 60%, transparent);\n    max-width: 100%;\n    max-height: 100%;\n}\n\n/* 3D renderer root: holds the visible canvas plus an off-screen SVG that\n   is rendered on demand for Copy SVG / Copy PNG. Explicit width/height\n   are written by the renderer per frame for fit-contain sizing; the\n   max-* rules are a safety net for the brief pre-layout window. */\n.tikz-3d-root {\n    position: relative;\n    border-radius: 6px;\n    box-shadow: 0 1px 4px color-mix(in srgb, var(--background-modifier-border) 60%, transparent);\n    overflow: hidden;\n    max-width: 100%;\n    max-height: 100%;\n}\n\n.tikz-3d-root .tikz-3d-canvas {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    border-radius: 6px;\n}\n\n/* The SVG is kept in the DOM (rendered fresh before Copy SVG / Copy PNG)\n   but never shown inside the modal - the canvas is the modal\'s single\n   display path, so there is no SVG-vs-canvas visual flash on drag start\n   / release. CSS sizing is shared with the canvas so it matches the\n   visible chart pixel-for-pixel when exported. */\n.tikz-3d-root .tikz-3d-svg {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    border-radius: 6px;\n    display: none;\n}\n\n/* In markdown-rendered code blocks we don\'t have drag interaction, so we\n   show the SVG (already populated by renderSvg) and hide the empty\n   canvas. This is the simplest path to a visible chart in notes. */\n.tikz-rendered-chart .tikz-3d-root .tikz-3d-svg {\n    display: block;\n}\n\n.tikz-rendered-chart .tikz-3d-root .tikz-3d-canvas {\n    display: none;\n}\n\n.tikz-preview-area {\n    cursor: grab;\n}\n\n.tikz-preview-area.tikz-preview-dragging {\n    cursor: grabbing;\n}\n\n.tikz-error {\n    color: var(--text-error);\n    font-size: 13px;\n    padding: 12px 16px;\n    background: var(--background-modifier-error);\n    border-radius: 6px;\n    max-width: 80%;\n    text-align: center;\n}\n\n/* Action bar */\n.tikz-action-bar {\n    display: flex;\n    gap: 8px;\n    padding: 14px 24px;\n    border-top: 1px solid color-mix(in srgb, var(--background-modifier-border) 70%, transparent);\n    background: var(--background-primary);\n    flex-shrink: 0;\n    justify-content: flex-end;\n    flex-wrap: wrap;\n}\n\n.tikz-action-bar .setting-item {\n    border: none;\n    padding: 0;\n}\n\n.tikz-action-bar button {\n    padding: 6px 16px;\n    font-size: 13px;\n}\n\n/* Function cards */\n\n.tikz-func-cards {\n    display: flex;\n    flex-direction: column;\n    gap: 12px;\n}\n\n.tikz-func-card {\n    border: 1px solid var(--background-modifier-border);\n    border-left: 4px solid var(--text-muted);\n    border-radius: 0 8px 8px 0;\n    padding: 16px;\n    background: var(--background-secondary);\n    transition: border-left-color 0.2s ease;\n}\n\n.tikz-func-row {\n    display: flex;\n    gap: 12px;\n    margin-bottom: 12px;\n    align-items: flex-end;\n}\n\n.tikz-func-row:last-child {\n    margin-bottom: 0;\n}\n\n.tikz-func-field {\n    flex: 1;\n    min-width: 0;\n}\n\n.tikz-func-field.wide {\n    flex: 2;\n}\n\n.tikz-func-card .setting-item {\n    padding: 2px 0;\n    border: none;\n}\n\n.tikz-func-card .setting-item-info {\n    flex: 0 0 auto;\n    margin-right: 8px;\n}\n\n.tikz-func-card .setting-item-name {\n    font-size: 12px;\n    color: var(--text-muted);\n    font-weight: 500;\n}\n\n.tikz-func-card .setting-item-description {\n    display: none;\n}\n\n.tikz-func-card .setting-item-control input[type="text"] {\n    width: 100%;\n}\n\n.tikz-func-header {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    margin-bottom: 12px;\n    padding-bottom: 8px;\n    border-bottom: 1px solid var(--background-modifier-border);\n}\n\n.tikz-func-header .tikz-func-label {\n    font-size: 13px;\n    font-weight: 600;\n    color: var(--text-normal);\n}\n\n.tikz-func-header .setting-item {\n    padding: 0;\n    border: none;\n    flex: 0;\n}\n\n/* Toggle chips row */\n.tikz-toggle-row {\n    display: flex;\n    flex-wrap: wrap;\n    gap: 10px 16px;\n    align-items: center;\n    padding: 4px 0;\n}\n\n.tikz-toggle-chip {\n    display: flex;\n    align-items: center;\n}\n\n.tikz-toggle-chip .setting-item {\n    padding: 0;\n    min-height: auto;\n    gap: 6px;\n}\n\n.tikz-toggle-chip .setting-item-name {\n    font-size: 12px;\n    color: var(--text-normal);\n}\n\n.tikz-toggle-chip .setting-item-control {\n    margin-left: 0;\n}\n\n/* Tangent input transition */\n.tikz-tangent-input {\n    overflow: hidden;\n    max-height: 0;\n    opacity: 0;\n    transition: max-height 0.25s ease, opacity 0.2s ease, margin 0.25s ease;\n    margin-top: 0;\n}\n\n.tikz-tangent-input.visible {\n    max-height: 60px;\n    opacity: 1;\n    margin-top: 10px;\n}\n\n/* Add function button */\n.tikz-add-func {\n    margin-top: 12px;\n}\n\n.tikz-add-func .setting-item {\n    justify-content: center;\n    border: none;\n    padding: 0;\n}\n\n/* Code tab: textarea fills the whole panel, no padding around it */\n\n.tikz-tab-content.tikz-code-panel {\n    padding: 0;\n}\n\n.tikz-code-textarea {\n    flex: 1;\n    width: 100%;\n    min-height: 0;\n    font-family: var(--font-monospace);\n    font-size: 12.5px;\n    padding: 18px 22px;\n    border: none;\n    border-radius: 0;\n    background: var(--background-primary);\n    color: var(--text-normal);\n    resize: none;\n    line-height: 1.55;\n    box-shadow: none;\n}\n\n.tikz-code-textarea:focus {\n    outline: none;\n    box-shadow: inset 2px 0 0 var(--interactive-accent);\n}\n\n/* Axis tab */\n\n.tikz-range-group {\n    display: flex;\n    gap: 20px;\n    align-items: center;\n    margin-bottom: 12px;\n}\n\n.tikz-range-group > div {\n    flex: 1;\n    min-width: 0;\n}\n\n.tikz-range-group .setting-item {\n    border: none;\n    padding: 6px 0;\n}\n\n.tikz-range-group .setting-item-name {\n    white-space: nowrap;\n}\n\n.tikz-range-group .setting-item-control input[type="text"] {\n    width: 100%;\n    min-width: 80px;\n}\n\n.tikz-range-separator {\n    color: var(--text-muted);\n    font-size: 13px;\n    flex-shrink: 0;\n    padding-top: 4px;\n}\n\n/* 3D controls */\n\n.tikz-3d-controls {\n    border-top: 1px solid var(--background-modifier-border);\n    margin-top: 8px;\n    padding-top: 8px;\n}\n\n/* General settings sections */\n\n.tikz-settings-section .setting-item {\n    padding: 10px 0;\n}\n\n/* Reference tab */\n\n.tikz-tab-content.tikz-reference {\n    /* Normal block flow: children get their natural height and the panel\n       scrolls. Flex layout was shrinking the <pre> blocks to one line. */\n    display: block;\n}\n\n.tikz-reference {\n    color: var(--text-normal);\n    font-size: 13px;\n    line-height: 1.55;\n    user-select: text;\n    -webkit-user-select: text;\n    cursor: text;\n}\n\n.tikz-reference * {\n    user-select: text;\n    -webkit-user-select: text;\n}\n\n.tikz-ref-heading {\n    margin: 22px 0 8px;\n    font-size: 14px;\n    font-weight: 600;\n    color: var(--text-normal);\n    letter-spacing: 0.01em;\n}\n\n.tikz-reference > .tikz-ref-heading:first-of-type {\n    margin-top: 0;\n}\n\n.tikz-ref-para {\n    margin: 0 0 12px;\n    color: var(--text-muted);\n}\n\n.tikz-ref-list {\n    margin: 0 0 14px;\n    padding: 0;\n}\n\n.tikz-ref-list dt {\n    font-family: var(--font-monospace);\n    font-size: 12px;\n    color: var(--text-normal);\n    background: var(--background-modifier-form-field);\n    border-radius: 4px;\n    padding: 2px 6px;\n    display: inline-block;\n    margin-top: 8px;\n}\n\n.tikz-ref-list dt:first-child {\n    margin-top: 0;\n}\n\n.tikz-ref-list dd {\n    margin: 4px 0 0 4px;\n    color: var(--text-muted);\n}\n\n.tikz-ref-code {\n    display: block;\n    margin: 0 0 14px;\n    padding: 14px 16px;\n    background: var(--background-primary-alt);\n    border: 1px solid color-mix(in srgb, var(--background-modifier-border) 60%, transparent);\n    border-radius: 6px;\n    font-family: var(--font-monospace);\n    font-size: 12.5px;\n    color: var(--text-normal);\n    white-space: pre;\n    overflow-x: auto;\n    line-height: 1.6;\n    flex-shrink: 0;\n    user-select: text;\n    -webkit-user-select: text;\n    cursor: text;\n}\n';
-
 // src/modal.ts
+var TextPromptModal = class extends import_obsidian2.Modal {
+  constructor(app, title, initial) {
+    super(app);
+    this.submitted = false;
+    this.onResolve = null;
+    this.promptTitle = title;
+    this.value = initial;
+  }
+  static prompt(app, title, initial) {
+    return new Promise((resolve) => {
+      const modal = new TextPromptModal(app, title, initial);
+      modal.onResolve = resolve;
+      modal.open();
+    });
+  }
+  onOpen() {
+    this.titleEl.setText(this.promptTitle);
+    const input = new import_obsidian2.TextComponent(this.contentEl);
+    input.setValue(this.value).onChange((v) => {
+      this.value = v;
+    });
+    input.inputEl.addClass("tikz-prompt-input");
+    input.inputEl.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        this.submit();
+      }
+    });
+    input.inputEl.focus();
+    input.inputEl.select();
+    new import_obsidian2.Setting(this.contentEl).addButton((b) => b.setButtonText("Cancel").onClick(() => this.close())).addButton((b) => b.setCta().setButtonText("Save").onClick(() => this.submit()));
+  }
+  submit() {
+    this.submitted = true;
+    const resolve = this.onResolve;
+    this.onResolve = null;
+    if (resolve)
+      resolve(this.value);
+    this.close();
+  }
+  onClose() {
+    this.contentEl.empty();
+    const resolve = this.onResolve;
+    this.onResolve = null;
+    if (!this.submitted && resolve)
+      resolve(null);
+  }
+};
 function trimmedRange(values, percentile = 0.01) {
   if (!values.length)
     return [0, 1];
@@ -3441,7 +4237,6 @@ function trimmedRange(values, percentile = 0.01) {
   const hi = sorted[sorted.length - 1 - drop];
   return [lo, hi];
 }
-var STYLE_ELEMENT_ID = "easy-tikz-styles";
 var PREVIEW_DEBOUNCE_MS = 150;
 var AZIMUTH_DRAG_RATE = 0.5;
 var ELEVATION_DRAG_RATE = 0.3;
@@ -3450,7 +4245,7 @@ var RENDERER_PADDING = { top: 45, right: 30, bottom: 45, left: 55 };
 var WHEEL_ZOOM_FACTOR = 1.15;
 var TABS = ["Graph", "Axis", "Functions", "Tools", "Annotations", "Grid", "Code", "Reference"];
 var SETTINGS_TABS = new Set(["Graph", "Axis", "Functions", "Tools", "Annotations", "Grid"]);
-var TikzModal = class extends import_obsidian.Modal {
+var TikzModal = class extends import_obsidian2.Modal {
   constructor(app, plugin, initialState) {
     super(app);
     this.previewTimer = null;
@@ -3471,6 +4266,8 @@ var TikzModal = class extends import_obsidian.Modal {
     this.isDragging = false;
     this.dragStartX = 0;
     this.dragStartY = 0;
+    this.panLocked = false;
+    this.panLockBtn = null;
     this.dragStartAzimuth = 0;
     this.dragStartElevation = 0;
     this.dragStartXmin = 0;
@@ -3481,7 +4278,6 @@ var TikzModal = class extends import_obsidian.Modal {
     this.draggingAnnotationIdx = null;
     this.annotationCards = [];
     this.annotationUpdateFn = null;
-    this.styleEl = null;
     this.onMouseMove = null;
     this.onMouseUp = null;
     this.settingsColumn = null;
@@ -3514,13 +4310,8 @@ var TikzModal = class extends import_obsidian.Modal {
     });
   }
   onOpen() {
-    if (!document.getElementById(STYLE_ELEMENT_ID)) {
-      const styleEl = document.createElement("style");
-      styleEl.id = STYLE_ELEMENT_ID;
-      styleEl.textContent = styles_default;
-      document.head.appendChild(styleEl);
-      this.styleEl = styleEl;
-    }
+    void (0, import_obsidian2.loadMathJax)().then(() => this.requestPreviewUpdate()).catch(() => {
+    });
     const { modalEl } = this;
     modalEl.addClass("tikz-modal");
     const layout = modalEl.createDiv({ cls: "tikz-layout" });
@@ -3566,10 +4357,6 @@ var TikzModal = class extends import_obsidian.Modal {
     this.rangeInputs.clear();
     this.svg3dRenderer = null;
     this.currentRenderMode = null;
-    if (this.styleEl && this.styleEl.parentNode) {
-      this.styleEl.parentNode.removeChild(this.styleEl);
-    }
-    this.styleEl = null;
     if (this.settingsColumn && this.onSettingsScroll) {
       this.settingsColumn.removeEventListener("scroll", this.onSettingsScroll);
     }
@@ -3607,9 +4394,9 @@ var TikzModal = class extends import_obsidian.Modal {
     const isSettingsTab = SETTINGS_TABS.has(name);
     if (isSettingsTab) {
       if (this.settingsColumn)
-        this.settingsColumn.style.display = "";
+        this.settingsColumn.removeClass("tikz-hidden");
       this.tabContents.forEach((content) => {
-        content.style.display = "none";
+        content.addClass("tikz-hidden");
       });
       const target = (_a = this.settingsColumn) == null ? void 0 : _a.querySelector(`[data-section="${name}"]`);
       if (target && this.settingsColumn) {
@@ -3618,9 +4405,9 @@ var TikzModal = class extends import_obsidian.Modal {
       }
     } else {
       if (this.settingsColumn)
-        this.settingsColumn.style.display = "none";
+        this.settingsColumn.addClass("tikz-hidden");
       this.tabContents.forEach((content, key) => {
-        content.style.display = key === name ? "flex" : "none";
+        content.toggleClass("tikz-hidden", key !== name);
       });
       if (name === "Code")
         this.updateCodeArea();
@@ -3661,7 +4448,7 @@ var TikzModal = class extends import_obsidian.Modal {
     };
     this.onSettingsScroll = () => {
       if (this.scrollRafId === null) {
-        this.scrollRafId = requestAnimationFrame(updateActive);
+        this.scrollRafId = window.requestAnimationFrame(updateActive);
       }
     };
     column.addEventListener("scroll", this.onSettingsScroll, { passive: true });
@@ -3690,7 +4477,7 @@ var TikzModal = class extends import_obsidian.Modal {
     content.setAttr("role", "tabpanel");
     content.setAttr("id", `tikz-tabpanel-${name.toLowerCase()}`);
     content.setAttr("aria-labelledby", `tikz-tab-${name.toLowerCase()}`);
-    content.style.display = "none";
+    content.addClass("tikz-hidden");
     if (name === "Code")
       content.addClass("tikz-code-panel");
     if (name === "Reference")
@@ -3700,30 +4487,30 @@ var TikzModal = class extends import_obsidian.Modal {
   }
   buildGraphTab(container) {
     const tab = this.createTabContent(container, "Graph", true);
-    new import_obsidian.Setting(tab).setName("3D mode").setDesc("Switch between 2D function plots and 3D surface plots.").addToggle((t) => t.setValue(this.settings.getValue("dimension")).onChange((v) => {
+    new import_obsidian2.Setting(tab).setName("3D mode").setDesc("Switch between 2D function plots and 3D surface plots.").addToggle((t) => t.setValue(this.settings.getValue("dimension")).onChange((v) => {
       this.settings.setValue("dimension", v);
       this.update3DVisibility();
       this.rebuildFunctionsTab();
       this.rebuildToolsTab();
       this.requestPreviewUpdate();
     }));
-    new import_obsidian.Setting(tab).setName("Title").setDesc("Name displayed above the graph.").addText((text) => text.setPlaceholder("My graph").setValue(this.settings.getValue("title")).onChange((v) => {
+    new import_obsidian2.Setting(tab).setName("Title").setDesc("Name displayed above the graph.").addText((text) => text.setPlaceholder("My graph").setValue(this.settings.getValue("title")).onChange((v) => {
       this.settings.setValue("title", v);
       this.requestPreviewUpdate();
     }));
-    new import_obsidian.Setting(tab).setName("Width (cm)").setDesc("Width of the exported TikZ image.").addSlider((s) => s.setLimits(1, 20, 1).setValue(this.settings.getValue("size_x_cm")).setDynamicTooltip().onChange((v) => {
+    new import_obsidian2.Setting(tab).setName("Width (cm)").setDesc("Width of the exported TikZ image.").addSlider((s) => s.setLimits(1, 20, 1).setValue(this.settings.getValue("size_x_cm")).onChange((v) => {
       this.settings.setValue("size_x_cm", v);
       this.requestPreviewUpdate();
     }));
-    new import_obsidian.Setting(tab).setName("Height (cm)").setDesc("Height of the exported TikZ image.").addSlider((s) => s.setLimits(1, 20, 1).setValue(this.settings.getValue("size_y_cm")).setDynamicTooltip().onChange((v) => {
+    new import_obsidian2.Setting(tab).setName("Height (cm)").setDesc("Height of the exported TikZ image.").addSlider((s) => s.setLimits(1, 20, 1).setValue(this.settings.getValue("size_y_cm")).onChange((v) => {
       this.settings.setValue("size_y_cm", v);
       this.requestPreviewUpdate();
     }));
-    new import_obsidian.Setting(tab).setName("Use pgfplots").setDesc("Include the pgfplots package in the TikZ code.").addToggle((t) => t.setValue(this.settings.getValue("documentSetup")).onChange((v) => {
+    new import_obsidian2.Setting(tab).setName("Use pgfplots").setDesc("Include the pgfplots package in the TikZ code.").addToggle((t) => t.setValue(this.settings.getValue("documentSetup")).onChange((v) => {
       this.settings.setValue("documentSetup", v);
       this.requestPreviewUpdate();
     }));
-    new import_obsidian.Setting(tab).setName("Coordinate system").setDesc("Cartesian uses f(x). Polar uses r(theta) and plots r in radians. Polar mode is 2D only.").addDropdown((d) => {
+    new import_obsidian2.Setting(tab).setName("Coordinate system").setDesc("Cartesian uses f(x). Polar uses r(theta) and plots r in radians. Polar mode is 2D only.").addDropdown((d) => {
       var _a;
       return d.addOptions({ cartesian: "Cartesian", polar: "Polar" }).setValue((_a = this.settings.getValue("coordinateSystem")) != null ? _a : "cartesian").onChange((v) => {
         this.settings.setValue("coordinateSystem", v);
@@ -3731,29 +4518,29 @@ var TikzModal = class extends import_obsidian.Modal {
         this.requestPreviewUpdate();
       });
     });
-    new import_obsidian.Setting(tab).setName("Preview size").setDesc("Width of the live preview, in pixels. Does not affect the exported TikZ dimensions. Scroll on the preview to zoom and drag to pan.").addSlider((s) => {
+    new import_obsidian2.Setting(tab).setName("Preview size").setDesc("Width of the live preview, in pixels. Does not affect the exported TikZ dimensions. Scroll on the preview to zoom and drag to pan.").addSlider((s) => {
       var _a;
-      return s.setLimits(400, 1400, 20).setValue((_a = this.settings.getValue("previewSize")) != null ? _a : 760).setDynamicTooltip().onChange((v) => {
+      return s.setLimits(400, 1400, 20).setValue((_a = this.settings.getValue("previewSize")) != null ? _a : 760).onChange((v) => {
         this.settings.setValue("previewSize", v);
         this.requestPreviewUpdate();
       });
     });
     this.rotationContainer = tab.createDiv({ cls: "tikz-3d-controls" });
-    new import_obsidian.Setting(this.rotationContainer).setName("Elevation").setDesc("Tilt: 0 looks at the surface edge-on, 90 looks straight down. Drag preview or press up/down arrows.").addSlider((s) => {
+    new import_obsidian2.Setting(this.rotationContainer).setName("Elevation").setDesc("Tilt: 0 looks at the surface edge-on, 90 looks straight down. Drag preview or press up/down arrows.").addSlider((s) => {
       this.elevationSlider = s;
-      s.setLimits(0, 90, 1).setValue(this.settings.getValue("rotationX")).setDynamicTooltip().onChange((v) => {
+      s.setLimits(0, 90, 1).setValue(this.settings.getValue("rotationX")).onChange((v) => {
         this.settings.setValue("rotationX", v);
         this.requestPreviewUpdateFast();
       });
     });
-    new import_obsidian.Setting(this.rotationContainer).setName("Azimuth").setDesc("Camera rotation around the vertical axis. Drag preview or press left/right arrows.").addSlider((s) => {
+    new import_obsidian2.Setting(this.rotationContainer).setName("Azimuth").setDesc("Camera rotation around the vertical axis. Drag preview or press left/right arrows.").addSlider((s) => {
       this.azimuthSlider = s;
-      s.setLimits(0, 360, 1).setValue(this.settings.getValue("rotationZ")).setDynamicTooltip().onChange((v) => {
+      s.setLimits(0, 360, 1).setValue(this.settings.getValue("rotationZ")).onChange((v) => {
         this.settings.setValue("rotationZ", v);
         this.requestPreviewUpdateFast();
       });
     });
-    new import_obsidian.Setting(this.rotationContainer).setName("Box aspect").setDesc("Equal: each axis spans the same length on screen - the bounding box is a perfect cube. True: edge lengths scale with the data ranges (xmax-xmin, ymax-ymin, zmax-zmin), so an axis with a much larger range dominates the box. The exported pgfplots adds `axis equal image` when Equal is selected.").addDropdown((d) => {
+    new import_obsidian2.Setting(this.rotationContainer).setName("Box aspect").setDesc("Equal: each axis spans the same length on screen - the bounding box is a perfect cube. True: edge lengths scale with the data ranges (xmax-xmin, ymax-ymin, zmax-zmin), so an axis with a much larger range dominates the box. The exported pgfplots adds `axis equal image` when Equal is selected.").addDropdown((d) => {
       var _a;
       return d.addOptions({ equal: "Equal (cube)", true: "True (proportional)" }).setValue((_a = this.settings.getValue("boxAspect")) != null ? _a : "true").onChange((v) => {
         this.settings.setValue("boxAspect", v);
@@ -3764,18 +4551,18 @@ var TikzModal = class extends import_obsidian.Modal {
   }
   buildAxisTab(container) {
     const tab = this.createTabContent(container, "Axis");
-    new import_obsidian.Setting(tab).setName("Show axis labels").addToggle((t) => t.setValue(this.settings.getValue("show_axis_label")).onChange((v) => {
+    new import_obsidian2.Setting(tab).setName("Show axis labels").addToggle((t) => t.setValue(this.settings.getValue("show_axis_label")).onChange((v) => {
       this.settings.setValue("show_axis_label", v);
       this.requestPreviewUpdate();
     }));
-    new import_obsidian.Setting(tab).setName("X-axis label").setDesc("In polar mode this edits a separate polar X label so your cartesian label stays intact.").addText((text) => {
+    new import_obsidian2.Setting(tab).setName("X-axis label").setDesc("In polar mode this edits a separate polar X label so your cartesian label stays intact.").addText((text) => {
       this.xLabelInput = text;
       text.setValue(this.currentXLabelValue()).onChange((v) => {
         this.settings.setValue(this.currentXLabelKey(), v);
         this.requestPreviewUpdate();
       });
     });
-    new import_obsidian.Setting(tab).setName("Y-axis label").setDesc("In polar mode this edits a separate polar Y label so your cartesian label stays intact.").addText((text) => {
+    new import_obsidian2.Setting(tab).setName("Y-axis label").setDesc("In polar mode this edits a separate polar Y label so your cartesian label stays intact.").addText((text) => {
       this.yLabelInput = text;
       text.setValue(this.currentYLabelValue()).onChange((v) => {
         this.settings.setValue(this.currentYLabelKey(), v);
@@ -3783,7 +4570,7 @@ var TikzModal = class extends import_obsidian.Modal {
       });
     });
     this.zAxisContainer = tab.createDiv({ cls: "tikz-3d-controls" });
-    new import_obsidian.Setting(this.zAxisContainer).setName("Z-axis label").addText((text) => text.setValue(this.settings.getValue("axis_label_z")).onChange((v) => {
+    new import_obsidian2.Setting(this.zAxisContainer).setName("Z-axis label").addText((text) => text.setValue(this.settings.getValue("axis_label_z")).onChange((v) => {
       this.settings.setValue("axis_label_z", v);
       this.requestPreviewUpdate();
     }));
@@ -3799,9 +4586,9 @@ var TikzModal = class extends import_obsidian.Modal {
       { key: "zmin", label: "Z min", placeholder: "-5" },
       { key: "zmax", label: "Z max", placeholder: "5" }
     ]);
-    new import_obsidian.Setting(tab).setName("Fit to functions").setDesc("Sample every enabled function and set the axis ranges so the curves fit comfortably inside the plot. Clips outliers so vertical asymptotes do not blow out the range.").addButton((btn) => btn.setButtonText("Auto-fit").setTooltip("Compute axis ranges from the current functions").onClick(() => this.autoFitRanges()));
+    new import_obsidian2.Setting(tab).setName("Fit to functions").setDesc("Sample every enabled function and set the axis ranges so the curves fit comfortably inside the plot. Clips outliers so vertical asymptotes do not blow out the range.").addButton((btn) => btn.setButtonText("Auto-fit").setTooltip("Compute axis ranges from the current functions").onClick(() => this.autoFitRanges()));
     this.axisStyleContainer = tab.createDiv();
-    new import_obsidian.Setting(this.axisStyleContainer).setName("Axis style").setDesc("Box: full rectangle around the plot. Middle: axes cross at origin. Axes: L-shape (x at bottom, y at left) with no enclosing box.").addDropdown((d) => {
+    new import_obsidian2.Setting(this.axisStyleContainer).setName("Axis style").setDesc("Box: full rectangle around the plot. Middle: axes cross at origin. Axes: L-shape (x at bottom, y at left) with no enclosing box.").addDropdown((d) => {
       var _a;
       return d.addOptions({ box: "Box (all around)", middle: "Middle (crossing)", axes: "Axes (no box)" }).setValue((_a = this.settings.getValue("axis_style")) != null ? _a : "box").onChange((v) => {
         this.settings.setValue("axis_style", v);
@@ -3814,15 +4601,19 @@ var TikzModal = class extends import_obsidian.Modal {
     const range = parent.createDiv({ cls: "tikz-range-group" });
     fields.forEach((field, i) => {
       const wrapper = range.createDiv();
-      new import_obsidian.Setting(wrapper).setName(field.label).addText((t) => {
+      new import_obsidian2.Setting(wrapper).setName(field.label).addText((t) => {
         this.rangeInputs.set(field.key, t);
         t.setPlaceholder(field.placeholder).setValue(this.settings.getValue(field.key)).onChange((v) => {
           const trimmed = v.trim();
           if (trimmed === "" || isFinite(Number(trimmed))) {
             this.settings.setValue(field.key, v);
             this.requestPreviewUpdate();
-          } else {
-            new import_obsidian.Notice(`${field.label} must be a number.`);
+          }
+        });
+        t.inputEl.addEventListener("blur", () => {
+          const trimmed = t.getValue().trim();
+          if (trimmed !== "" && !isFinite(Number(trimmed))) {
+            new import_obsidian2.Notice(`${field.label} must be a number.`);
             t.setValue(this.settings.getValue(field.key));
           }
         });
@@ -3886,7 +4677,7 @@ var TikzModal = class extends import_obsidian.Modal {
       card.style.borderLeftColor = COLOR_MAP[state.color];
       const header = card.createDiv({ cls: "tikz-func-header" });
       const headerLabel = header.createSpan({ cls: "tikz-func-label", text: state.name || `Function ${ordinal}` });
-      new import_obsidian.Setting(header).addButton((btn) => btn.setIcon("trash").setTooltip("Remove function").then((b) => b.buttonEl.setAttr("aria-label", "Remove function")).onClick(() => {
+      new import_obsidian2.Setting(header).addButton((btn) => btn.setIcon("trash").setTooltip("Remove function").then((b) => b.buttonEl.setAttr("aria-label", "Remove function")).onClick(() => {
         rowStates.delete(rowId);
         card.remove();
         updateFunctionValues();
@@ -3896,7 +4687,7 @@ var TikzModal = class extends import_obsidian.Modal {
       let colorDropdown = null;
       const templateRow = card.createDiv({ cls: "tikz-func-row" });
       const templateDiv = templateRow.createDiv({ cls: "tikz-func-field wide" });
-      new import_obsidian.Setting(templateDiv).setName("Template").setDesc("Quick start from a built-in curve, or save the current card as your own template.").addDropdown((d) => {
+      new import_obsidian2.Setting(templateDiv).setName("Template").setDesc("Quick start from a built-in curve, or save the current card as your own template.").addDropdown((d) => {
         const buildOptions = () => {
           d.selectEl.empty();
           d.addOption("", "Choose a template...");
@@ -3957,12 +4748,12 @@ var TikzModal = class extends import_obsidian.Modal {
         });
       });
       const saveDiv = templateRow.createDiv({ cls: "tikz-func-field" });
-      new import_obsidian.Setting(saveDiv).addButton((btn) => btn.setButtonText("Save as").setTooltip("Save the current expression, domain, and color as a personal template").onClick(() => __async(this, null, function* () {
+      new import_obsidian2.Setting(saveDiv).addButton((btn) => btn.setButtonText("Save as").setTooltip("Save the current expression, domain, and color as a personal template").onClick(() => __async(this, null, function* () {
         if (!state.expression) {
-          new import_obsidian.Notice("Enter an expression before saving as a template.");
+          new import_obsidian2.Notice("Enter an expression before saving as a template.");
           return;
         }
-        const name = window.prompt("Template name:", state.expression);
+        const name = yield TextPromptModal.prompt(this.app, "Template name", state.expression);
         if (!name)
           return;
         const trimmed = name.trim();
@@ -3977,11 +4768,11 @@ var TikzModal = class extends import_obsidian.Modal {
           color: state.color
         }];
         yield this.setUserTemplates(next);
-        new import_obsidian.Notice(`Saved template "${trimmed}".`);
+        new import_obsidian2.Notice(`Saved template "${trimmed}".`);
       })));
       const row1 = card.createDiv({ cls: "tikz-func-row" });
       const exprDiv = row1.createDiv({ cls: "tikz-func-field wide" });
-      new import_obsidian.Setting(exprDiv).setName("Expression").setDesc("Use x. Supports +, -, *, /, ^, parentheses, and Math.* functions.").addText((t) => {
+      new import_obsidian2.Setting(exprDiv).setName("Expression").setDesc("Use x. Supports +, -, *, /, ^, parentheses, and Math.* functions.").addText((t) => {
         expressionInput = t;
         t.setPlaceholder("x^2").setValue(state.expression || "").onChange((v) => {
           state.expression = v;
@@ -3989,7 +4780,7 @@ var TikzModal = class extends import_obsidian.Modal {
         });
       });
       const domDiv = row1.createDiv({ cls: "tikz-func-field" });
-      new import_obsidian.Setting(domDiv).setName("Domain").addText((t) => {
+      new import_obsidian2.Setting(domDiv).setName("Domain").addText((t) => {
         domainInput = t;
         t.setPlaceholder("-10:10").setValue(state.domain).onChange((v) => {
           state.domain = v;
@@ -3998,7 +4789,7 @@ var TikzModal = class extends import_obsidian.Modal {
       });
       const nameRow = card.createDiv({ cls: "tikz-func-row" });
       const nameDiv = nameRow.createDiv({ cls: "tikz-func-field wide" });
-      new import_obsidian.Setting(nameDiv).setName("Name").setDesc("Used to reference this function from Tools (e.g. area between curves). Defaults to f1, f2, \u2026").addText((t) => {
+      new import_obsidian2.Setting(nameDiv).setName("Name").setDesc("Used to reference this function from Tools (e.g. area between curves). Defaults to f1, f2, \u2026").addText((t) => {
         t.setPlaceholder(state.name || `f${ordinal}`).setValue(state.name || "").onChange((v) => {
           state.name = v;
           if (headerLabel)
@@ -4008,7 +4799,7 @@ var TikzModal = class extends import_obsidian.Modal {
       });
       const row2 = card.createDiv({ cls: "tikz-func-row" });
       const colorDiv = row2.createDiv({ cls: "tikz-func-field" });
-      new import_obsidian.Setting(colorDiv).setName("Color").addDropdown((d) => {
+      new import_obsidian2.Setting(colorDiv).setName("Color").addDropdown((d) => {
         colorDropdown = d;
         d.addOptions(COLOR_OPTIONS).setValue(state.color).onChange((v) => {
           state.color = v;
@@ -4017,18 +4808,25 @@ var TikzModal = class extends import_obsidian.Modal {
         });
       });
       const thickDiv = row2.createDiv({ cls: "tikz-func-field" });
-      new import_obsidian.Setting(thickDiv).setName("Thickness").addDropdown((d) => d.addOptions(THICKNESS_OPTIONS).setValue(state.thickness).onChange((v) => {
+      new import_obsidian2.Setting(thickDiv).setName("Thickness").addDropdown((d) => d.addOptions(THICKNESS_OPTIONS).setValue(state.thickness).onChange((v) => {
         state.thickness = v;
         updateFunctionValues();
       }));
       const row3 = card.createDiv({ cls: "tikz-func-row tikz-toggle-row" });
+      const legendInput = card.createDiv({ cls: "tikz-tangent-input" });
+      new import_obsidian2.Setting(legendInput).setName("Legend label").setDesc("Custom text for the legend entry. Leave blank to use the expression.").addText((t) => {
+        t.setPlaceholder(state.expression || "e.g. Revenue").setValue(state.legendLabel || "").onChange((v) => {
+          state.legendLabel = v;
+          updateFunctionValues();
+        });
+      });
       const parametricInput = card.createDiv({ cls: "tikz-tangent-input" });
-      new import_obsidian.Setting(parametricInput).setName("y(t)").setDesc("Second component when parametric. The Expression field above becomes x(t). Domain is the t range.").addText((t) => t.setPlaceholder("sin(t)").setValue(state.expressionY || "").onChange((v) => {
+      new import_obsidian2.Setting(parametricInput).setName("y(t)").setDesc("Second component when parametric. The Expression field above becomes x(t). Domain is the t range.").addText((t) => t.setPlaceholder("sin(t)").setValue(state.expressionY || "").onChange((v) => {
         state.expressionY = v;
         updateFunctionValues();
       }));
       const tangentInput = card.createDiv({ cls: "tikz-tangent-input" });
-      new import_obsidian.Setting(tangentInput).setName("Tangent point (x)").setDesc('A number, or "min" / "max" to snap to the nearest extremum. Append a digit (min2, max1) to pick the n-th.').addText((t) => {
+      new import_obsidian2.Setting(tangentInput).setName("Tangent point (x)").setDesc('A number, or "min" / "max" to snap to the nearest extremum. Append a digit (min2, max1) to pick the n-th.').addText((t) => {
         t.setPlaceholder("x value, min, or max").setValue(state.tangentPoint || "").onChange((v) => {
           state.tangentPoint = v;
           updateFunctionValues();
@@ -4052,7 +4850,7 @@ var TikzModal = class extends import_obsidian.Modal {
         });
       });
       const fillOptions = card.createDiv({ cls: "tikz-tangent-input" });
-      new import_obsidian.Setting(fillOptions).setName("Fill pattern").addDropdown((d) => d.addOptions({
+      new import_obsidian2.Setting(fillOptions).setName("Fill pattern").addDropdown((d) => d.addOptions({
         solid: "Solid",
         horizontal: "Horizontal lines",
         vertical: "Vertical lines",
@@ -4064,7 +4862,7 @@ var TikzModal = class extends import_obsidian.Modal {
         state.fillPattern = v;
         updateFunctionValues();
       }));
-      new import_obsidian.Setting(fillOptions).setName("Fill opacity").addSlider((s) => s.setLimits(0.05, 1, 0.05).setValue(state.fillOpacity).setDynamicTooltip().onChange((v) => {
+      new import_obsidian2.Setting(fillOptions).setName("Fill opacity").addSlider((s) => s.setLimits(0.05, 1, 0.05).setValue(state.fillOpacity).onChange((v) => {
         state.fillOpacity = v;
         updateFunctionValues();
       }));
@@ -4078,7 +4876,7 @@ var TikzModal = class extends import_obsidian.Modal {
       ];
       toggles.forEach(({ name, key }) => {
         const chip = row3.createDiv({ cls: "tikz-toggle-chip" });
-        new import_obsidian.Setting(chip).setName(name).addToggle((t) => t.setValue(state[key]).onChange((v) => {
+        new import_obsidian2.Setting(chip).setName(name).addToggle((t) => t.setValue(state[key]).onChange((v) => {
           state[key] = v;
           if (key === "tangent")
             tangentInput.toggleClass("visible", v);
@@ -4086,6 +4884,8 @@ var TikzModal = class extends import_obsidian.Modal {
             fillOptions.toggleClass("visible", v);
           if (key === "parametric")
             parametricInput.toggleClass("visible", v);
+          if (key === "showLegend")
+            legendInput.toggleClass("visible", v);
           updateFunctionValues();
         }));
       });
@@ -4095,6 +4895,8 @@ var TikzModal = class extends import_obsidian.Modal {
         fillOptions.addClass("visible");
       if (state.parametric)
         parametricInput.addClass("visible");
+      if (state.showLegend)
+        legendInput.addClass("visible");
     };
     const existing = this.settings.getValue("functions") || [];
     if (existing.length > 0) {
@@ -4104,7 +4906,7 @@ var TikzModal = class extends import_obsidian.Modal {
       addFunctionCard();
     }
     const addBtnDiv = tab.createDiv({ cls: "tikz-add-func" });
-    new import_obsidian.Setting(addBtnDiv).addButton((btn) => btn.setButtonText("+ Add function").onClick(() => addFunctionCard()));
+    new import_obsidian2.Setting(addBtnDiv).addButton((btn) => btn.setButtonText("+ Add function").onClick(() => addFunctionCard()));
   }
   build3DFunctionCards(tab) {
     const cardsContainer = tab.createDiv({ cls: "tikz-func-cards" });
@@ -4136,7 +4938,7 @@ var TikzModal = class extends import_obsidian.Modal {
       card.style.borderLeftColor = COLOR_MAP[state.color] || "var(--text-muted)";
       const header = card.createDiv({ cls: "tikz-func-header" });
       header.createSpan({ cls: "tikz-func-label", text: `Surface ${rowStates.size}` });
-      new import_obsidian.Setting(header).addButton((btn) => btn.setIcon("trash").setTooltip("Remove surface").then((b) => b.buttonEl.setAttr("aria-label", "Remove surface")).onClick(() => {
+      new import_obsidian2.Setting(header).addButton((btn) => btn.setIcon("trash").setTooltip("Remove surface").then((b) => b.buttonEl.setAttr("aria-label", "Remove surface")).onClick(() => {
         rowStates.delete(rowId);
         card.remove();
         updateFunctionValues();
@@ -4147,7 +4949,7 @@ var TikzModal = class extends import_obsidian.Modal {
       let colorDropdown = null;
       const templateRow = card.createDiv({ cls: "tikz-func-row" });
       const templateDiv = templateRow.createDiv({ cls: "tikz-func-field wide" });
-      new import_obsidian.Setting(templateDiv).setName("Template").setDesc("Quick start from a built-in surface, or save the current card as your own template.").addDropdown((d) => {
+      new import_obsidian2.Setting(templateDiv).setName("Template").setDesc("Quick start from a built-in surface, or save the current card as your own template.").addDropdown((d) => {
         const buildOptions = () => {
           d.selectEl.empty();
           d.addOption("", "Choose a template...");
@@ -4213,12 +5015,12 @@ var TikzModal = class extends import_obsidian.Modal {
         });
       });
       const saveDiv = templateRow.createDiv({ cls: "tikz-func-field" });
-      new import_obsidian.Setting(saveDiv).addButton((btn) => btn.setButtonText("Save as").setTooltip("Save the current expression and domains as a personal template").onClick(() => __async(this, null, function* () {
+      new import_obsidian2.Setting(saveDiv).addButton((btn) => btn.setButtonText("Save as").setTooltip("Save the current expression and domains as a personal template").onClick(() => __async(this, null, function* () {
         if (!state.expression) {
-          new import_obsidian.Notice("Enter an expression before saving as a template.");
+          new import_obsidian2.Notice("Enter an expression before saving as a template.");
           return;
         }
-        const name = window.prompt("Template name:", state.expression);
+        const name = yield TextPromptModal.prompt(this.app, "Template name", state.expression);
         if (!name)
           return;
         const trimmed = name.trim();
@@ -4234,11 +5036,11 @@ var TikzModal = class extends import_obsidian.Modal {
           color: state.color
         }];
         yield this.setUserTemplates(next);
-        new import_obsidian.Notice(`Saved template "${trimmed}".`);
+        new import_obsidian2.Notice(`Saved template "${trimmed}".`);
       })));
       const row1 = card.createDiv({ cls: "tikz-func-row" });
       const exprDiv = row1.createDiv({ cls: "tikz-func-field wide" });
-      new import_obsidian.Setting(exprDiv).setName("f(x, y)").setDesc("Use x and y. Supports +, -, *, /, ^, parentheses, and Math.* functions.").addText((t) => {
+      new import_obsidian2.Setting(exprDiv).setName("f(x, y)").setDesc("Use x and y. Supports +, -, *, /, ^, parentheses, and Math.* functions.").addText((t) => {
         expressionInput = t;
         t.setPlaceholder("sin(x)*cos(y)").setValue(state.expression || "").onChange((v) => {
           state.expression = v;
@@ -4247,7 +5049,7 @@ var TikzModal = class extends import_obsidian.Modal {
       });
       const row2 = card.createDiv({ cls: "tikz-func-row" });
       const xDomDiv = row2.createDiv({ cls: "tikz-func-field" });
-      new import_obsidian.Setting(xDomDiv).setName("X domain").addText((t) => {
+      new import_obsidian2.Setting(xDomDiv).setName("X domain").addText((t) => {
         xDomainInput = t;
         t.setPlaceholder("-5:5").setValue(state.xDomain).onChange((v) => {
           state.xDomain = v;
@@ -4255,7 +5057,7 @@ var TikzModal = class extends import_obsidian.Modal {
         });
       });
       const yDomDiv = row2.createDiv({ cls: "tikz-func-field" });
-      new import_obsidian.Setting(yDomDiv).setName("Y domain").addText((t) => {
+      new import_obsidian2.Setting(yDomDiv).setName("Y domain").addText((t) => {
         yDomainInput = t;
         t.setPlaceholder("-5:5").setValue(state.yDomain).onChange((v) => {
           state.yDomain = v;
@@ -4264,7 +5066,7 @@ var TikzModal = class extends import_obsidian.Modal {
       });
       const row3 = card.createDiv({ cls: "tikz-func-row" });
       const colorDiv = row3.createDiv({ cls: "tikz-func-field" });
-      new import_obsidian.Setting(colorDiv).setName("Color").addDropdown((d) => {
+      new import_obsidian2.Setting(colorDiv).setName("Color").addDropdown((d) => {
         colorDropdown = d;
         d.addOptions(COLOR_OPTIONS).setValue(state.color).onChange((v) => {
           state.color = v;
@@ -4274,19 +5076,19 @@ var TikzModal = class extends import_obsidian.Modal {
       });
       const row4 = card.createDiv({ cls: "tikz-func-row tikz-toggle-row" });
       const wireChip = row4.createDiv({ cls: "tikz-toggle-chip" });
-      new import_obsidian.Setting(wireChip).setName("Wireframe").addToggle((t) => t.setValue(state.wireframe).onChange((v) => {
+      new import_obsidian2.Setting(wireChip).setName("Wireframe").addToggle((t) => t.setValue(state.wireframe).onChange((v) => {
         state.wireframe = v;
         updateFunctionValues();
       }));
       const opacityDiv = row4.createDiv({ cls: "tikz-func-field" });
-      new import_obsidian.Setting(opacityDiv).setName("Opacity").addSlider((s) => s.setLimits(0.1, 1, 0.1).setValue(state.opacity).setDynamicTooltip().onChange((v) => {
+      new import_obsidian2.Setting(opacityDiv).setName("Opacity").addSlider((s) => s.setLimits(0.1, 1, 0.1).setValue(state.opacity).onChange((v) => {
         state.opacity = v;
         updateFunctionValues();
       }));
       const row5 = card.createDiv({ cls: "tikz-func-row" });
       const samplesDiv = row5.createDiv({ cls: "tikz-func-field wide" });
       const maxSamples = Math.max(40, Math.min(400, (_c = (_b = (_a = this.plugin) == null ? void 0 : _a.data) == null ? void 0 : _b.maxSamples3D) != null ? _c : 80));
-      new import_obsidian.Setting(samplesDiv).setName("Samples").setDesc(`Grid density per axis (8 to ${maxSamples}). Higher = smoother surface but slower preview. Also drives pgfplots \`samples=\` in the exported code.`).addSlider((s) => s.setLimits(8, maxSamples, 2).setValue(Math.min(state.samples, maxSamples)).setDynamicTooltip().onChange((v) => {
+      new import_obsidian2.Setting(samplesDiv).setName("Samples").setDesc(`Grid density per axis (8 to ${maxSamples}). Higher = smoother surface but slower preview. Also drives pgfplots \`samples=\` in the exported code.`).addSlider((s) => s.setLimits(8, maxSamples, 2).setValue(Math.min(state.samples, maxSamples)).onChange((v) => {
         state.samples = v;
         updateFunctionValues();
       }));
@@ -4299,7 +5101,7 @@ var TikzModal = class extends import_obsidian.Modal {
       addFunctionCard();
     }
     const addBtnDiv = tab.createDiv({ cls: "tikz-add-func" });
-    new import_obsidian.Setting(addBtnDiv).addButton((btn) => btn.setButtonText("+ Add surface").onClick(() => addFunctionCard()));
+    new import_obsidian2.Setting(addBtnDiv).addButton((btn) => btn.setButtonText("+ Add surface").onClick(() => addFunctionCard()));
   }
   buildToolsTab(container) {
     this.toolsTabContent = this.createTabContent(container, "Tools");
@@ -4327,7 +5129,7 @@ var TikzModal = class extends import_obsidian.Modal {
     };
     renderAll();
     const addRow = tab.createDiv({ cls: "tikz-add-func" });
-    new import_obsidian.Setting(addRow).setName("Add tool").setDesc(is3D ? "Pick a 3D tool type." : "Pick a tool type.").addDropdown((d) => {
+    new import_obsidian2.Setting(addRow).setName("Add tool").setDesc(is3D ? "Pick a 3D tool type." : "Pick a tool type.").addDropdown((d) => {
       d.addOption("", "- select type -");
       if (!is3D) {
         d.addOption("areaBetween", "Area between two curves");
@@ -4415,7 +5217,7 @@ var TikzModal = class extends import_obsidian.Modal {
     const card = container.createDiv({ cls: "tikz-func-card" });
     const header = card.createDiv({ cls: "tikz-func-header" });
     header.createSpan({ cls: "tikz-func-label", text: `${idx + 1}. ${this.toolLabel(tool.type)}` });
-    new import_obsidian.Setting(header).addButton((btn) => btn.setIcon("trash").setTooltip("Remove tool").onClick(() => {
+    new import_obsidian2.Setting(header).addButton((btn) => btn.setIcon("trash").setTooltip("Remove tool").onClick(() => {
       toolList.splice(idx, 1);
       save();
       renderAll();
@@ -4434,11 +5236,11 @@ var TikzModal = class extends import_obsidian.Modal {
     };
     const textField = (parent, label, value, onChange) => {
       const div = parent.createDiv({ cls: "tikz-func-field" });
-      new import_obsidian.Setting(div).setName(label).addText((t) => t.setValue(String(value != null ? value : "")).onChange(onChange));
+      new import_obsidian2.Setting(div).setName(label).addText((t) => t.setValue(String(value != null ? value : "")).onChange(onChange));
     };
     const colorField = (parent, value, onChange) => {
       const div = parent.createDiv({ cls: "tikz-func-field" });
-      new import_obsidian.Setting(div).setName("Color").addDropdown((d) => {
+      new import_obsidian2.Setting(div).setName("Color").addDropdown((d) => {
         for (const [k, v] of Object.entries(COLOR_OPTIONS))
           d.addOption(k, v);
         d.setValue(value).onChange(onChange);
@@ -4446,7 +5248,7 @@ var TikzModal = class extends import_obsidian.Modal {
     };
     const thicknessField = (parent, value, onChange) => {
       const div = parent.createDiv({ cls: "tikz-func-field" });
-      new import_obsidian.Setting(div).setName("Thickness").addDropdown((d) => {
+      new import_obsidian2.Setting(div).setName("Thickness").addDropdown((d) => {
         for (const [k, v] of Object.entries(THICKNESS_OPTIONS))
           d.addOption(k, v);
         d.setValue(value).onChange(onChange);
@@ -4454,15 +5256,15 @@ var TikzModal = class extends import_obsidian.Modal {
     };
     const toggleField = (parent, label, value, onChange) => {
       const div = parent.createDiv({ cls: "tikz-func-field" });
-      new import_obsidian.Setting(div).setName(label).addToggle((t) => t.setValue(!!value).onChange(onChange));
+      new import_obsidian2.Setting(div).setName(label).addToggle((t) => t.setValue(!!value).onChange(onChange));
     };
     const sliderField = (parent, label, value, onChange) => {
       const div = parent.createDiv({ cls: "tikz-func-field" });
-      new import_obsidian.Setting(div).setName(label).addSlider((s) => s.setLimits(0.05, 1, 0.05).setValue(value).setDynamicTooltip().onChange(onChange));
+      new import_obsidian2.Setting(div).setName(label).addSlider((s) => s.setLimits(0.05, 1, 0.05).setValue(value).onChange(onChange));
     };
     const dropdownField = (parent, label, value, options, onChange) => {
       const div = parent.createDiv({ cls: "tikz-func-field" });
-      new import_obsidian.Setting(div).setName(label).addDropdown((d) => {
+      new import_obsidian2.Setting(div).setName(label).addDropdown((d) => {
         for (const [k, v] of Object.entries(options))
           d.addOption(k, v);
         d.setValue(value).onChange(onChange);
@@ -4471,7 +5273,7 @@ var TikzModal = class extends import_obsidian.Modal {
     const fnNameField = (parent, label, value, onChange) => {
       const div = parent.createDiv({ cls: "tikz-func-field" });
       const names = fnNames();
-      new import_obsidian.Setting(div).setName(label).addDropdown((d) => {
+      new import_obsidian2.Setting(div).setName(label).addDropdown((d) => {
         d.addOption("", "- select function -");
         for (const n of names)
           d.addOption(n.value, n.label);
@@ -4480,7 +5282,7 @@ var TikzModal = class extends import_obsidian.Modal {
     };
     const patternField = (parent, value, onChange) => {
       const div = parent.createDiv({ cls: "tikz-func-field" });
-      new import_obsidian.Setting(div).setName("Pattern").addDropdown((d) => {
+      new import_obsidian2.Setting(div).setName("Pattern").addDropdown((d) => {
         d.addOption("solid", "Solid");
         d.addOption("horizontal", "Horizontal lines");
         d.addOption("vertical", "Vertical lines");
@@ -4856,9 +5658,9 @@ var TikzModal = class extends import_obsidian.Modal {
       this.requestPreviewUpdate();
     };
     this.annotationUpdateFn = update;
-    const addCard = () => {
+    const addCard = (seed) => {
       const rowId = `ann-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
-      const state = {
+      const state = __spreadValues({
         x: "0",
         y: "0",
         z: this.is3D() ? "0" : void 0,
@@ -4866,7 +5668,7 @@ var TikzModal = class extends import_obsidian.Modal {
         color: "black",
         size: "normal",
         anchor: "above"
-      };
+      }, seed || {});
       rowStates.set(rowId, state);
       const cardEntry = { rowId, state, xInput: null, yInput: null, zInput: null };
       this.annotationCards.push(cardEntry);
@@ -4874,7 +5676,7 @@ var TikzModal = class extends import_obsidian.Modal {
       card.style.borderLeftColor = COLOR_MAP[state.color];
       const header = card.createDiv({ cls: "tikz-func-header" });
       header.createSpan({ cls: "tikz-func-label", text: `Label ${rowStates.size}` });
-      new import_obsidian.Setting(header).addButton((btn) => btn.setIcon("trash").setTooltip("Remove label").then((b) => b.buttonEl.setAttr("aria-label", "Remove label")).onClick(() => {
+      new import_obsidian2.Setting(header).addButton((btn) => btn.setIcon("trash").setTooltip("Remove label").then((b) => b.buttonEl.setAttr("aria-label", "Remove label")).onClick(() => {
         rowStates.delete(rowId);
         const idx = this.annotationCards.indexOf(cardEntry);
         if (idx >= 0)
@@ -4884,13 +5686,13 @@ var TikzModal = class extends import_obsidian.Modal {
       }));
       const row1 = card.createDiv({ cls: "tikz-func-row" });
       const textDiv = row1.createDiv({ cls: "tikz-func-field wide" });
-      new import_obsidian.Setting(textDiv).setName("Text").addText((t) => t.setPlaceholder("Local max").onChange((v) => {
+      new import_obsidian2.Setting(textDiv).setName("Text").addText((t) => t.setPlaceholder("Local max").setValue(state.text).onChange((v) => {
         state.text = v;
         update();
       }));
       const row2 = card.createDiv({ cls: "tikz-func-row" });
       const xDiv = row2.createDiv({ cls: "tikz-func-field" });
-      new import_obsidian.Setting(xDiv).setName("x").addText((t) => {
+      new import_obsidian2.Setting(xDiv).setName("x").addText((t) => {
         cardEntry.xInput = t;
         t.setPlaceholder("0").setValue(state.x).onChange((v) => {
           state.x = v;
@@ -4898,7 +5700,7 @@ var TikzModal = class extends import_obsidian.Modal {
         });
       });
       const yDiv = row2.createDiv({ cls: "tikz-func-field" });
-      new import_obsidian.Setting(yDiv).setName("y").addText((t) => {
+      new import_obsidian2.Setting(yDiv).setName("y").addText((t) => {
         cardEntry.yInput = t;
         t.setPlaceholder("0").setValue(state.y).onChange((v) => {
           state.y = v;
@@ -4906,7 +5708,7 @@ var TikzModal = class extends import_obsidian.Modal {
         });
       });
       const zDiv = row2.createDiv({ cls: "tikz-func-field" });
-      new import_obsidian.Setting(zDiv).setName("z").addText((t) => {
+      new import_obsidian2.Setting(zDiv).setName("z").addText((t) => {
         var _a;
         cardEntry.zInput = t;
         t.setPlaceholder("0").setValue((_a = state.z) != null ? _a : "").onChange((v) => {
@@ -4916,18 +5718,18 @@ var TikzModal = class extends import_obsidian.Modal {
       });
       const row3 = card.createDiv({ cls: "tikz-func-row" });
       const colorDiv = row3.createDiv({ cls: "tikz-func-field" });
-      new import_obsidian.Setting(colorDiv).setName("Color").addDropdown((d) => d.addOptions(COLOR_OPTIONS).setValue(state.color).onChange((v) => {
+      new import_obsidian2.Setting(colorDiv).setName("Color").addDropdown((d) => d.addOptions(COLOR_OPTIONS).setValue(state.color).onChange((v) => {
         state.color = v;
         card.style.borderLeftColor = COLOR_MAP[v] || "var(--text-muted)";
         update();
       }));
       const sizeDiv = row3.createDiv({ cls: "tikz-func-field" });
-      new import_obsidian.Setting(sizeDiv).setName("Size").addDropdown((d) => d.addOptions({ small: "Small", normal: "Normal", large: "Large" }).setValue(state.size).onChange((v) => {
+      new import_obsidian2.Setting(sizeDiv).setName("Size").addDropdown((d) => d.addOptions({ small: "Small", normal: "Normal", large: "Large" }).setValue(state.size).onChange((v) => {
         state.size = v;
         update();
       }));
       const anchorDiv = row3.createDiv({ cls: "tikz-func-field" });
-      new import_obsidian.Setting(anchorDiv).setName("Anchor").addDropdown((d) => d.addOptions({
+      new import_obsidian2.Setting(anchorDiv).setName("Anchor").addDropdown((d) => d.addOptions({
         above: "Above",
         below: "Below",
         left: "Left",
@@ -4938,27 +5740,30 @@ var TikzModal = class extends import_obsidian.Modal {
         update();
       }));
     };
+    const existingAnnotations = this.settings.getValue("annotations") || [];
+    for (const ann of existingAnnotations)
+      addCard(ann);
     const addBtnDiv = tab.createDiv({ cls: "tikz-add-func" });
-    new import_obsidian.Setting(addBtnDiv).addButton((btn) => btn.setButtonText("+ Add label").onClick(() => addCard()));
+    new import_obsidian2.Setting(addBtnDiv).addButton((btn) => btn.setButtonText("+ Add label").onClick(() => addCard()));
   }
   buildGridTab(container) {
     const tab = this.createTabContent(container, "Grid");
-    new import_obsidian.Setting(tab).setName("Show major grid").setDesc("Display major coordinate grid lines.").addToggle((t) => t.setValue(this.settings.getValue("showLargeGrid")).onChange((v) => {
+    new import_obsidian2.Setting(tab).setName("Show major grid").setDesc("Display major coordinate grid lines.").addToggle((t) => t.setValue(this.settings.getValue("showLargeGrid")).onChange((v) => {
       this.settings.setValue("showLargeGrid", v);
       this.requestPreviewUpdate();
     }));
-    new import_obsidian.Setting(tab).setName("Major divisions").setDesc("Approximate number of major grid cells across the X axis. The Y axis follows proportionally.").addSlider((s) => {
+    new import_obsidian2.Setting(tab).setName("Major divisions").setDesc("Approximate number of major grid cells across the X axis. The Y axis follows proportionally.").addSlider((s) => {
       var _a;
-      return s.setLimits(2, 20, 1).setValue((_a = this.settings.getValue("majorTickNum")) != null ? _a : 8).setDynamicTooltip().onChange((v) => {
+      return s.setLimits(2, 20, 1).setValue((_a = this.settings.getValue("majorTickNum")) != null ? _a : 8).onChange((v) => {
         this.settings.setValue("majorTickNum", v);
         this.requestPreviewUpdate();
       });
     });
-    new import_obsidian.Setting(tab).setName("Show minor grid").setDesc("Display minor coordinate grid lines between the major ones.").addToggle((t) => t.setValue(this.settings.getValue("showSmallGrid")).onChange((v) => {
+    new import_obsidian2.Setting(tab).setName("Show minor grid").setDesc("Display minor coordinate grid lines between the major ones.").addToggle((t) => t.setValue(this.settings.getValue("showSmallGrid")).onChange((v) => {
       this.settings.setValue("showSmallGrid", v);
       this.requestPreviewUpdate();
     }));
-    new import_obsidian.Setting(tab).setName("Minor subdivisions").setDesc("Number of minor subdivisions between two major grid lines.").addSlider((s) => s.setLimits(1, 10, 1).setValue(this.settings.getValue("gridSize")).setDynamicTooltip().onChange((v) => {
+    new import_obsidian2.Setting(tab).setName("Minor subdivisions").setDesc("Number of minor subdivisions between two major grid lines.").addSlider((s) => s.setLimits(1, 10, 1).setValue(this.settings.getValue("gridSize")).onChange((v) => {
       this.settings.setValue("gridSize", v);
       this.requestPreviewUpdate();
     }));
@@ -5037,7 +5842,7 @@ var TikzModal = class extends import_obsidian.Modal {
       { name: "Thickness", desc: "Very thin, Thin, Thick, Very thick. Affects the rendered TikZ output and the live preview equally." },
       { name: "Dashed", desc: "Draws the curve as a dashed line rather than a solid stroke." },
       { name: "Fill", desc: "Shades the region between the curve and the x-axis. When enabled, a Fill pattern dropdown (solid, horizontal/vertical lines, crosshatch, dots, diagonals) and a Fill opacity slider appear." },
-      { name: "Legend", desc: "Adds the expression to the legend box in the upper-right of the plot." }
+      { name: "Legend", desc: 'Adds an entry to the legend box in the upper-right of the plot. By default it shows the expression; set Legend label to override it with custom text (e.g. "Revenue").' }
     ]);
     section("Tools");
     para("The Tools tab adds composable overlays on top of functions. Each tool is independent - stack them freely to build the diagram you want. Function-referencing tools (area between, intersection) look up your functions by the Name field on each function card (defaults to f1, f2, \u2026).");
@@ -5090,6 +5895,7 @@ var TikzModal = class extends import_obsidian.Modal {
     list([
       { name: "Scroll", desc: "Mouse wheel zooms in or out around the cursor. Zoom updates xmin/xmax/ymin/ymax, so the generated TikZ code reflects what you see." },
       { name: "Drag", desc: "Click and drag inside the preview to pan. Like zoom, this updates the axis ranges and round-trips into the code." },
+      { name: "Lock pan/zoom", desc: "Padlock icon in the floating action strip on the right edge of the preview. When locked, drag and scroll no longer touch the axis range - use this if you've dialed in xmin/xmax/ymin/ymax and want to stop accidentally nudging them (e.g. while dragging an annotation nearby). Annotation dragging keeps working either way. Resets to unlocked next time you open the editor." },
       { name: "Preview size slider", desc: "On the Graph tab. Sets the live preview width in pixels. The exported TikZ size is controlled by Width and Height (cm) and stays independent." }
     ]);
     section("Camera (3D)");
@@ -5138,15 +5944,15 @@ var TikzModal = class extends import_obsidian.Modal {
   update3DVisibility() {
     const show3D = this.is3D();
     if (this.rotationContainer)
-      this.rotationContainer.style.display = show3D ? "block" : "none";
+      this.rotationContainer.toggleClass("tikz-hidden", !show3D);
     if (this.zAxisContainer)
-      this.zAxisContainer.style.display = show3D ? "block" : "none";
+      this.zAxisContainer.toggleClass("tikz-hidden", !show3D);
     if (this.axisStyleContainer)
-      this.axisStyleContainer.style.display = show3D ? "none" : "block";
+      this.axisStyleContainer.toggleClass("tikz-hidden", show3D);
     if (this.previewContainer)
       this.previewContainer.toggleClass("is-3d", show3D);
     if (this.zoom3DOverlay)
-      this.zoom3DOverlay.style.display = show3D ? "flex" : "none";
+      this.zoom3DOverlay.toggleClass("tikz-hidden", !show3D);
   }
   setupPreviewResizeObserver() {
     if (typeof ResizeObserver === "undefined")
@@ -5170,7 +5976,7 @@ var TikzModal = class extends import_obsidian.Modal {
   buildZoom3DOverlay() {
     const overlay = this.previewContainer.createDiv({ cls: "tikz-3d-zoom-overlay" });
     overlay.setAttr("aria-hidden", "true");
-    overlay.style.display = this.is3D() ? "flex" : "none";
+    overlay.toggleClass("tikz-hidden", !this.is3D());
     const plus = overlay.createEl("button", { cls: "tikz-3d-zoom-btn", text: "+" });
     plus.setAttr("type", "button");
     plus.setAttr("aria-label", "Zoom in");
@@ -5234,7 +6040,7 @@ var TikzModal = class extends import_obsidian.Modal {
       btn.setAttr("type", "button");
       btn.setAttr("aria-label", label);
       btn.setAttr("title", label);
-      (0, import_obsidian.setIcon)(btn, icon);
+      (0, import_obsidian2.setIcon)(btn, icon);
       btn.onclick = (e) => {
         e.stopPropagation();
         onClick();
@@ -5244,7 +6050,18 @@ var TikzModal = class extends import_obsidian.Modal {
     addAction("maximize-2", "Fit to functions", () => this.autoFitRanges());
     addAction("rotate-ccw", "Reset axis ranges", () => this.resetAxisRanges());
     addAction("grid-3x3", "Toggle major grid", () => this.toggleMajorGrid());
+    this.panLockBtn = addAction("lock-open", "Lock pan/zoom (2D)", () => this.togglePanLock());
     this.floatingActionsOverlay = overlay;
+  }
+  togglePanLock() {
+    this.panLocked = !this.panLocked;
+    if (this.panLockBtn) {
+      (0, import_obsidian2.setIcon)(this.panLockBtn, this.panLocked ? "lock" : "lock-open");
+      this.panLockBtn.toggleClass("is-active", this.panLocked);
+      this.panLockBtn.setAttr("aria-label", this.panLocked ? "Unlock pan/zoom (2D)" : "Lock pan/zoom (2D)");
+      this.panLockBtn.setAttr("title", this.panLocked ? "Unlock pan/zoom (2D)" : "Lock pan/zoom (2D)");
+    }
+    new import_obsidian2.Notice(this.panLocked ? "Pan/zoom locked - axis range won't change from drag or scroll." : "Pan/zoom unlocked.");
   }
   resetAxisRanges() {
     this.settings.setValue("xmin", "-0.5");
@@ -5258,13 +6075,13 @@ var TikzModal = class extends import_obsidian.Modal {
     }
     this.refreshRangeInputs();
     this.requestPreviewUpdate();
-    new import_obsidian.Notice("Axis ranges reset.");
+    new import_obsidian2.Notice("Axis ranges reset.");
   }
   toggleMajorGrid() {
     const current = !!this.settings.getValue("showLargeGrid");
     this.settings.setValue("showLargeGrid", !current);
     this.requestPreviewUpdate();
-    new import_obsidian.Notice(current ? "Major grid off." : "Major grid on.");
+    new import_obsidian2.Notice(current ? "Major grid off." : "Major grid on.");
   }
   setupMouseDragRotation() {
     const el = this.previewContainer;
@@ -5285,6 +6102,8 @@ var TikzModal = class extends import_obsidian.Modal {
           }
         }
       }
+      if (this.panLocked && !this.is3D())
+        return;
       this.isDragging = true;
       this.dragStartX = e.clientX;
       this.dragStartY = e.clientY;
@@ -5346,6 +6165,8 @@ var TikzModal = class extends import_obsidian.Modal {
     window.addEventListener("mouseup", this.onMouseUp);
     el.addEventListener("wheel", (e) => {
       if (this.is3D())
+        return;
+      if (this.panLocked)
         return;
       if (e.deltaY === 0)
         return;
@@ -5453,7 +6274,7 @@ var TikzModal = class extends import_obsidian.Modal {
       const surfaces = this.settings.getValue("functions3D") || [];
       const live2 = surfaces.filter((s) => s.expression);
       if (!live2.length) {
-        new import_obsidian.Notice("Add a surface first.");
+        new import_obsidian2.Notice("Add a surface first.");
         return;
       }
       let xs2 = [];
@@ -5481,7 +6302,7 @@ var TikzModal = class extends import_obsidian.Modal {
         }
       }
       if (!xs2.length) {
-        new import_obsidian.Notice("Could not evaluate any surface.");
+        new import_obsidian2.Notice("Could not evaluate any surface.");
         return;
       }
       const [zLo, zHi] = trimmedRange(zs);
@@ -5502,13 +6323,13 @@ var TikzModal = class extends import_obsidian.Modal {
       this.settings.setValue("zmax", this.formatRange(newZmax));
       this.refreshRangeInputs();
       this.requestPreviewUpdate();
-      new import_obsidian.Notice("Axis ranges fit to surfaces.");
+      new import_obsidian2.Notice("Axis ranges fit to surfaces.");
       return;
     }
     const funcs = this.settings.getValue("functions") || [];
     const live = funcs.filter((f) => f.expression && f.domain);
     if (!live.length) {
-      new import_obsidian.Notice("Add a function first.");
+      new import_obsidian2.Notice("Add a function first.");
       return;
     }
     let xs = [];
@@ -5530,7 +6351,7 @@ var TikzModal = class extends import_obsidian.Modal {
       }
     }
     if (!xs.length) {
-      new import_obsidian.Notice("Could not evaluate any function.");
+      new import_obsidian2.Notice("Could not evaluate any function.");
       return;
     }
     const [yLo, yHi] = trimmedRange(ys);
@@ -5546,7 +6367,7 @@ var TikzModal = class extends import_obsidian.Modal {
     this.settings.setValue("ymax", this.formatRange(newYmax));
     this.refreshRangeInputs();
     this.requestPreviewUpdate();
-    new import_obsidian.Notice("Axis ranges fit to functions.");
+    new import_obsidian2.Notice("Axis ranges fit to functions.");
   }
   applyAxisRange(xmin, xmax, ymin, ymax) {
     if (!isFinite(xmin) || !isFinite(xmax) || !isFinite(ymin) || !isFinite(ymax))
@@ -5610,7 +6431,7 @@ var TikzModal = class extends import_obsidian.Modal {
   }
   buildActionBar(container) {
     const bar = container.createDiv({ cls: "tikz-action-bar" });
-    new import_obsidian.Setting(bar).addButton((btn) => btn.setButtonText("Copy SVG").then((b) => b.buttonEl.setAttr("aria-label", "Copy the preview as an SVG with transparent background")).onClick(() => __async(this, null, function* () {
+    new import_obsidian2.Setting(bar).addButton((btn) => btn.setButtonText("Copy SVG").then((b) => b.buttonEl.setAttr("aria-label", "Copy the preview as an SVG with transparent background")).onClick(() => __async(this, null, function* () {
       yield this.copyPreviewAsSvg();
     }))).addButton((btn) => btn.setButtonText("Copy PNG").then((b) => b.buttonEl.setAttr("aria-label", "Copy the preview as a PNG with transparent background")).onClick(() => __async(this, null, function* () {
       yield this.copyPreviewAsPng();
@@ -5620,9 +6441,9 @@ var TikzModal = class extends import_obsidian.Modal {
         yield navigator.clipboard.writeText(code);
         const orig = btn.buttonEl.textContent;
         btn.setButtonText("Copied");
-        setTimeout(() => btn.setButtonText(orig || "Copy TikZ code"), 2e3);
+        window.setTimeout(() => btn.setButtonText(orig || "Copy TikZ code"), 2e3);
       } catch (e) {
-        new import_obsidian.Notice("Could not access clipboard.");
+        new import_obsidian2.Notice("Could not access clipboard.");
       }
     }))).addButton((btn) => btn.setButtonText(this.sourceFile ? "Save changes" : "Insert into note").setCta().then((b) => b.buttonEl.setAttr("aria-label", this.sourceFile ? "Save the edited chart back into the source note" : "Insert this chart as an easy-tikz block in the current note")).onClick(() => __async(this, null, function* () {
       yield this.emitEasyTikzBlock();
@@ -5636,7 +6457,7 @@ var TikzModal = class extends import_obsidian.Modal {
         try {
           const content = yield this.app.vault.read(this.sourceFile);
           if (!content.includes(this.originalBlockText)) {
-            new import_obsidian.Notice("Could not locate the original chart in the source file (it may have been edited). Inserting at the cursor instead.");
+            new import_obsidian2.Notice("Could not locate the original chart in the source file (it may have been edited). Inserting at the cursor instead.");
             this.insertAtCursor(newBlock);
             return;
           }
@@ -5646,7 +6467,7 @@ var TikzModal = class extends import_obsidian.Modal {
           this.close();
         } catch (e) {
           const msg = e instanceof Error ? e.message : "unknown error";
-          new import_obsidian.Notice("Could not save the chart to the file: " + msg);
+          new import_obsidian2.Notice("Could not save the chart to the file: " + msg);
         }
         return;
       }
@@ -5654,9 +6475,9 @@ var TikzModal = class extends import_obsidian.Modal {
     });
   }
   insertAtCursor(blockText) {
-    const view = this.app.workspace.getActiveViewOfType(import_obsidian.MarkdownView);
+    const view = this.app.workspace.getActiveViewOfType(import_obsidian2.MarkdownView);
     if (!view) {
-      new import_obsidian.Notice("No active note to insert into.");
+      new import_obsidian2.Notice("No active note to insert into.");
       return;
     }
     view.editor.replaceSelection(blockText + "\n");
@@ -5668,10 +6489,24 @@ var TikzModal = class extends import_obsidian.Modal {
     if (!svg)
       return null;
     const clone = svg.cloneNode(true);
+    clone.querySelectorAll("foreignObject[data-export-text]").forEach((fo) => {
+      const t = createSvg("text");
+      t.setAttribute("x", fo.getAttribute("data-export-x") || "0");
+      t.setAttribute("y", fo.getAttribute("data-export-y") || "0");
+      t.setAttribute("text-anchor", fo.getAttribute("data-export-anchor") || "start");
+      t.setAttribute("fill", fo.getAttribute("data-export-fill") || "var(--text-normal)");
+      t.setAttribute("font-size", fo.getAttribute("data-export-font-size") || "11");
+      t.setAttribute("font-family", "var(--font-text)");
+      const weight = fo.getAttribute("font-weight");
+      if (weight)
+        t.setAttribute("font-weight", weight);
+      t.textContent = stripLatex(fo.getAttribute("data-export-text") || "");
+      fo.replaceWith(t);
+    });
     const computed = getComputedStyle(document.body);
     const resolveVars = (value) => value.replace(/var\((--[^,)]+)(?:,\s*([^)]+))?\)/g, (_match, name, fallback) => {
       const v = computed.getPropertyValue(name).trim();
-      return v || (fallback ? String(fallback).trim() : "");
+      return v || (fallback ? fallback.trim() : "");
     });
     const nodes = [clone, ...Array.from(clone.querySelectorAll("*"))];
     for (const el of nodes) {
@@ -5695,15 +6530,15 @@ var TikzModal = class extends import_obsidian.Modal {
     return __async(this, null, function* () {
       const clone = this.prepareSvgForExport();
       if (!clone) {
-        new import_obsidian.Notice("No graph to copy yet.");
+        new import_obsidian2.Notice("No graph to copy yet.");
         return;
       }
       const svgString = '<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n' + new XMLSerializer().serializeToString(clone);
       try {
         yield navigator.clipboard.writeText(svgString);
-        new import_obsidian.Notice("SVG copied to clipboard (transparent background).");
+        new import_obsidian2.Notice("SVG copied to clipboard (transparent background).");
       } catch (e) {
-        new import_obsidian.Notice("Could not copy SVG to the clipboard.");
+        new import_obsidian2.Notice("Could not copy SVG to the clipboard.");
       }
     });
   }
@@ -5711,7 +6546,7 @@ var TikzModal = class extends import_obsidian.Modal {
     return __async(this, null, function* () {
       const clone = this.prepareSvgForExport();
       if (!clone) {
-        new import_obsidian.Notice("No graph to copy yet.");
+        new import_obsidian2.Notice("No graph to copy yet.");
         return;
       }
       const svgString = new XMLSerializer().serializeToString(clone);
@@ -5727,7 +6562,7 @@ var TikzModal = class extends import_obsidian.Modal {
           img.src = url;
         });
         const scale = 2;
-        const canvas = document.createElement("canvas");
+        const canvas = createEl("canvas");
         canvas.width = Math.round(width * scale);
         canvas.height = Math.round(height * scale);
         const ctx = canvas.getContext("2d");
@@ -5739,10 +6574,10 @@ var TikzModal = class extends import_obsidian.Modal {
         if (!pngBlob)
           throw new Error("Could not encode PNG");
         yield navigator.clipboard.write([new ClipboardItem({ "image/png": Promise.resolve(pngBlob) })]);
-        new import_obsidian.Notice("PNG copied to clipboard (transparent background, 2x resolution).");
+        new import_obsidian2.Notice("PNG copied to clipboard (transparent background, 2x resolution).");
       } catch (e) {
         const message = e instanceof Error ? e.message : "PNG copy failed";
-        new import_obsidian.Notice(message);
+        new import_obsidian2.Notice(message);
       } finally {
         URL.revokeObjectURL(url);
       }
@@ -5845,7 +6680,7 @@ var TikzModal = class extends import_obsidian.Modal {
       }
     } catch (e) {
       const message = e instanceof Error ? e.message : "Rendering error";
-      new import_obsidian.Notice(`Render failed: ${message}`);
+      new import_obsidian2.Notice(`Render failed: ${message}`);
     }
     this.updateCodeArea();
   }
@@ -5869,7 +6704,7 @@ var TikzModal = class extends import_obsidian.Modal {
 };
 
 // main.ts
-var EasyTikzPlugin = class extends import_obsidian2.Plugin {
+var EasyTikzPlugin = class extends import_obsidian3.Plugin {
   constructor() {
     super(...arguments);
     this.data = __spreadValues({}, DEFAULT_PLUGIN_DATA);
@@ -5877,8 +6712,9 @@ var EasyTikzPlugin = class extends import_obsidian2.Plugin {
   onload() {
     return __async(this, null, function* () {
       const stored = yield this.loadData();
+      const storedTemplates = stored == null ? void 0 : stored.userTemplates;
       this.data = __spreadProps(__spreadValues(__spreadValues({}, DEFAULT_PLUGIN_DATA), stored != null ? stored : {}), {
-        userTemplates: Array.isArray(stored == null ? void 0 : stored.userTemplates) ? stored.userTemplates : []
+        userTemplates: Array.isArray(storedTemplates) ? storedTemplates : []
       });
       this.addRibbonIcon("square-function", "Easy TikZ", () => {
         new TikzModal(this.app, this).open();
@@ -5964,7 +6800,7 @@ var EasyTikzPlugin = class extends import_obsidian2.Plugin {
     this.buildHoverControls(wrapper, data, ctx, fenceTag, source, aspect, containerWidth);
     const openEditor = () => {
       const file = this.app.vault.getAbstractFileByPath(ctx.sourcePath);
-      const tfile = file instanceof import_obsidian2.TFile ? file : null;
+      const tfile = file instanceof import_obsidian3.TFile ? file : null;
       const originalBlockText = "```" + fenceTag + "\n" + source.replace(/\s+$/, "") + "\n```";
       new TikzModal(this.app, this, {
         data,
@@ -5996,12 +6832,12 @@ var EasyTikzPlugin = class extends import_obsidian2.Plugin {
       btn.setAttr("type", "button");
       btn.setAttr("aria-label", label);
       btn.setAttr("title", label);
-      (0, import_obsidian2.setIcon)(btn, icon);
-      btn.addEventListener("click", (e) => __async(this, null, function* () {
+      (0, import_obsidian3.setIcon)(btn, icon);
+      btn.addEventListener("click", (e) => {
         e.stopPropagation();
         this.applyAlign(wrapper, key);
-        yield this.persistDisplayPatch(data, ctx, fenceTag, source, { displayAlign: key });
-      }));
+        void this.persistDisplayPatch(data, ctx, fenceTag, source, { displayAlign: key });
+      });
     };
     makeAlignBtn("left", "align-left", "Align left");
     makeAlignBtn("center", "align-center", "Center");
@@ -6028,15 +6864,15 @@ var EasyTikzPlugin = class extends import_obsidian2.Plugin {
       wrapper.style.width = w + "px";
       wrapper.style.height = w / aspect + "px";
     });
-    slider.addEventListener("change", () => __async(this, null, function* () {
+    slider.addEventListener("change", () => {
       const w = parseInt(slider.value, 10);
-      yield this.persistDisplayPatch(data, ctx, fenceTag, source, { displayWidth: w });
-    }));
+      void this.persistDisplayPatch(data, ctx, fenceTag, source, { displayWidth: w });
+    });
   }
   persistDisplayPatch(data, ctx, fenceTag, source, patch) {
     return __async(this, null, function* () {
       const file = this.app.vault.getAbstractFileByPath(ctx.sourcePath);
-      if (!(file instanceof import_obsidian2.TFile))
+      if (!(file instanceof import_obsidian3.TFile))
         return;
       const merged = __spreadValues(__spreadValues({}, data), patch);
       const trimmedSource = source.replace(/\s+$/, "");
@@ -6052,36 +6888,58 @@ var EasyTikzPlugin = class extends import_obsidian2.Plugin {
     });
   }
 };
-var EasyTikzSettingTab = class extends import_obsidian2.PluginSettingTab {
+var EasyTikzSettingTab = class extends import_obsidian3.PluginSettingTab {
   constructor(app, plugin) {
     super(app, plugin);
     this.plugin = plugin;
   }
-  display() {
-    const { containerEl } = this;
-    containerEl.empty();
-    new import_obsidian2.Setting(containerEl).setName("Invert vertical drag in 3D").setDesc("Off (default): drag down tilts the scene up (camera elevation rises), drag up tilts the scene down - the trackball convention. On: drag down lowers the camera, drag up raises it - direct manipulation.").addToggle((t) => t.setValue(this.plugin.data.invertDrag3D).onChange((v) => __async(this, null, function* () {
-      this.plugin.data.invertDrag3D = v;
+  getSettingDefinitions() {
+    return [
+      {
+        name: "Invert vertical drag in 3D",
+        desc: "Off (default): drag down tilts the scene up (camera elevation rises), drag up tilts the scene down - the trackball convention. On: drag down lowers the camera, drag up raises it - direct manipulation.",
+        control: { type: "toggle", key: "invertDrag3D", defaultValue: false }
+      },
+      {
+        name: "Max 3D samples per axis",
+        desc: "Upper bound of the Samples slider on each 3D surface card. Default 80. Higher values draw smoother surfaces but each axis step squares the work, so the preview will slow noticeably above ~200. Re-open the Easy TikZ modal after changing this.",
+        control: { type: "slider", key: "maxSamples3D", min: 40, max: 400, step: 10, defaultValue: 80 }
+      },
+      {
+        name: "2D pan sensitivity",
+        desc: "Default 1.0 - direct manipulation: moving the mouse by N pixels pans the chart by exactly N chart pixels. Lower values dampen the drag for finer control on dense plots (e.g. 0.5 = half-step pan); higher values overshoot. The pan rate also scales with the current axis range, so this multiplier stays consistent as you zoom in or out.",
+        control: { type: "slider", key: "dragSensitivity2D", min: 0.1, max: 2, step: 0.05, defaultValue: 1 }
+      },
+      {
+        name: "Also render plain `tikz` blocks",
+        desc: "Off by default. When on, the plugin renders blocks tagged plain ```tikz the same way it renders ```easy-tikz blocks. Useful if you want one tag for everything, but conflicts with `obsidian-tikzjax` and other plugins that claim ```tikz. Reload Obsidian after changing this for the registration to take effect.",
+        control: { type: "toggle", key: "renderTikzBlocks", defaultValue: false }
+      }
+    ];
+  }
+  getControlValue(key) {
+    return this.plugin.data[key];
+  }
+  setControlValue(key, value) {
+    return __async(this, null, function* () {
+      switch (key) {
+        case "invertDrag3D":
+          this.plugin.data.invertDrag3D = Boolean(value);
+          break;
+        case "renderTikzBlocks":
+          this.plugin.data.renderTikzBlocks = Boolean(value);
+          break;
+        case "maxSamples3D":
+          this.plugin.data.maxSamples3D = Number(value);
+          break;
+        case "dragSensitivity2D":
+          this.plugin.data.dragSensitivity2D = Number(value);
+          break;
+        default:
+          return;
+      }
       yield this.plugin.saveSettings();
-    })));
-    new import_obsidian2.Setting(containerEl).setName("Max 3D samples per axis").setDesc("Upper bound of the Samples slider on each 3D surface card. Default 80. Higher values draw smoother surfaces but each axis step squares the work, so the preview will slow noticeably above ~200. Re-open the Easy TikZ modal after changing this.").addSlider((s) => {
-      var _a;
-      return s.setLimits(40, 400, 10).setValue((_a = this.plugin.data.maxSamples3D) != null ? _a : 80).setDynamicTooltip().onChange((v) => __async(this, null, function* () {
-        this.plugin.data.maxSamples3D = v;
-        yield this.plugin.saveSettings();
-      }));
     });
-    new import_obsidian2.Setting(containerEl).setName("2D pan sensitivity").setDesc("Default 1.0 - direct manipulation: moving the mouse by N pixels pans the chart by exactly N chart pixels. Lower values dampen the drag for finer control on dense plots (e.g. 0.5 = half-step pan); higher values overshoot. The pan rate also scales with the current axis range, so this multiplier stays consistent as you zoom in or out.").addSlider((s) => {
-      var _a;
-      return s.setLimits(0.1, 2, 0.05).setValue((_a = this.plugin.data.dragSensitivity2D) != null ? _a : 1).setDynamicTooltip().onChange((v) => __async(this, null, function* () {
-        this.plugin.data.dragSensitivity2D = v;
-        yield this.plugin.saveSettings();
-      }));
-    });
-    new import_obsidian2.Setting(containerEl).setName("Also render plain `tikz` blocks").setDesc("Off by default. When on, the plugin renders blocks tagged plain ```tikz the same way it renders ```easy-tikz blocks. Useful if you want one tag for everything, but conflicts with `obsidian-tikzjax` and other plugins that claim ```tikz. Reload Obsidian after changing this for the registration to take effect.").addToggle((t) => t.setValue(this.plugin.data.renderTikzBlocks).onChange((v) => __async(this, null, function* () {
-      this.plugin.data.renderTikzBlocks = v;
-      yield this.plugin.saveSettings();
-    })));
   }
 };
 
