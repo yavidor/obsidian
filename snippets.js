@@ -179,6 +179,15 @@
     options: "rmA",
     priority: -1,
   },
+  // Avoid Auto letter subscript
+  // {
+  //   trigger: "\\\\(?!(?:${GREEK})[0-9])([A-Za-z]+)(\\d)",
+  //   replacement: "\\[[0]] [[1]]",
+  //   options: "rmA",
+  //   priority: 1,
+  //   description:
+  //     "Add space after any non-Greek command when followed by a number.",
+  // },
 
   { trigger: "xnn", replacement: "x_{n}", options: "mA" },
   { trigger: "\\xii", replacement: "x_{i}", options: "mA", priority: 1 },
