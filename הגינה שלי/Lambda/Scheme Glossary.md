@@ -61,10 +61,10 @@ This feels like cheating, and it probably is. But it works
 
 
 > [!TODO] Functions to write
-> - Length
-> - Min
-> - Map
-> - Reduce
-> - Filter
-> - Concatenate
-> - Reverse
+> - [x] Length
+> - [x] Min
+> - [ ] Map
+> - [ ] Reduce
+> - [ ] Filter
+> - [ ] Concatenate
+> - [ ] Reverse
