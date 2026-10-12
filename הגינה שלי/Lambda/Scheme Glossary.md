@@ -125,8 +125,22 @@ This examples shows how a co-recursive behavior can be defined using `letrec`
                 #f
                 (o (- n 1))))))
       o))
+> (is-even 1)
+#f
 ```
 ### Counter-example
+While co-recursion is possible, you cannot get into circular dependency (which is good!)
+```scheme
+> (letrec
+   ((x y)
+    (y x))
+    (+ x y))
+Exception: attempt to reference undefined variable y
+```
 
+> [!QUESTION] Equivalence?
+> Is this just syntactic sugar or "new power"?
+> Well I don't really know, but I think that this behavior cannot be trivially replicated with `let`, `let*` and `lambda` expressions, since everything up until now had a top-down scope
+>
 # Apply
 
