@@ -12,31 +12,31 @@ cssclasses:
 # s-expression
 ```scheme
 > (quote abc)
-> abc
+abc
 > (quote (a b c d))
-> (a b c d)
+(a b c d)
 ```
 # Pairs
 The only data structure
 Created with
 ```scheme
 > (cons 5 6)
-> (5 . 6)
+(5 . 6)
 ```
 Accessed with `car` and `cdr`
 For example for the pair (5 . 6)
 ```scheme
 > (define p (cons (5 6))
 > (car p)
-> 5
+5
 > (cdr p)
-> 6
+6
 ```
 Can be nested, for example to create a linked list
 ```scheme
 > (define p (cons 4 (cons 5 6)))
 > (cdr (cdr p))
-> 6
+6
 ```
 ## The empty list
 `()`
@@ -69,8 +69,8 @@ This feels like cheating, and it probably is. But it works
 > - [x] Concatenate
 > - [x] Reverse
 
-# Let
-Like lambda but with binding pre-declared
+# let
+Like lambda but with binding predeclared
 ## Syntax
 ```scheme
 (let
@@ -80,11 +80,53 @@ Like lambda but with binding pre-declared
    (an e_n))
    body)
 ```
-## Let*
 
-> [!TODO] Add
-> With how to turn let to lambda and let* to nested let
+At the end of the day this is equivalent to a lambda expression
+Just like we wrote this let expression we could've written
+```scheme
+((lambda (a_1 a_2 ... a_n)
+  body) e_1 e_2 ... e_n)
+```
+So `let` is in fact syntactic sugar over lambda expressions
+## let*
+Like let, but arguments (need to check if arguments is really the right name for this) can see the arguments defined above them
+syntax is the same as `let` but with an asterisk
+### Example
+```scheme
+> (let*
+   ((x 1)
+    (y y))
+    (+ x y))
+2
+```
+It should be mentioned that this too is actually syntactic sugar, over nested `let` statements. We can take the example from above and write it like this:
+```scheme
+> (let
+    ((x 1))
+    (let
+      ((y x))
+      (+ x y)))
+2
+```
+## `letrec`
+Now the real crazy shit happens
+`Letrec` is like `let*` except each deceleration can see every deceleration, including itself, allowing for recursive behavior
+### Example
+This examples shows how a co-recursive behavior can be defined using `letrec`
+```scheme
+> (define is-even
+    (letrec
+      ((o (lambda (n)
+            (if (zero? n)
+                #t
+                (e (- n 1)))))
+       (e (lambda (n)
+            (if (zero? n)
+                #f
+                (o (- n 1))))))
+      o))
+```
+### Counter-example
 
-## Letrec
 # Apply
 
