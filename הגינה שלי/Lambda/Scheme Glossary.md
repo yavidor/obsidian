@@ -61,6 +61,7 @@ This feels like cheating, and it probably is. But it works
 
 
 > [!CHECK] Functions to write
+> [[Scheme functions#11-10-2026]]
 > - [x] Length
 > - [x] Min
 > - [x] Map
@@ -70,7 +71,7 @@ This feels like cheating, and it probably is. But it works
 > - [x] Reverse
 
 # let
-Like lambda but with binding predeclared
+Like lambda but with binding pre-declared
 ## Syntax
 ```scheme
 (let

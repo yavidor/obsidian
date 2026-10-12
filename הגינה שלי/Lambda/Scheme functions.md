@@ -1,7 +1,8 @@
 ---
 uid: 070612ed-b139-43ce-9d62-8e15d4980a09
 ---
-# Length
+# 11-10-2026
+## Length
 ```scheme
 (define list-length
         (lambda (l) 
@@ -9,7 +10,7 @@ uid: 070612ed-b139-43ce-9d62-8e15d4980a09
                     0
                     (+ 1 (list-length (cdr l))))))
 ```
-# Min
+## Min
 ```scheme
 (define list-min
     (lambda (l) 
@@ -20,7 +21,7 @@ uid: 070612ed-b139-43ce-9d62-8e15d4980a09
                 (min (car l) (list-min (cdr l)))))))
 ```
 
-# Map
+## Map
 ```scheme
 (define list-map
     (lambda (l func)
@@ -28,7 +29,7 @@ uid: 070612ed-b139-43ce-9d62-8e15d4980a09
             (cons (func (car l)) '())
             (cons (func (car l)) (list-map (cdr l) func)))))
 ```
-# Reduce
+## Reduce
 
 ```scheme
 (define reduce
@@ -37,7 +38,7 @@ uid: 070612ed-b139-43ce-9d62-8e15d4980a09
             (reducer initial (car l))
             (reduce (cdr l) reducer (reducer initial (car l))))))
 ```
-# Filter
+## Filter
 ```scheme
 (define filter
     (lambda (l predicate?)
@@ -48,7 +49,7 @@ uid: 070612ed-b139-43ce-9d62-8e15d4980a09
             (if (predicate? (car l))
                 (cons (car l) (filter (cdr l) predicate?))
 ```
-# Concat
+## Concat
 ```scheme
 (define cat
   (lambda (l1 l2)
@@ -56,8 +57,7 @@ uid: 070612ed-b139-43ce-9d62-8e15d4980a09
       (cons (car l1) l2)
       (cons (car l1) (cat (cdr l1) l2)))))
 ```
-# Reverse
-## Using a helper variable
+## Reverse
 
 ```scheme
 (define reverse-list
@@ -66,3 +66,5 @@ uid: 070612ed-b139-43ce-9d62-8e15d4980a09
        acc
       (reverse-list (cdr l) (cons (car l) acc)))))
 ```
+
+# 12-10-2026
