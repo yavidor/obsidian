@@ -60,14 +60,14 @@ This feels like cheating, and it probably is. But it works
 ```
 
 
-> [!TODO] Functions to write
+> [!CHECK] Functions to write
 > - [x] Length
 > - [x] Min
 > - [x] Map
 > - [x] Reduce
 > - [x] Filter
-> - [ ] Concatenate
-> - [ ] Reverse
+> - [x] Concatenate
+> - [x] Reverse
 
 # Let
 Like lambda but with binding pre-declared
