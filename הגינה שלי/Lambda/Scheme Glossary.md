@@ -69,7 +69,22 @@ This feels like cheating, and it probably is. But it works
 > - [ ] Concatenate
 > - [ ] Reverse
 
+# Let
+Like lambda but with binding pre-declared
+## Syntax
+```scheme
+(let
+  ((a_1 e_1)
+   (a_2 e_2)
+   ...
+   (an e_n))
+   body)
 ```
-1 2 3 ()
-() 3 2 1
-```
+## Let*
+
+> [!TODO] Add
+> With how to turn let to lambda and let* to nested let
+
+## Letrec
+# Apply
+
