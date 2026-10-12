@@ -145,3 +145,16 @@ Exception: attempt to reference undefined variable y
 >
 # Apply
 
+Apply gives us the option to pass down a list as the arguments to a function seperatly
+## Example
+```scheme
+> (define add-three
+  (lambda (a b c)
+  (+ a b c)))
+> (define my-list '(1 2 3))
+```
+We cannot do `(add-three my-list)` since it's a list, so instead we do
+```scheme
+> (apply add-three my-list)
+6
+```
