@@ -63,8 +63,13 @@ This feels like cheating, and it probably is. But it works
 > [!TODO] Functions to write
 > - [x] Length
 > - [x] Min
-> - [ ] Map
-> - [ ] Reduce
-> - [ ] Filter
+> - [x] Map
+> - [x] Reduce
+> - [x] Filter
 > - [ ] Concatenate
 > - [ ] Reverse
+
+```
+1 2 3 ()
+() 3 2 1
+```
