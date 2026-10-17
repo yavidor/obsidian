@@ -32,3 +32,4 @@ It will be
 (8 (3 (1) (6 (4)) (7))) (10 '() (14)))
 ```
 
+Since we need the tree to be ordered, a null value is not acceptable, so the default value will be $0$
