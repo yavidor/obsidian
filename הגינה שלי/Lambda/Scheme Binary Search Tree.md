@@ -6,9 +6,10 @@ cssclasses:
 # BST
 A [[binary search tree]] (Also known as sorted binary tree, the combination of these two names explain what it does pretty well)
 A BST is a [[binary tree]] but with the following property:
-For each node $v$, the left child of $v$ is lesser or equal to $v$, and the right child is greater than $v$.
-This means that the elements of a BST need to have some sort of a partial order (explained [[תואר/סיכומים/סמסטר א/מושגי יסוד במתמטיקה/הרצאה 12#יחסי סדר|here]])\
+For each node $v$, every value in the left sub-tree of $v$ is lesser or equal to $v$, and every value in the right sub-tree of $v$ is greater or equal to $v$. 
+This means that the elements of a BST need to have some sort of a partial order (explained [[תואר/סיכומים/סמסטר א/מושגי יסוד במתמטיקה/הרצאה 12#יחסי סדר|here]])
 # Implementation in Scheme
+By an arbitrary decision, equal values will go the the right sub-tree.
 Since we have [[Scheme Glossary#Pairs|only one data structure]], we'll build it with pairs.
 A tree will be represented as follows
 ```scheme
