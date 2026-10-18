@@ -30,7 +30,20 @@ graph TD
 ```
 It will be
 ```scheme
-(8 (3 (1) (6 (4)) (7))) (10 '() (14)))
+(8 (3 (1) (6 (4)) (7))) (10 () (14)))
 ```
 
-Since we need the tree to be ordered, a null value is not acceptable, so the default value will be $0$
+Since we need the tree to be ordered, a null value is not acceptable so I have decided that the empty pair `()` will represent an empty value. So the empty tree will be
+`(() () ())`
+
+Since having a child of empty value is not the same as not having a child, said empty tree is
+```mermaid
+graph TD
+    empty((∅)) --> left((∅))
+    empty --> right((∅))
+
+```
+
+> [!WARNING] Depth
+> This might make it seem like there is a level after the leaves, don't let this confuse you.
+
