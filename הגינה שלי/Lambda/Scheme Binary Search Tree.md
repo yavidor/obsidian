@@ -3,6 +3,11 @@ uid: c1bec893-829c-49e1-96c5-e767502b5f29
 cssclasses:
   - ltr
 ---
+
+> [!TODO] Github snippet
+> Create a quartz plugin to display github content or gists
+
+[code](https://raw.githubusercontent.com/yavidor/scheme/refs/heads/main/binary-search-tree/BinSearchTreeTests.scm)
 # BST
 A [[binary search tree]] (Also known as sorted binary tree, the combination of these two names explain what it does pretty well)
 A BST is a [[binary tree]] but with the following property:
@@ -64,10 +69,4 @@ To insert the value $v$,  we start at the root, if the value of the root is grea
 When we get to a leaf (which can be true for the root node itself), we create a node with value $v$ and insert it as the left or the right sub-tree.
 ### Removal
 Removing a value is not as straight-forward as inserting one.
-Since the value can be anywhere in the tree, to remove a value that's not in a leaf we need to find the value, delete its node and then re-add the values of all of its children
-
-> [!NOTE] Alternative
-> There is probably a better way to handle the children of a deleted node, however it requires different handling for leaves, nodes with one direct child, and nodes with two
-
-
-
+Since the value can be anywhere in the tree, to remove a value that's not in a leaf we need to find the value, delete and set the right child of a w
