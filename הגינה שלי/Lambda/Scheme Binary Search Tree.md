@@ -7,7 +7,7 @@ cssclasses:
 > [!TODO] Github snippet
 > Create a quartz plugin to display github content or gists
 
-[code](https://raw.githubusercontent.com/yavidor/scheme/refs/heads/main/binary-search-tree/BinSearchTreeTests.scm)
+[code](https://raw.githubusercontent.com/yavidor/scheme/refs/heads/main/binary-search-tree/BinSearchTree.scm)
 # BST
 A [[binary search tree]] (Also known as sorted binary tree, the combination of these two names explain what it does pretty well)
 A BST is a [[binary tree]] but with the following property:
