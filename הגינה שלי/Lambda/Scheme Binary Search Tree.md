@@ -47,3 +47,20 @@ graph TD
 > [!WARNING] Depth
 > This might make it seem like there is a level after the leaves, don't let this confuse you.
 
+## Operations
+### Traversal
+There are three main ways to traverse a binary search tree, pre-order, in-order and post-order.
+The three traversal algorithms are very similar.
+Start at the root node, then Visit nodes in a pattern (the only difference between the algorithms is the pattern), and for each node visited, treat it as the root of its own sub-tree, and apply the algorithm on it.
+
+In pre-order you go through the the node, the left sub-tree and then the right sub-tree
+In in-order you go through the left sub-tree, the node and then the right sub-tree
+In post-order you go through the right sub-tree, the right sub-tree and then the node.
+
+An inorder traversal visits the node in a non-decreasing order.
+Traversals are $\Theta \left( n \right)$ where $n$ is the number of nodes.
+### Insertion
+New values are added as leaves, to find *where* to put the new values.
+To insert the value $v$,  we start at the root, if the value of the root is greater than $v$ we go the the left sub-tree, else we go the the right.
+When we get to a leaf (which can be true for the root node itself), we create a node with value $v$ and insert it as the left or the right sub-tree.
+### Removal
