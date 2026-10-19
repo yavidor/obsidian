@@ -69,4 +69,4 @@ To insert the value $v$,  we start at the root, if the value of the root is grea
 When we get to a leaf (which can be true for the root node itself), we create a node with value $v$ and insert it as the left or the right sub-tree.
 ### Removal
 Removing a value is not as straight-forward as inserting one.
-Since the value can be anywhere in the tree, to remove a value that's not in a leaf we need to find the value, delete and set the right child of a w
+Since the value can be anywhere in the tree, to remove a value that's not in a leaf we need to find the value, delete and set the right child of the deleted node as the instead
