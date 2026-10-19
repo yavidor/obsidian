@@ -58,7 +58,6 @@ In in-order you go through the left sub-tree, the node and then the right sub-tr
 In post-order you go through the right sub-tree, the right sub-tree and then the node.
 
 An inorder traversal visits the node in a non-decreasing order.
-Traversals are $\Theta \left( n \right)$ where $n$ is the number of nodes.
 ### Insertion
 New values are added as leaves, to find *where* to put the new values.
 To insert the value $v$,  we start at the root, if the value of the root is greater than $v$ we go the the left sub-tree, else we go the the right.
