@@ -3,7 +3,6 @@ uid: c1bec893-829c-49e1-96c5-e767502b5f29
 cssclasses:
   - ltr
 ---
-
 # The code
 > [!TODO] Github snippet
 > Create a quartz plugin to display github content or gists
