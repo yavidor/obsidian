@@ -72,3 +72,8 @@ When we get to a leaf (which can be true for the root node itself), we create a 
 ### Removal
 Removing a value is not as straight-forward as inserting one.
 Since the value can be anywhere in the tree, to remove a value that's not in a leaf we need to find the value, delete and set the right child of the deleted node as the instead
+
+# Balance
+
+> [!TODO] Find a better way
+> Find a better/faster way to balance
