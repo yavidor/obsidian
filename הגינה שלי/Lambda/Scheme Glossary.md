@@ -158,3 +158,24 @@ We cannot do `(add-three my-list)` since it's a list, so instead we do
 > (apply add-three my-list)
 6
 ```
+
+# Cond
+The scheme switch case
+```scheme
+(cond
+  (cond1 then1)
+  (cond2 then2)
+  ...
+  (condn thenn)
+  (else default))
+```
+
+# Quasiquote
+
+> [!TODO] Quasiquote
+> ```scheme
+> `(,a ,@b)
+> ```
+
+
+# Sequences
