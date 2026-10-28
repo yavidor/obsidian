@@ -188,3 +188,13 @@ We denote CPS functions by a trailing \$, so `function$`
     (f (+ a b))))
 ```
 ## Tail-Call Optimization
+
+> [!TODO] Quicksort
+> CPS quicksort
+
+
+> [!TODO] CPS
+> List CPS
+
+
+
