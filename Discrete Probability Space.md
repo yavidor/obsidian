@@ -71,6 +71,14 @@ $$
 	7\leq j\leq 11
 	\end{gathered}
 	 \right\}  \\
-	 \mathbb{P}\left( A \right) =\frac{\left| A \right| }{\left| \Omega \right| }= \frac{6\cdot 5}{\binom{2}{11}} - \frac{30}{55}=\frac{6}{11}
+	 \mathbb{P}\left( A \right) =\frac{\left| A \right| }{\left| \Omega \right| }= \frac{6\cdot 5}{\binom{11}{2}} = \frac{30}{55}=\frac{6}{11}
 	\end{gather}
 $$
+
+> [!hint] Where did the binomial come from?
+> The set of all outcomes is composed of options to pick two balls out of the total ${11}$, therefore there are $\binom{11}{2}$
+> Then, there are ${6}$ options for $i$ and ${5}$ options for $j$
+> $$
+ \frac{11!}{2!9!} = \frac{10\cdot 11}{2} = 5 \cdot 11 =55
+ $$
+ 
