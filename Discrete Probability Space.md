@@ -11,6 +11,10 @@ A <u>discrete probability space</u> is a pair $\left( \Omega,p \right)$ where
 Here we have
 $$
 	\begin{gather}
-	\Omega=\left\{ \text{heads},\text{tails} \right\} = \left\{ H,T \right\} 
+	\Omega= \left\{ \underbrace{ H }_{ \text{heads} },\underbrace{ T }_{ \text{tails} } \right\}  \\
+	p:\Omega\to \left[ 0,1 \right]  \\
+	\begin{array}{lr}
+	p\left( H \right) =\frac{1}{2} & p\left( T \right) =\frac{1}{2}
+	\end{array} 
 	\end{gather}
 $$
