@@ -179,3 +179,11 @@ The scheme switch case
 
 
 # Sequences
+# Continuation-Passing Style (CPS)
+In CPS, each function also gets a function that continues the process
+We denote CPS functions by a trailing \$, so `function$`
+```scheme
+(define plus$
+  (lambda (a b f)
+    (f (+ a b))))
+```
