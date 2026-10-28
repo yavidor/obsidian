@@ -34,7 +34,7 @@
   "taboutClosingSymbols": "), ], \\rbrack, \\}, \\rbrace, \\rangle, \\rvert, \\rVert, \\rfloor, \\rceil, \\urcorner, }",
   "autoEnlargeBracketsTriggers": "sum, int, frac, prod, bigcup, bigcap",
   "forceMathLanguages": "math",
-  "snippetDebug": "verbose",
+  "snippetDebug": "off",
   "vimEnabled": true,
   "vimSelectMode": "<C-g>",
   "vimVisualMode": "<C-g>",
