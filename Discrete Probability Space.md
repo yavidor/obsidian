@@ -13,10 +13,22 @@ A <u>discrete probability space</u> is a pair $\left( \Omega,p \right)$ where
 A member in $\Omega$
 ### Event
 A subset $A\subseteq\Omega$
-we define
+and we define
 $$
 	\mathbb{P}\left( A \right) :=\sum_{\omega \in A}p\left( \omega \right) 
 $$
+### Uniform probability
+Assume $\Omega$ is finite
+The uniform (sometimes called symmetric) prob. on $\Omega$ is the function $p:\Omega\to \left[ 0,1 \right]$
+such that $p\left( \omega \right)=\frac{1}{\left| \Omega \right|}$
+
+> [!NOTE] For an event
+> Let $A\subseteq\Omega$ be an event, then we have
+> 
+> $$
+>	\mathbb{P}\left( A \right) =\sum_{\omega \in A}p\left( \omega \right) =\sum_{\omega \in A} \frac{1}{\left| \Omega \right| }= \frac{\left| A \right| }{\left| \Omega \right| }
+> $$
+
 # Example - "Flipping a fair coin"
 Here we have
 $$
