@@ -508,8 +508,8 @@
 
   // Automatically convert standalone numbers in text to math
   {
-    trigger: /([^'])\b(\d+)\b([\n\s.,?!:'])/,
-    replacement: "[[0]]$[[1]]$[[2]]",
+    trigger: /([^'])\b(-?\d+.?\d*)\b([\n\s,?!:'])/,
+    replacement: "[[0]]${[[1]]}$[[2]]",
     options: "tA",
   },
 
