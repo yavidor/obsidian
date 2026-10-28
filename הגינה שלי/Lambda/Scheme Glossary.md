@@ -187,3 +187,4 @@ We denote CPS functions by a trailing \$, so `function$`
   (lambda (a b f)
     (f (+ a b))))
 ```
+## Tail-Call Optimization
