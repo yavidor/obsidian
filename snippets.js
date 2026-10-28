@@ -506,8 +506,19 @@
     options: "tA",
   },
 
+  // Automatically convert standalone numbers in text to math
+  {
+    trigger: /([^'])\b(\d+)\b([\n\s.,?!:'])/,
+    replacement: "[[0]]$[[1]]$[[2]]",
+    options: "tA",
+  },
+
   // Automatically convert Greek letters in text to math.
-  // {trigger: "(${GREEK})([\\n\\s.,?!:'])", replacement: "$\\[[0]]$[[1]]", options: "rtAw"},
+  {
+    trigger: "(${GREEK})([\\n\\s.,?!:'])",
+    replacement: "$\\[[0]]$[[1]]",
+    options: "rtAw",
+  },
 
   // Automatically convert text of the form "x=2" and "x=n+1" to math.
   // {trigger: /([A-Za-z]=\d+)([\n\s.,?!:'])/, replacement: "$[[0]]$[[1]]", options: "rtAw"},

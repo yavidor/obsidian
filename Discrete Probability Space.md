@@ -28,7 +28,6 @@ such that $p\left( \omega \right)=\frac{1}{\left| \Omega \right|}$
 > $$
 >	\mathbb{P}\left( A \right) =\sum_{\omega \in A}p\left( \omega \right) =\sum_{\omega \in A} \frac{1}{\left| \Omega \right| }= \frac{\left| A \right| }{\left| \Omega \right| }
 > $$
-
 # Example - "Flipping a fair coin"
 Here we have
 $$
@@ -52,4 +51,26 @@ Take for example $A=\left\{ \text{We rolled an even number} \right\}=\left\{ 2,4
 Then we have
 $$
 	\mathbb{P}\left( A \right) =p\left( 2 \right) +p\left( 4 \right) +p\left( 6 \right) = \frac{1}{6}+\frac{1}{6}+\frac{1}{6}=\frac{3}{6}=\frac{1}{2}
+$$
+# Example - "Urns & Balls"
+An urn has $6$ red balls and $5$ green balls.
+We choose $2$ balls at random.
+What is the prob. we have one red ball and one green ball?
+Let's decide the balls are numbered, such that balls 1-6 are red, balls 7-11 are green.
+So we have
+$$
+\Omega=\left\{ \left( i,j \right) :1\leq i<j\leq 11 \right\} 
+$$
+it "makes sense" that $p$ is uniform
+$$
+	\begin{gather}
+	
+	A=\left\{ \left( i,j \right) :
+	\begin{gathered}
+	1\leq i\leq 6\\
+	7\leq j\leq 11
+	\end{gathered}
+	 \right\}  \\
+	 \mathbb{P}\left( A \right) =\frac{\left| A \right| }{\left| \Omega \right| }= \frac{6\cdot 5}{\binom{2}{11}} - \frac{30}{55}=\frac{6}{11}
+	\end{gather}
 $$
