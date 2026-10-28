@@ -77,5 +77,7 @@ $$
 
 > [!hint] Where did the binomial come from?
 > The set of all outcomes is composed of options to pick two balls out of the total ${11}$, therefore there are $\binom{11}{2}$
-> $$ \frac{11!}{2!9!} = \frac{10\cdot 11}{2} = 5 \cdot 11 =55 $$
+> $$
+> \frac{11!}{2!9!} = \frac{10\cdot 11}{2} = 5 \cdot 11 =55
+> $$
 > And for the numerator, there are ${6}$ options for $i$ and ${5}$ options for $j$, so $6 \cdot 5$, as known from the multiplication principal from #קומבינטוריקה 
