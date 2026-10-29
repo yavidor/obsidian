@@ -6,7 +6,7 @@ cssclasses:
 # Definition
 A <u>discrete probability space</u> is a pair $\left( \Omega,p \right)$ where
 - $\Omega$ is a finite or countable set called the <u>sample space</u>
-- $p:\Omega \to \left[ 0,1 \right]$ is a [[פונקציה|function]] such that $\sum_{\omega \in\Omega }p\left( \omega \right)=1$ 
+- $p:\Omega \to \left[ 0,1 \right]$ is a [[פונקציה|function]] such that $\displaystyle\sum_{\omega \in\Omega }p\left( \omega \right)=1$ 
 
 ## Definitions
 ### Outcome
