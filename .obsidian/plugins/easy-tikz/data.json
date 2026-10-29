@@ -3,5 +3,20 @@
   "invertDrag3D": false,
   "maxSamples3D": 80,
   "renderTikzBlocks": false,
-  "dragSensitivity2D": 1
+  "dragSensitivity2D": 1,
+  "showWhatsNew": true,
+  "aiServer": false,
+  "aiPort": 27150,
+  "aiToken": "",
+  "blockFormat": "text",
+  "animateCharts": true,
+  "liveChart": true,
+  "chartWords": {
+    "words": {},
+    "bundles": [],
+    "write": "yours"
+  },
+  "chartColours": "theme",
+  "draft": null,
+  "whatsNewSeen": "4.6.0"
 }

@@ -6,10 +6,13 @@
   "ignoredFolders": [],
   "disableAutomaticUpdates": false,
   "showRefreshButton": true,
+  "hideQueryText": true,
   "foldersToForceUpdate": [],
   "showErrorNotifications": true,
   "debugLogging": false,
   "addTrailingNewline": false,
   "linkFormat": "shortest",
-  "enableDataviewJS": true
+  "enableDataviewJS": true,
+  "skipQueriesWithUnresolvedReferences": true,
+  "updateQueriesOnRename": true
 }
