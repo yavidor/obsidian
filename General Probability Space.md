@@ -45,3 +45,64 @@ Just take
 $$
 	A_{N+1}=A_{N+2}=A_{N+3}=\ldots=\emptyset
 $$
+## Prob. of the complement
+### Claim
+$$
+	(\forall A\in \mathcal{F})\left( \mathbb{P}\left( A^{c}=1-\mathbb{P}\left( A \right)  \right)  \right) 
+$$
+### Proof
+$$
+	\begin{gather}
+	\Omega=A\cup A^{c} \land A\cap A^{c}=\emptyset \\
+	\implies 1=\mathbb{P}\left( \Omega \right) =\mathbb{P}\left( A \right)+\mathbb{P}\left( A^{c} \right)  
+	\end{gather}
+$$
+## Prob. of a subset
+### Claim
+$$
+	A\subseteq B \implies \mathbb{P}\left( A \right) \leq \mathbb{P}\left( B \right) 
+$$
+### Proof
+$$
+	\begin{gather}
+	
+	A\cup \left( B\setminus A \right)=B\land A\cap \left( B\setminus A \right)=\emptyset  \\
+	\implies \mathbb{P}\left( B \right) =\mathbb{P}\left( A \right) +\underbrace{ \mathbb{P}\left( B\setminus A \right)  }_{ \geq 0 } \geq \mathbb{P}\left( A \right) 
+	\end{gather}
+$$
+## Inclusion Exclusion
+### Claim
+$$
+	\left( \forall A,B\in \mathcal{F} \right) \left( \mathbb{P}\left( A\cup B \right) =\mathbb{P}\left( A \right) +\mathbb{P}\left( B \right) -\mathbb{P}\left( A\cap B \right)  \right) 
+$$
+This is literally [[כלל ההכלה וההפרדה|Principle of Inclusion and Exclusion]]
+## Sub-additivity
+$$
+	\left( \forall \left( A_{n} \right)_{n=1}^\infty \subseteq \mathcal{F}  \right) \left( \mathbb{P}\left( \bigcup_{n=1}^\infty A_{n} \right)\leq \sum_{n=1}^{\infty}  \mathbb{P}\left( A_{n} \right)   \right) 
+$$
+Note that this time $A_{n}$ is not pairwise disjoint
+For finite amounts it's just like the previous one, but the problem is that we have an infinite [[סדרה|sequence]], let's "make it pairwise disjoint"
+### Proof
+Set $B_{1}=A_{1}$
+and then
+$$
+	\left( \forall n\geq 2 \right) \left( A_{n} \setminus \left( A_{1}\cup A_{2}\cup\ldots\cup A_{n-1} \right)  \right) 
+$$
+We claim $\left( B_{n}\cap B_{m} = \emptyset \right)$ and therefore
+$$
+	\mathbb{P}\left( \bigcup^\infty_{n=1}A_{n} \right)  =\mathbb{P}\left( \bigcup^\infty_{n=1}B_{n} \right) \underset{ B\text{ is disjoint} }{ = } \sum_{n=1}^{\infty}  \mathbb{P}\left( B_{n} \right) \underset{ B_{n}\subseteq A_{n} }{ \leq } \mathbb{P}\left( A_{n} \right) 
+$$
+## Chain of subsets
+### Claim
+If $A_{1}\subseteq A_{2}\subseteq A_{3}\subseteq\ldots$
+then
+$$
+	\mathbb{P}\left( \bigcup_{n=1}^\infty A_{n} \right)  = \lim_{ n \to \infty } \mathbb{P}\left( A_{n} \right) 
+$$
+
+> [!NOTE] And the other way around
+> if $A_{1} \supseteq A_{2}\supseteq A_{3}\supseteq\ldots$
+> Then
+> $$
+> 	\left( \bigcap_{n=1}^\infty A_{n}\right) = \lim_{ n \to \infty } \mathbb{P}\left( A_{n} \right) 
+> $$
