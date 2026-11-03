@@ -21,4 +21,27 @@ $\mathcal{F}\subseteq2^{\Omega}$ is a $\sigma$ algebra if
    $$
    	A\in \mathcal{F} \implies \underbrace{ A^{c} }_{ \Omega \setminus A }\in\mathcal{F}
    $$
-   
+# Properties
+## Empty set is zero
+### Claim
+$$
+	\mathbb{P}\left( \emptyset \right) =0
+$$
+### Proof
+Choose $A_{1}=A_{2}=\ldots=\emptyset$
+$\left( \forall n\neq m \right)\left( A_{n}\cap A_{m} \right)=\emptyset$ so by the definition
+$$
+	\mathbb{P}\left( \emptyset \right) =\mathbb{P}\left( \bigcup^\infty_{n=1} A_{n} \right)= \sum_{n=1}^{\infty}  \mathbb{P}\left( A_{n} \right) =\sum_{n=1}^{\infty}  \mathbb{P}\left( \emptyset \right) \implies \mathbb{P}\left( \emptyset \right) =0   
+$$
+## Finite union
+### Claim
+For finitely many 
+$\left( A_{n} \right)_{n=1}^{N}\subseteq \mathcal{F}$ such that  $\left( \forall n\neq m \right)\left( A_{n}\cap A_{m}=\emptyset \right)$ we have 
+$$
+	\mathbb{P}\left( \bigcup^N_{n=1} A_{n} \right)  = \sum_{n=1}^{N} \mathbb{P}\left( A_{n} \right) 
+$$
+### Proof
+Just take
+$$
+	A_{N+1}=A_{N+2}=A_{N+3}=\ldots=\emptyset
+$$
