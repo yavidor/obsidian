@@ -1,5 +1,13 @@
 ---
 uid: 12110422-ca9a-449c-8e36-b9fb7f12b56b
+tags:
+  - תואר
+  - סיכומים/הרצאות
+  - הסתברות
+uni_subjects:
+  - הסתברות
+cssclasses:
+  - ltr
 ---
 # Definition
 A probability space is a triple $\left( \Omega,\mathcal{F},\mathbb{P} \right)$ where
