@@ -22,9 +22,10 @@ A probability space is a triple $\left( \Omega,\mathcal{F},\mathbb{P} \right)$ w
 ## Definition - $\sigma$-Algebra
 $\mathcal{F}\subseteq2^{\Omega}$ is a $\sigma$ algebra if
 - $\Omega \in \mathcal{F}$
-- $$
- \left( A_{n} \right)_{n=1}^\infty \in \mathcal{F} \implies \bigcup_{n=1}^\infty \in \mathcal{F}
- $$
+- 
+	$$
+     \left( A_{n} \right)_{n=1}^\infty \in \mathcal{F} \implies \bigcup_{n=1}^\infty \in \mathcal{F}
+	 $$
  - 
    $$
    	A\in \mathcal{F} \implies \underbrace{ A^{c} }_{ \Omega \setminus A }\in\mathcal{F}
