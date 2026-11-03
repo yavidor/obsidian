@@ -86,7 +86,7 @@ For finite amounts it's just like the previous one, but the problem is that we h
 Set $B_{1}=A_{1}$
 and then
 $$
-	\left( \forall n\geq 2 \right) \left( A_{n} \setminus \left( A_{1}\cup A_{2}\cup\ldots\cup A_{n-1} \right)  \right) 
+	\left( \forall n\geq 2 \right) \left(B_{n}= A_{n} \setminus \left( A_{1}\cup A_{2}\cup\ldots\cup A_{n-1} \right)  \right) 
 $$
 We claim $\left( B_{n}\cap B_{m} = \emptyset \right)$ and therefore
 $$
@@ -106,3 +106,19 @@ $$
 > $$
 > 	\left( \bigcap_{n=1}^\infty A_{n}\right) = \lim_{ n \to \infty } \mathbb{P}\left( A_{n} \right) 
 > $$
+### Proof
+Set $B_{1}=A_{1}$
+and then
+$$
+	\left( \forall n\geq 2 \right) \left(B_{n}= A_{n} \setminus  A_{n-1} \right)  
+$$
+And we have
+$$
+	\mathbb{P}\left( \bigcup_{n=1}^\infty A_{n} \right) 	=\mathbb{P}\left( \bigcup_{n=1}^\infty B_{n} \right) \underset{ disjoint }{ = } \sum_{n=1}^{\infty}  \mathbb{P}\left( B_{n} \right) 
+$$
+Note that $A_{n-1}\cup B_{n}=A_{n}$ and $A_{n-1}\cap B_{n}=\emptyset$
+so $\mathbb{P}\left( A_{n} \right)=\mathbb{P}\left( A_{n-1} \right)+\mathbb{P}\left( B_{n} \right)$
+And such
+$$
+	\mathbb{P}\left( \bigcup_{n=1}^\infty A_{n} \right) = \sum_{n=1}^{\infty}  \left( \mathbb{P}\left( A_{n}-\mathbb{P}\left( A_{n-1} \right)  \right)  \right) \underset{ \text{Telescopic} }{ = } \lim_{ n \to \infty } \mathbb{P}\left( A_{n} \right) 
+$$
