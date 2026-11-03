@@ -17,7 +17,6 @@ jobs:
         uses: benc-uk/workflow-dispatch@v1
         with:
           repo: yavidor/digital-garden
-          workflow: deploy.yaml
-          ref: v4
+          workflow: deploy-v5.yaml
+          ref: v5
           token: "${{ secrets.GARDEN_ACCESS_TOKEN }}"
-
