@@ -109,7 +109,7 @@ It should be mentioned that this too is actually syntactic sugar, over nested `l
       (+ x y)))
 2
 ```
-## `letrec`
+## letrec
 Now the real crazy shit happens
 `Letrec` is like `let*` except each deceleration can see every deceleration, including itself, allowing for recursive behavior
 ### Example
