@@ -197,4 +197,14 @@ We denote CPS functions by a trailing \$, so `function$`
 > List CPS
 
 
+# Set
 
+> [!DANGER] SIDE EFFECTS
+> `set!` creates side effects
+
+# Begin
+The curly braces of scheme
+```scheme
+(begin e1 e2 ... en)
+```
+Evaluates all expressions (e1 ... e2) and returns the result of en
