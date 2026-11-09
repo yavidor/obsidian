@@ -50,6 +50,7 @@
   { trigger: "@O", replacement: "\\Omega", options: "mA" },
   { trigger: "ome", replacement: "\\omega", options: "mA" },
   { trigger: "Ome", replacement: "\\Omega", options: "mA" },
+  { trigger: "@p", replacement: "\\varphi", options: "mA" },
 
   // Text environment
   { trigger: "text", replacement: "\\text{$0}$1", options: "mA" },

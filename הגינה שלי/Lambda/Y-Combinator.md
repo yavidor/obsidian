@@ -12,8 +12,7 @@ this better noder neder
 ```scheme
 (define YC
     (lambda (f)
-      ((lambda (x) (f (x x)))
+      ((lambda (x) (x x))
        (lambda (x) (f (lambda (n) ((x x) n)))))))
-(YC F)
 ```
 Why?
