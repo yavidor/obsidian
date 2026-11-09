@@ -14,6 +14,6 @@ this better noder neder
     (lambda (f)
       ((lambda (x) (f (x x)))
        (lambda (x) (f (lambda (n) ((x x) n)))))))
-> (YC F)
+(YC F)
 ```
 Why?
