@@ -181,3 +181,36 @@ $$
 	\mathbb{P}\left( { A\cap B\cap C^{c} } \right)  \underset{ ? }{ = }   \mathbb{P}\left( A \right) \mathbb{P}\left( B \right) \mathbb{P}\left( C^{c} \right) 
 	\end{gather}
 $$
+We'll check the last one (because of time)
+$$
+	\begin{gather}
+	
+	\mathbb{P}\left( A\cap B\cap C^{c} \right) = \mathbb{P}\left( A\cap B\setminus \left( A\cap B\cap C \right)  \right)  \\
+	\underset{ \left( * \right)  }{ = } \mathbb{P}\left( A\cap B \right) -\mathbb{P}\left( A\cap B\cap C \right)  \\
+	= \mathbb{P}\left( A \right) \mathbb{P}\left( B \right) -\mathbb{P}\left( A \right) \mathbb{P}\left( B \right) \mathbb{P}\left( C \right) =\mathbb{P}\left( A \right) \mathbb{P}\left( B \right) \left( 1-\mathbb{P}\left( C \right)  \right) \\
+	 = \mathbb{P}\left( A \right) \mathbb{P}\left( B \right) \mathbb{P}\left( \mathbb{C}^{c} \right) 
+	\end{gather}
+$$
+
+> [!hint] Why we could subtract
+> If $Y\subseteq X$ then $\mathbb{P}\left( X\setminus Y \right)=\mathbb{P}\left( X \right)-\mathbb{P}\left( Y \right)$
+> Since $Y\cup \left( X\setminus Y \right)=X$ and $Y\cap \left( X\setminus Y \right)=\emptyset$ and they are disjoint
+## Claim
+If $\left\{ A,B,C \right\}$ are Ind. $\left\{ A,B\cap C \right\}$ are ind.
+### Proof
+$$
+	\mathbb{P}\left( A\cap \left( B\cap C \right)  \right) \underset{ ? }{ = } \mathbb{P}\left( A \right) \mathbb{P}\left( B\cap C \right) 
+$$
+The left side is equal to $\mathbb{P}\left( A \right)\mathbb{P}\left( B \right)\mathbb{P}\left( C \right)$, and the right side is equal to $\mathbb{P}\left( A \right)\mathbb{P}\left( B \right)\mathbb{P}\left( C \right)$
+And such, there is equality
+## Claim
+If $\left\{ A,B,C \right\}$ are ind. so are $\left\{ A,B\cup C \right\}$
+### Proof
+$A,B,C$ are ind., therefore $A,B,C^{c}$ are ind. And therefore $A,B^{c},C^{c}$ are ind. And therefore $A,B^{c}\cap C^{c}$ are ind. And therefore  $A,\left( B^{c}\cap C^{c} \right)^{c}$, and from de-morgan's we have $A,B\cup C$ are ind.
+### Example - We can get crazy
+for example if $A,B,C,D,E$ are ind.
+then $A\cap B^{c},\left( C\cup D \right)\cap E^{c}$ are ind.
+so
+$$
+	\mathbb{P}\left( A\cap B^{c}|\left( C\cup D \right) \cap E^{c} \right) = \mathbb{P}\left( A\cap B^{c} \right) 
+$$
