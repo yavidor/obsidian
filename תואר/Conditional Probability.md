@@ -74,4 +74,46 @@ $$
 	\mathbb{P}\left( B_{1}\big|A \right) \underset{ Bayes }{ = } \frac{\mathbb{P}\left( A\big|B_{1} \right) \mathbb{P}\left( B_{1} \right) }{\mathbb{P}\left( A \right) }  \\
 	\underset{ \text{Total prob.} }{ = } \frac{\mathbb{P}\left( A\big|B_{1} \right) \mathbb{P}\left( B_{1} \right) }{\mathbb{P}\left( A\big|B_{1} \right) \mathbb{P}\left( B_{1} \right) +\mathbb{P}\left( A\big|B_{2} \right)\mathbb{P}\left( B_{2} \right)  }
 	\end{gather}
-$$ 
+$$
+# Independence
+Let $\left( \Omega,\mathcal{F},\mathbb{P} \right)$ be a prob space and let $A,B\in \mathcal{F}$.
+$A,B$ are <u>independent</u> if $\mathbb{P}\left( A\cap B \right)=\mathbb{P}\left( A \right)\mathbb{P}\left( B \right)$
+If e.g $\mathbb{P}\left( B \right)>0$, this is the same as
+$$
+	\mathbb{P}\left( A|B \right)  = \frac{\mathbb{P}\left( A\cap B \right) }{\mathbb{P}\left( B \right) } = \mathbb{P}\left( A \right) 
+$$
+(And this is symmetric for $A$ and $B$)
+## Example
+We roll two fair dice
+$$
+	\begin{gather}
+	A=\left\{ \text{First die landed on }6 \right\} \\
+	B=\left\{ \text{Second die landed on }5 \right\}  \\
+	C=\left\{ \text{Sum is }7 \right\} \\
+	D=\left\{ \text{Sum is }10 \right\} 
+	\end{gather}
+$$
+Let's see where independence comes into play
+$$
+	\Omega=\left\{ \left( i,j \right) :1\leq i,j\leq6 \right\} 
+$$
+With the uniform prob.
+$$
+	\begin{gather}
+	\left| A \right| =6 \\
+	\left| B  \right| =6 \\
+	C=\left\{ \left( 1,6 \right) ,\left( 2,5 \right) ,\left( 3,4 \right) ,\left( 4,3 \right) ,\left( 5,2 \right) ,\left( 6,1 \right)  \right\} \implies \left| C \right| =6 \\
+	D = \left\{ \left( 6,4 \right) ,\left( 5,5 \right) ,\left( 4,6 \right)  \right\} \implies \left| D \right| =3
+	\end{gather}
+$$
+Now let's calculate some nice intersection
+$$
+	\begin{gather}
+ A\cap B =\left\{ \left( 6,5 \right)  \right\} \implies \left| A\cap B \right|  =1 \\
+  A\cap C= \left\{ \left( 6,1 \right)  \right\} \implies \left| A\cap C \right| =1 \\
+  A\cap D=\left\{ \left( 6,4 \right)  \right\} \implies \left| A\cap D \right| =1 \\
+  B\cap C=\left\{ \left( 5,2 \right)  \right\} \implies \left| B\cap C \right| =1 \\
+  B\cap D=\left\{ \left( 5,5 \right)  \right\} \implies \left| B\cap D \right| =1 \\
+  C\cap D=\emptyset\implies \left| C\cap D \right| =0
+	\end{gather}
+$$
