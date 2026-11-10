@@ -137,4 +137,47 @@ Of course not everything here is independent
 $$
 	\mathbb{P}\left( A\cap D \right) = \frac{1}{36} \neq \frac{6}{36} \cdot \frac{3}{36} = \mathbb{P}\left( A \right) \mathbb{P}\left( D \right) 
 $$
-And such $A$ and $D$ are **not** independent
+And such $A$ and $D$ are **not** independent.
+Similarly, $B,C$ are independent and $B,D$ aren't.
+Also
+$$
+	\mathbb{P}\left( C\cap D \right) =0 \neq \mathbb{P}\left( C \right) \mathbb{P}\left( D \right) 
+$$
+And therefore $C$ and $D$ aren't
+## Definition - Independent sets of events
+$\left\{ A_{i} \right\}_{i\in \mathcal{I}}$ are events, we say they are
+- <u>Pairwise independent</u> if 
+  $$
+  	\mathbb{P}\left( A_{j}\cap A_{i} \right) =\mathbb{P}\left( A_{i} \right) \mathbb{P}\left( A_{j} \right) \,\,\forall i\neq j
+  $$
+  - <u>Independent</u> if for every $\mathcal{J}\subseteq \mathcal{I}$ finite 
+$$
+    	\mathbb{P}\left( \bigcap_{j\in \mathcal{J}}A_{j} \right) = \prod_{j\in \mathcal{J}}\mathbb{P}\left( A_{j} \right) 
+$$
+### Example
+Previous example $\left\{ A,B,C \right\}$, are those independent?
+$$
+	\begin{gather}
+	\mathbb{P}\left( A\cap B \right) =\mathbb{P}\left( A \right) \mathbb{P}\left( B \right)  \\
+	\mathbb{P}\left( A\cap C \right) =\mathbb{P}\left( A \right) \mathbb{P}\left( C \right)  \\
+	\mathbb{P}\left( B\cap C \right) = \mathbb{P}\left( B \right) \mathbb{P}\left( C \right)  \\
+	\mathbb{P}\left( \underbrace{ A\cap B\cap C }_{ \emptyset } \right)  = 0 \neq \mathbb{P}\left( A \right) \mathbb{P}\left( B \right) \mathbb{P}\left( C \right) 
+	\end{gather}
+$$
+And such, $\left\{ A,B,C \right\}$ is pairwise independent but not independent.
+
+> [!ABSTRACT] Intuition
+> One cannot "create dependencies" in a non-trivial way.
+
+## Claim
+If $\left\{ A,B,C \right\}$ are ind. so are $\left\{ A,B,C^{c} \right\}$
+### Proof
+We have to check ${4}$ conditions
+$$
+	\begin{gather}
+	\mathbb{P}\left( A\cap B \right) \underset{ ? }{ = }\mathbb{P}\left( A \right) \mathbb{P}\left( B \right)  \\
+	\mathbb{P}\left( A\cap C^{c} \right) \underset{ ? }{ = }\mathbb{P}\left( A \right) \mathbb{P}\left( C^{c} \right)  \\
+	\mathbb{P}\left( B\cap C^{c} \right) \underset{ ? }{ = } \mathbb{P}\left( B \right) \mathbb{P}\left( C^{c} \right)  \\
+	\mathbb{P}\left( { A\cap B\cap C^{c} } \right)  \underset{ ? }{ = }   \mathbb{P}\left( A \right) \mathbb{P}\left( B \right) \mathbb{P}\left( C^{c} \right) 
+	\end{gather}
+$$
