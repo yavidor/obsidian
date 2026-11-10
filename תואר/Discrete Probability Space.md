@@ -2,6 +2,12 @@
 uid: 70deabf1-b14d-4599-bce3-2ac8b2bdcc96
 cssclasses:
   - ltr
+uni_subjects:
+  - הסתברות
+tags:
+  - הסתברות
+  - תואר
+  - מונחים
 ---
 # Definition
 A <u>discrete probability space</u> is a pair $\left( \Omega,p \right)$ where
