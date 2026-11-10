@@ -8,6 +8,10 @@ uni_subjects:
   - הסתברות
 cssclasses:
   - ltr
+aliases:
+  - Probability Space
+  - Prob. Space
+  - prob. space
 ---
 # Definition
 A probability space is a triple $\left( \Omega,\mathcal{F},\mathbb{P} \right)$ where
