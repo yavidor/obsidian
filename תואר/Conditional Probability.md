@@ -117,3 +117,24 @@ $$
   C\cap D=\emptyset\implies \left| C\cap D \right| =0
 	\end{gather}
 $$
+And as we would expect
+$$
+	\begin{gather}
+	\mathbb{P}\left( A\cap B \right) = \frac{\left| A\cap B \right| }{\left| \Omega \right| }= \frac{1}{36} \\
+	\mathbb{P}\left( A \right) \mathbb{P}\left( B \right) = \frac{\left| A \right| }{\left| \Omega \right| }\cdot \frac{\left| B \right| }{\left| \Omega \right| } = \frac{6}{36} \cdot \frac{6}{36}= \frac{1}{36}
+	\end{gather}
+$$
+And such, $A$ and $B$ are independent.
+This is kind of obvious, since the dice are not connected.
+But it's not always *so* obvious
+$$
+	\begin{gather}
+	\mathbb{P}\left( A\cap C \right) = \frac{1}{36} = \frac{1}{6} \cdot \frac{1}{6} = \mathbb{P}\left( A \right) \mathbb{P}\left( C \right) 
+	\end{gather}
+$$
+And such $A$ and $C$ are independent as well.
+Of course not everything here is independent
+$$
+	\mathbb{P}\left( A\cap D \right) = \frac{1}{36} \neq \frac{6}{36} \cdot \frac{3}{36} = \mathbb{P}\left( A \right) \mathbb{P}\left( D \right) 
+$$
+And such $A$ and $D$ are **not** independent
