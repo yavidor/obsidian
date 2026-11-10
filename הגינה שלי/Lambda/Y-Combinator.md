@@ -16,3 +16,10 @@ this better noder neder
        (lambda (x) (f (lambda (n) ((x x) n)))))))
 ```
 Why?
+
+$$
+	Y=\lambda f\left(\left( \lambda x\left( f \left( x\quad x \right)  \right)  \right)\left( \lambda x\left( f\left( x\quad x \right)  \right)  \right) \right)
+$$
+$$
+	Y=\lambda f\left( \left( \lambda x\left( f\left( \lambda x\left( f\left( x\quad x \right)  \right)  \right)  \right)  \right)  \right) 
+$$
