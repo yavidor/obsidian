@@ -30,6 +30,9 @@ $$
 $$
 
 $$
+	def: F = \left( \lambda x\quad f\left( \lambda n\left( \left( x\ \ \ x \right) \quad n \right)  \right)  \right) 
+$$
+$$
 	
-	\left( Z\,\, f \right) = \left( \lambda x\quad f \left( \lambda n \left( \left( x \ \ \ x \right) \ \ \ n \right)  \right)  \right) \left( \lambda x\quad f \left( \lambda n \left( \left( x \ \ \ x \right) \ \ \ n \right)  \right)  \right) 
+	\left( Z\,\, f \right) =  f \left( \lambda n \left( \left( F \ \ \ F \right) \ \ \ n \right)  \right) 
 $$
