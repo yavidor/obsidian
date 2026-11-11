@@ -44,13 +44,24 @@ Let's look at an event in $\Omega$ we'll call $C$
 THIS IS WORK IN PROGRESS
 ```tikz
 \begin{document}
-  \begin{tikzpicture}
-    \path [draw, help lines, opacity=.5]  (-11,-11) grid (11,11);
-    \foreach \i in {1,...,10} \draw (\i,2.5pt) -- +(0,-5pt) node [anchor=north, font=\small] {$\i$}  (2.5pt,\i) -- +(-5pt,0) node [anchor=east, font=\small] {$\i$} ;
-    \draw [->] (0,0) -- (10,0) node [anchor=south] {$x$};
-    \draw [->] (0,0) -- (0,10) node [anchor=west] {$y$};
-    \path [draw=blue, ultra thick, text=blue, densely dashed] (0,6) node [anchor=south west] {$(0,y)$} -| (8,0) node [anchor=south west] {$(x,0)$} node [anchor=south west, midway] {$(x,y)$};
-  \end{tikzpicture}
+\begin{tikzpicture}
+	%\draw[help lines] (0,0) grid (5,5);
+	\path[fill=black!20] (0,0) -- (4.5,0) -- (4.5,3) -- (0,3);
+	\draw[thick, ->] (-0.2,0) -- (6,0) node [below right] {$x$};
+	\node at (0,-0.4) {\scriptsize$0$};
+	\node at (4.5,-0.4) {\scriptsize$1$};
+	\draw[thick, ->] (0,-0.2) -- (0,4.5) node [below left] {$t$};
+	\node at (-0.6,3) {\scriptsize$1$};
+	\draw[green, very thick] (4.5,0) -- (4.5,3);
+	\draw[dashed] (4.5,0) -- (4.5,3);
+	\draw[green, very thick] (0,0) -- (0,3);
+	\draw[dashed] (0,0) -- (0,3);
+	\draw[green, very thick] (0,0) -- (4.5,0);
+	\draw[dashed] (0,0) -- (4.5,0);
+	\draw[dashed] (0,3) -- (4.5,3);
+	\node at (2.25,1.5) {$R$};
+\end{tikzpicture}
+	
 \end{document}
 ```
 $C\subseteq\Omega$, since $C=\left[ \frac{1}{4}, \frac{3}{4} \right]\times \left[ \frac{1}{3}, \frac{2}{3} \right]$ we have
