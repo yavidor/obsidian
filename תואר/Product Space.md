@@ -46,20 +46,14 @@ THIS IS WORK IN PROGRESS
 \begin{document}
 \begin{tikzpicture}
 	%\draw[help lines] (0,0) grid (5,5);
-	\path[fill=black!20] (0,0) -- (4.5,0) -- (4.5,3) -- (0,3);
-	\draw[thick, ->] (-0.2,0) -- (6,0) node [below right] {$x$};
+%	\path[fill=black!20] (0,0) -- (4.5,0) -- (4.5,3) -- (0,3);
+	\draw[thick, ->] (-0.2,0) -- (6,0) ;
 	\node at (0,-0.4) {\scriptsize$0$};
 	\node at (4.5,-0.4) {\scriptsize$1$};
-	\draw[thick, ->] (0,-0.2) -- (0,4.5) node [below left] {$t$};
+	\draw[thick, ->] (0,-0.2) -- (0,4.5);
 	\node at (-0.6,3) {\scriptsize$1$};
-	\draw[green, very thick] (4.5,0) -- (4.5,3);
-	\draw[dashed] (4.5,0) -- (4.5,3);
-	\draw[green, very thick] (0,0) -- (0,3);
-	\draw[dashed] (0,0) -- (0,3);
-	\draw[green, very thick] (0,0) -- (4.5,0);
-	\draw[dashed] (0,0) -- (4.5,0);
-	\draw[dashed] (0,3) -- (4.5,3);
-	\node at (2.25,1.5) {$R$};
+	\draw [dashed] (4.5,0) -- (4.5,3);
+	\draw [dashed] (0,3) -- (4.5,3);
 \end{tikzpicture}
 	
 \end{document}
