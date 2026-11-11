@@ -17,9 +17,19 @@ this better noder neder
 ```
 Why?
 
+Let's try to expand it
 $$
-	Y=\lambda f\left(\left( \lambda x\left( f \left( x\quad x \right)  \right)  \right)\left( \lambda x\left( f\left( x\quad x \right)  \right)  \right) \right)
+\left( Y\,\, f \right)  =  f\left( f\left( f\left( \ldots\left( f\left( \lambda x \quad f\left( x\ \ \ x \right)  \right) \left( \lambda x \quad f\left( x \ \ \ x \right)  \right)   \right)  \right)  \right)  \right) 
+$$
+Now let's to do if after the $\eta$ expansion (Apparently also called $Z$ combinator)
+$$
+	\left( Z\,\,f \right) = \left( \lambda x \quad \left( x \ \ \ x \right)  \right)  \left( \lambda x\quad f \left( \lambda n \left( \left( x \ \ \ x \right) \ \ \ n \right)  \right)  \right) 
 $$
 $$
-	Y=\lambda f\left( \left( \lambda x\left( f\left( \lambda x\left( f\left( x\quad x \right)  \right)  \right)  \right)  \right)  \right) 
+	\left( Z\,\, f \right) = \left( \lambda x\quad f \left( \lambda n \left( \left( x \ \ \ x \right) \ \ \ n \right)  \right)  \right) \left( \lambda x\quad f \left( \lambda n \left( \left( x \ \ \ x \right) \ \ \ n \right)  \right)  \right) 
+$$
+
+$$
+	
+	\left( Z\,\, f \right) = \left( \lambda x\quad f \left( \lambda n \left( \left( x \ \ \ x \right) \ \ \ n \right)  \right)  \right) \left( \lambda x\quad f \left( \lambda n \left( \left( x \ \ \ x \right) \ \ \ n \right)  \right)  \right) 
 $$
