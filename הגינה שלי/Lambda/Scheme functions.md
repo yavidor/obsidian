@@ -3,7 +3,7 @@ uid: 070612ed-b139-43ce-9d62-8e15d4980a09
 ---
 # 11-10-2026
 ## Length
-```scheme
+```scheme title:length
 (define list-length
         (lambda (l) 
             (if (null? l)
