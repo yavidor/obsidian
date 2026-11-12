@@ -166,13 +166,13 @@
             "textItalic": true
           },
           "languageTag": {
-            "display": "none",
+            "display": "if_header_shown",
             "textFont": "",
             "textBold": true,
             "textItalic": false
           },
           "languageIcon": {
-            "display": "none",
+            "display": "if_header_shown",
             "displayColour": true
           },
           "externalReference": {
@@ -315,13 +315,13 @@
           "textItalic": true
         },
         "languageTag": {
-          "display": "none",
+          "display": "if_header_shown",
           "textFont": "",
           "textBold": true,
           "textItalic": false
         },
         "languageIcon": {
-          "display": "none",
+          "display": "if_header_shown",
           "displayColour": true
         },
         "externalReference": {
