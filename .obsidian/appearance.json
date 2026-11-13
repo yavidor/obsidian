@@ -9,5 +9,6 @@
   ],
   "baseFontSize": 18,
   "interfaceFontFamily": "AtkynsonMono Nerd Font",
-  "monospaceFontFamily": "AtkynsonMono Nerd Font"
+  "monospaceFontFamily": "AtkynsonMono Nerd Font",
+  "showRibbon": true
 }
