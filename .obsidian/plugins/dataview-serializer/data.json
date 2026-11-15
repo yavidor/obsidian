@@ -8,6 +8,7 @@
   "showRefreshButton": true,
   "hideQueryText": true,
   "foldersToForceUpdate": [],
+  "forceUpdateTriggers": [],
   "showErrorNotifications": true,
   "debugLogging": false,
   "addTrailingNewline": false,

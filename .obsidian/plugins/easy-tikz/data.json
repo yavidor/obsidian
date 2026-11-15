@@ -17,7 +17,8 @@
     "write": "yours"
   },
   "chartColours": "theme",
+  "imageBackground": "transparent",
   "interfaceLanguage": "auto",
   "draft": null,
-  "whatsNewSeen": "4.7.0"
+  "whatsNewSeen": "4.10.0"
 }
