@@ -1,5 +1,5 @@
 ---
-uid: 9de3d59e-4eca-4e31-ac18-d7bc5da10e29
+permalink: 9de3d59e-4eca-4e31-ac18-d7bc5da10e29
 tags:
   - תואר
   - מונחים

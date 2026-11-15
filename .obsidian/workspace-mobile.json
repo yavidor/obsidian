@@ -196,7 +196,7 @@
       "obsidian-excalidraw-plugin:New drawing": false,
       "obsidian-git:Open Git source control": false,
       "table-editor-obsidian:Advanced Tables Toolbar": false,
-      "note_uid_generator:Create uid if missing": false
+      "note_permalink_generator:Create permalink if missing": false
     }
   },
   "active": "fb9238a254a556ba",

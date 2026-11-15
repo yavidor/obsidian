@@ -1175,7 +1175,7 @@ input.etz-input.is-live {
 }
 
 /* ---- src/ui/help.css ---- */
-/* Help tab (src/ui/helpPanel.ts): the guides browser, the guide reader and
+/* Help tab (src/ui/helpPanel.ts): the gpermalinkes browser, the gpermalinke reader and
    the reference. Text stays selectable so formulas can be copied into
    fields. The tab panel around .etz-help provides the 16 px panel padding
    and scrolls; colours come from the theme, so light and dark both work. */
@@ -1196,7 +1196,7 @@ input.etz-input.is-live {
 }
 
 /* Keyboard focus that scrolls a control into view keeps it clear of the
-   sticky "All guides" bar of a page. */
+   sticky "All gpermalinkes" bar of a page. */
 .etz-tabpanel.mod-help {
     scroll-padding-top: 44px;
 }
@@ -1235,7 +1235,7 @@ input.etz-input.is-live {
 .etz-help-category,
 .etz-help-intro,
 .etz-help-section,
-.etz-help-guide-head,
+.etz-help-gpermalinke-head,
 .etz-help-outcomes,
 .etz-help-next {
     display: flex;
@@ -1335,7 +1335,7 @@ h4.etz-help-sub {
     font-size: var(--etz-font-small);
 }
 
-/* ------------------------------------------------------------ guide cards */
+/* ------------------------------------------------------------ gpermalinke cards */
 
 .etz-help-cards {
     display: grid;
@@ -1445,7 +1445,7 @@ button.etz-help-card:focus-visible {
     line-height: 1.4;
 }
 
-/* Level and minutes are what a reader picks a guide by: muted, not faint (faint is under 3:1 on a card). */
+/* Level and minutes are what a reader picks a gpermalinke by: muted, not faint (faint is under 3:1 on a card). */
 .etz-help-card-meta,
 .etz-help-meta {
     display: flex;
@@ -1559,7 +1559,7 @@ button.etz-help-topic:focus-visible {
 
 /* ----------------------------------------------------------- page chrome */
 
-/* "All guides" stays reachable while a page scrolls. The bar spans the
+/* "All gpermalinkes" stays reachable while a page scrolls. The bar spans the
    panel padding, so the text below does not show beside it. */
 .etz-help-bar {
     position: sticky;
@@ -1693,7 +1693,7 @@ h4.etz-help-step-title {
     line-height: 22px;
 }
 
-/* A search result that opens a guide at a step puts the focus on that step's heading. */
+/* A search result that opens a gpermalinke at a step puts the focus on that step's heading. */
 h4.etz-help-step-title:focus {
     outline: none;
 }
@@ -3379,7 +3379,7 @@ input.etz-input.etz-dialog-input {
 
 /* ---- src/ui/motion.css ---- */
 /* Objects new to a chart pop in (src/motion.ts): curves draw themselves,
-   points pop, regions, guides and labels fade up. The script sets the
+   points pop, regions, gpermalinkes and labels fade up. The script sets the
    variables for every animation frame, from the time of the frame. */
 .etz-pop.etz-pop-draw {
     stroke-dasharray: 1 1;
@@ -4244,7 +4244,7 @@ pre.etz-whatsnew-text {
     line-height: 1.35;
 }
 
-button.etz-btn.mod-link.etz-whatsnew-item-guide {
+button.etz-btn.mod-link.etz-whatsnew-item-gpermalinke {
     flex: 0 0 auto;
     height: auto;
     margin-left: auto;
@@ -4279,8 +4279,8 @@ button.etz-btn.mod-link.etz-whatsnew-item-guide {
     white-space: nowrap;
 }
 
-/* Links to guides read as part of the sentence. */
-button.etz-btn.mod-link.etz-whatsnew-guide {
+/* Links to gpermalinkes read as part of the sentence. */
+button.etz-btn.mod-link.etz-whatsnew-gpermalinke {
     display: inline;
     height: auto;
     padding: 0;

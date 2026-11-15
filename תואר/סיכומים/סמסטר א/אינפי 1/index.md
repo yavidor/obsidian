@@ -1,7 +1,7 @@
 ---
 tags:
   - תואר
-uid: 9faf1549-eb93-4c02-b2d8-d2b2ba25cc3f
+permalink: 9faf1549-eb93-4c02-b2d8-d2b2ba25cc3f
 title:
   - אינפי 1
 ---

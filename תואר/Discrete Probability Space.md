@@ -1,5 +1,5 @@
 ---
-uid: 70deabf1-b14d-4599-bce3-2ac8b2bdcc96
+permalink: 70deabf1-b14d-4599-bce3-2ac8b2bdcc96
 cssclasses:
   - ltr
 uni_subjects:

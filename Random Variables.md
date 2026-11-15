@@ -1,5 +1,5 @@
 ---
-uid: 43a0e192-231c-416d-90ec-a87a0b28bdf3
+permalink: 43a0e192-231c-416d-90ec-a87a0b28bdf3
 ---
 # Definition
 Let $\left( \Omega,\mathcal{F},\mathbb{P} \right)$ be a [[General Probability Space|Prob. Space]]. A random variable is a [[פונקציה|function]] $X:\Omega\to \mathbb{R}$ such that

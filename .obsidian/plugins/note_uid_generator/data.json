@@ -1,7 +1,7 @@
 {
-  "uidKey": "permalink",
+  "permalinkKey": "permalink",
   "autoGenerateUid": true,
-  "uidGenerator": "uuid",
+  "permalinkGenerator": "upermalink",
   "nanoidLength": 21,
   "nanoidAlphabet": "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
   "nanoidSeparators": [],
@@ -13,6 +13,6 @@
   "autoGenerationExclusions": [],
   "duplicateUidCheck": "notify",
   "folderToClear": "",
-  "copyFormatString": "{title} - {uidKey}: {uid}",
-  "copyFormatStringMissingUid": "{title} - No {uidKey}"
+  "copyFormatString": "{title} - {permalinkKey}: {permalink}",
+  "copyFormatStringMissingUid": "{title} - No {permalinkKey}"
 }

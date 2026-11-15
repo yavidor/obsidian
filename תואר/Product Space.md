@@ -1,5 +1,5 @@
 ---
-uid: ba74ef36-3cb9-4f1f-a45b-0242f24fdf9a
+permalink: ba74ef36-3cb9-4f1f-a45b-0242f24fdf9a
 tags:
   - הסתברות
   - מונחים

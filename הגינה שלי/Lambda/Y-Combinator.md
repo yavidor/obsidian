@@ -1,5 +1,5 @@
 ---
-uid: c397139a-7eea-48bf-80f8-f2b1e183708b
+permalink: c397139a-7eea-48bf-80f8-f2b1e183708b
 cssclasses:
   - ltr
 ---

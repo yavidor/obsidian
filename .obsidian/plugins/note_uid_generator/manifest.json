@@ -1,5 +1,5 @@
 {
-	"id": "note_uid_generator",
+	"id": "note_permalink_generator",
 	"name": "Note UID Generator",
 	"version": "1.4.0",
 	"minAppVersion": "0.15.0",
