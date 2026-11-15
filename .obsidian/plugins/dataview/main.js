@@ -7671,7 +7671,7 @@ async function asyncTryOrPropagate(func) {
 }
 /**
  * Escape regex characters in a string.
- * See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Gpermalinke/Regular_Expressions.
+ * See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions.
  */
 function escapeRegex(str) {
     return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
