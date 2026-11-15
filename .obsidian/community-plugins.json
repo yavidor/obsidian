@@ -7,7 +7,7 @@
   "obsidian-git",
   "obsidian-latex-suite",
   "mermaid-tools",
-  "note_permalink_generator",
+  "note_uid_generator",
   "opener",
   "obsidian-rtl",
   "vim-yank-highlight",
