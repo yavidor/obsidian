@@ -1,5 +1,5 @@
 {
-  "uidKey": "uid",
+  "uidKey": "permalink",
   "autoGenerateUid": true,
   "uidGenerator": "uuid",
   "nanoidLength": 21,
