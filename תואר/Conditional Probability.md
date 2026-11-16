@@ -188,7 +188,7 @@ $$
 	\mathbb{P}\left( A\cap B\cap C^{c} \right) = \mathbb{P}\left( A\cap B\setminus \left( A\cap B\cap C \right)  \right)  \\
 	\underset{ \left( * \right)  }{ = } \mathbb{P}\left( A\cap B \right) -\mathbb{P}\left( A\cap B\cap C \right)  \\
 	= \mathbb{P}\left( A \right) \mathbb{P}\left( B \right) -\mathbb{P}\left( A \right) \mathbb{P}\left( B \right) \mathbb{P}\left( C \right) =\mathbb{P}\left( A \right) \mathbb{P}\left( B \right) \left( 1-\mathbb{P}\left( C \right)  \right) \\
-	 = \mathbb{P}\left( A \right) \mathbb{P}\left( B \right) \mathbb{P}\left( \mathbb{C}^{c} \right) 
+	 = \mathbb{P}\left( A \right) \mathbb{P}\left( B \right) \mathbb{P}\left( C^{c} \right) 
 	\end{gather}
 $$
 
