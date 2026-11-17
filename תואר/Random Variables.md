@@ -14,7 +14,7 @@ aliases:
 # Definition
 Let $\left( \Omega,\mathcal{F},\mathbb{P} \right)$ be a [[General Probability Space|Prob. Space]]. A <u>random variable</u> (rv) is a [[פונקציה|function]] $X:\Omega\to \mathbb{R}$ such that
 $$
-	\left( \forall a<b \right) \left( \left\{ a<X<b \right\} \in \mathcal{F} \right) 
+	 \forall a<b  . \left\{ a<X<b \right\} \in \mathcal{F} 
 $$
 When the meaning of $a<X<b$  is
 $$
