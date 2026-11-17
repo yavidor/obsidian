@@ -12,6 +12,7 @@ aliases:
   - Probability Space
   - Prob. Space
   - prob. space
+  - probability space
 ---
 # Definition
 A probability space is a triple $\left( \Omega,\mathcal{F},\mathbb{P} \right)$ where
