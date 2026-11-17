@@ -91,3 +91,95 @@ $$
 > Then $\mathbb{1}_{C_{1}}\neq\mathbb{1}_{C_{2}}$ but $\mathbb{P}_{\mathbb{1}_{C_{1}}}=\mathbb{P}_{\mathbb{1}_{C_{2}}}$
 
 There are more examples [[תואר/סיכומים/סמסטר ג/הסתברות/הרצאה 5|here]]
+
+# Definition - The Cumulative Distribution Function
+Let $X$ be a random variable, the <u>Comulative Distribution Function</u> (CDF) of $X$ is the function
+$$
+\begin{gather}
+F_X: \mathbb{R} \to \left[0,1\right]\\
+F_X \left(t\right) = \mathbb{P}_X \left(\left(-\infty,t\right]\right) = \mathbb{P}\left(X \leq t\right)
+\end{gather}
+$$
+## Example
+Assume
+$$
+\mathbb{P}\left(X=2\right)=0.3, \mathbb{P}\left(X=5\right)=0.6, \mathbb{P}\left(X=10\right)=0.1
+$$
+```tikz
+\begin{document}
+
+
+
+
+
+
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Shape: Axis 2D [id:dp877590463568188] 
+\draw  (29,261.3) -- (573,261.3)(83.4,3) -- (83.4,290) (566,256.3) -- (573,261.3) -- (566,266.3) (78.4,10) -- (83.4,3) -- (88.4,10)  ;
+%Straight Lines [id:da8370930696580476] 
+\draw [color={rgb, 255:red, 80; green, 227; blue, 194 }  ,draw opacity=1 ][fill={rgb, 255:red, 80; green, 227; blue, 194 }  ,fill opacity=1 ]   (83.4,261.3) -- (172,261.3) ;
+%Straight Lines [id:da9970647333342363] 
+\draw [color={rgb, 255:red, 80; green, 227; blue, 194 }  ,draw opacity=1 ][fill={rgb, 255:red, 80; green, 227; blue, 194 }  ,fill opacity=1 ]   (172,213.3) -- (310,213.3) ;
+%Straight Lines [id:da2379789621313143] 
+\draw [color={rgb, 255:red, 80; green, 227; blue, 194 }  ,draw opacity=1 ][fill={rgb, 255:red, 80; green, 227; blue, 194 }  ,fill opacity=1 ]   (310,115.3) -- (410,115.3) ;
+%Straight Lines [id:da2669582280218965] 
+\draw [color={rgb, 255:red, 80; green, 227; blue, 194 }  ,draw opacity=1 ][fill={rgb, 255:red, 80; green, 227; blue, 194 }  ,fill opacity=1 ]   (410,80.3) -- (674,80.3) ;
+%Straight Lines [id:da9311331918080689] 
+\draw  [dash pattern={on 4.5pt off 4.5pt}]  (172,213.3) -- (172,261.3) ;
+%Straight Lines [id:da10748848276635203] 
+\draw  [dash pattern={on 4.5pt off 4.5pt}]  (310,115.3) -- (310,261.3) ;
+%Straight Lines [id:da08341043472790344] 
+\draw  [dash pattern={on 4.5pt off 4.5pt}]  (410,82.25) -- (410,261.3) ;
+%Shape: Circle [id:dp030534536002677526] 
+\draw  [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ,fill opacity=1 ] (166,213.5) .. controls (166,210.46) and (168.46,208) .. (171.5,208) .. controls (174.54,208) and (177,210.46) .. (177,213.5) .. controls (177,216.54) and (174.54,219) .. (171.5,219) .. controls (168.46,219) and (166,216.54) .. (166,213.5) -- cycle ;
+%Shape: Circle [id:dp4834056934500838] 
+\draw  [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ,fill opacity=1 ] (306,116.5) .. controls (306,113.46) and (308.46,111) .. (311.5,111) .. controls (314.54,111) and (317,113.46) .. (317,116.5) .. controls (317,119.54) and (314.54,122) .. (311.5,122) .. controls (308.46,122) and (306,119.54) .. (306,116.5) -- cycle ;
+%Shape: Circle [id:dp43561959239941206] 
+\draw  [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ,fill opacity=1 ] (406,79.5) .. controls (406,76.46) and (408.46,74) .. (411.5,74) .. controls (414.54,74) and (417,76.46) .. (417,79.5) .. controls (417,82.54) and (414.54,85) .. (411.5,85) .. controls (408.46,85) and (406,82.54) .. (406,79.5) -- cycle ;
+%Shape: Circle [id:dp7500473267292231] 
+\draw   (404.5,112.8) .. controls (404.5,109.76) and (406.96,107.3) .. (410,107.3) .. controls (413.04,107.3) and (415.5,109.76) .. (415.5,112.8) .. controls (415.5,115.84) and (413.04,118.3) .. (410,118.3) .. controls (406.96,118.3) and (404.5,115.84) .. (404.5,112.8) -- cycle ;
+%Shape: Circle [id:dp8121866034745656] 
+\draw   (305.5,211.8) .. controls (305.5,208.76) and (307.96,206.3) .. (311,206.3) .. controls (314.04,206.3) and (316.5,208.76) .. (316.5,211.8) .. controls (316.5,214.84) and (314.04,217.3) .. (311,217.3) .. controls (307.96,217.3) and (305.5,214.84) .. (305.5,211.8) -- cycle ;
+%Shape: Circle [id:dp6511762105063084] 
+\draw   (166.5,260.8) .. controls (166.5,257.76) and (168.96,255.3) .. (172,255.3) .. controls (175.04,255.3) and (177.5,257.76) .. (177.5,260.8) .. controls (177.5,263.84) and (175.04,266.3) .. (172,266.3) .. controls (168.96,266.3) and (166.5,263.84) .. (166.5,260.8) -- cycle ;
+
+% Text Node
+\draw (166,270.4) node [anchor=north west][inner sep=0.75pt]    {$2$};
+% Text Node
+\draw (306,265) node [anchor=north west][inner sep=0.75pt]   [align=left] {5};
+% Text Node
+\draw (402,265) node [anchor=north west][inner sep=0.75pt]   [align=left] {10};
+% Text Node
+\draw (87,119.4) node [anchor=north west][inner sep=0.75pt]    {$0.3+0.6=0.9$};
+% Text Node
+\draw (87,205.4) node [anchor=north west][inner sep=0.75pt]    {$0.3$};
+% Text Node
+\draw (85,60.4) node [anchor=north west][inner sep=0.75pt]    {$1$};
+
+
+\end{tikzpicture}
+
+
+
+\end{document}
+```
+## Theorem
+The CDF always satisfies
+1. $F_{X}$ is non-decreasing
+2. $\displaystyle \lim_{ t \to \infty }F_{X}\left( t \right)=1$
+3. $\displaystyle \lim_{ t \to -\infty }F_{X}\left( t \right)=0$
+4. $F_{X}$ is [[רציפות|continuous]] from the right at every point
+### Proof
+1. Fix $t<s$ and then 
+   $$
+	\begin{gather}
+   	\left(-\infty,t\right] \subseteq \left( -\infty,s \right] \\
+	\implies \left\{ X\in \left( -\infty,t \right]  \right\}  \subseteq \left\{ X\in \left( -\infty,s \right]  \right\}  \underset{ \text{Monotonicity of }\mathbb{P} }{ \implies } \mathbb{P}\left( \underbrace{ X<t }_{ F_{X}\left( t \right)  } \right)\leq \mathbb{P}\left( \underbrace{ X<s }_{ F_{X}\left( s \right)  } \right)  
+	\end{gather}
+   $$
