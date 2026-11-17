@@ -1,8 +1,18 @@
 ---
 permalink: 43a0e192-231c-416d-90ec-a87a0b28bdf3
+tags:
+  - תואר
+  - מונחים
+  - הסתברות
+uni_subjects:
+  - הסתברות
+aliases:
+  - RV
+  - rv
+  - random variable
 ---
 # Definition
-Let $\left( \Omega,\mathcal{F},\mathbb{P} \right)$ be a [[General Probability Space|Prob. Space]]. A random variable is a [[פונקציה|function]] $X:\Omega\to \mathbb{R}$ such that
+Let $\left( \Omega,\mathcal{F},\mathbb{P} \right)$ be a [[General Probability Space|Prob. Space]]. A <u>random variable</u> (rv) is a [[פונקציה|function]] $X:\Omega\to \mathbb{R}$ such that
 $$
 	\left( \forall a<b \right) \left( \left\{ a<X<b \right\} \in \mathcal{F} \right) 
 $$
