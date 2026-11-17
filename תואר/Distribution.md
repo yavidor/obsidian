@@ -90,7 +90,7 @@ $$
 > If $C_{1},C_{2}$ are events such that $C_{1}\neq C_{2}$ but $\mathbb{P}\left( C_{1} \right)=\mathbb{P}\left( C_{2} \right)$
 > Then $\mathbb{1}_{C_{1}}\neq\mathbb{1}_{C_{2}}$ but $\mathbb{P}_{\mathbb{1}_{C_{1}}}=\mathbb{P}_{\mathbb{1}_{C_{2}}}$
 
-There are more examples [[תואר/סיכומים/סמסטר ג/תורת ההסתברות/הרצאה 5|here]]
+There are more examples [[תואר/סיכומים/סמסטר ג/הסתברות/הרצאה 5|here]]
 
 # Definition - The Cumulative Distribution Function
 Let $X$ be a random variable, the <u>Comulative Distribution Function</u> (CDF) of $X$ is the function

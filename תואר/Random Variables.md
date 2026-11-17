@@ -39,4 +39,4 @@ We will compute things like
 $$
 	\mathbb{P}\left( a<X<b \right) = \mathbb{P}\left( \left\{ \omega \in \Omega:a<X\left( \omega \right) <b \right\}  \right) 
 $$
-There are more examples [[תואר/סיכומים/סמסטר ג/תורת ההסתברות/הרצאה 5|here]]
+There are more examples [[תואר/סיכומים/סמסטר ג/הסתברות/הרצאה 5|here]]
