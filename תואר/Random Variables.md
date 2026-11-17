@@ -10,6 +10,8 @@ aliases:
   - RV
   - rv
   - random variable
+cssclasses:
+  - ltr
 ---
 # Definition
 Let $\left( \Omega,\mathcal{F},\mathbb{P} \right)$ be a [[General Probability Space|Prob. Space]]. A <u>random variable</u> (rv) is a [[פונקציה|function]] $X:\Omega\to \mathbb{R}$ such that
