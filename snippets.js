@@ -645,4 +645,9 @@
     replacement: "\\sum_{n=${0:1}}^{\\infty}  $1",
     options: "mrA",
   },
+  {
+    trigger: "prob",
+    replacement: "\\left\\{ \\Omega, \\mathcal{F}, \\mathbb{P}\\right\\}",
+    options: "m",
+  },
 ];
