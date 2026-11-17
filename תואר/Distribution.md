@@ -69,3 +69,25 @@ $$
 
 \end{document}
 ```
+$\mathbb{P}_{X}$ is [[Discrete Probability Space|discrete]], so to describe it it's enough to describe
+$$
+	\begin{gather}
+	\mathbb{P}_{X}\left( \left\{ 0 \right\}  \right) =\mathbb{P}\left( X=0 \right) =\mathbb{P}\left( C^{c} \right) =1-\mathbb{P}\left( C \right)  \\
+	\mathbb{P}_{X}\left( \left\{ 1 \right\}  \right) =\mathbb{P}\left( X=1 \right) =\mathbb{P}\left( C \right) 
+	\end{gather}
+$$
+Or in a less easily understood way to phrase it: for "every" $A\subseteq \mathbb{R}$
+$$
+	\mathbb{P}_{X}\left( A \right) = \begin{cases}
+	1 & 0,1\in A \\
+	0 & 0,1\not\in A \\
+	\mathbb{P}\left( C \right)  & 0\not\in A,1\in A \\
+	1-\mathbb{P}\left( C \right)  & 0\in A,1\not\in A
+	\end{cases}
+$$
+
+> [!NOTE] Remark
+> If $C_{1},C_{2}$ are events such that $C_{1}\neq C_{2}$ but $\mathbb{P}\left( C_{1} \right)=\mathbb{P}\left( C_{2} \right)$
+> Then $\mathbb{1}_{C_{1}}\neq\mathbb{1}_{C_{2}}$ but $\mathbb{P}_{\mathbb{1}_{C_{1}}}=\mathbb{P}_{\mathbb{1}_{C_{2}}}$
+
+There are more examples [[תואר/סיכומים/סמסטר ג/הסתברות/הרצאה 5|here]]
