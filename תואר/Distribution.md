@@ -210,3 +210,13 @@ $\left( * \right): x\leq a+ \frac{1}{n} \forall n\iff x\leq a$
 > [!TODO] What?
 > I feel like I totally lost the entire calc argument here
 
+## Proposition
+$\lim_{ t \to a^{-} } F_{X}\left( t \right)=\mathbb{P}\left( X<a \right)$
+#### Proof
+$$
+	\begin{gather}
+	\lim_{ t \to a^{-} } F_{X}\left( t \right) = \lim_{ n \to \infty } F_{X}\left( a- \frac{1}{n} \right) = \lim_{ n \to \infty } \mathbb{P}\left( X\leq a- \frac{1}{n} \right)  \\
+	= \mathbb{P}\left( \bigcup_{n=1}^{\infty} \left\{ X\leq a- \frac{1}{n} \right\}  \right) \underset{ \left( * \right)  }{ = } \mathbb{P}\left( X<a \right) 
+	\end{gather}
+$$
+$\left( * \right) \exists n. x\leq a-\frac{1}{n} \iff x<a$
