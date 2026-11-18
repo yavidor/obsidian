@@ -183,3 +183,30 @@ The CDF always satisfies
 	\implies \left\{ X\in \left( -\infty,t \right]  \right\}  \subseteq \left\{ X\in \left( -\infty,s \right]  \right\}  \underset{ \text{Monotonicity of }\mathbb{P} }{ \implies } \mathbb{P}\left( \underbrace{ X<t }_{ F_{X}\left( t \right)  } \right)\leq \mathbb{P}\left( \underbrace{ X<s }_{ F_{X}\left( s \right)  } \right)  
 	\end{gather}
    $$
+2. Since $F_{X}$ is increasing the limit exists and 
+  $$
+	\lim_{ t \to \infty } F_{X}\left( t \right) = \underbrace{ \lim_{ n  \to \infty } }_{ Integers } F_{X\left( n \right) } = \lim_{ n \to \infty } \mathbb{P}\left( X\leq n \right) 
+  $$
+  We used [[קריטריון היינה|Heine's limit definition]].
+  Write $A_{n}=\left\{ X\leq n \right\}\subseteq\Omega$, and note that $A_{1}\subseteq A_{2}\subseteq\ldots$, so by the continuity of $\mathbb{P}$ we get 
+  $$
+	\lim_{ n \to \infty } \mathbb{P}\left( A_{n} \right) = \mathbb{P}\left( \bigcup_{n=1}^{\infty} A_{n} \right)  = \mathbb{P}\left( \Omega \right) =1
+  $$
+3. todo
+   
+> [!TODO] Prove
+> exercise
+
+4. Fix $a\in \mathbb{R}$ and then $\lim_{ t \to a^{+} }F_{X}\left( t \right)$ exists and 
+$$
+\lim_{ t \to a^{+} }F_{X}\left( t \right)=\lim_{ n \to \infty }F_{X}\left( a+ \frac{1}{n} \right) = \lim_{ n \to \infty } \mathbb{P}\left( X\leq a+ \frac{1}{n} \right) 
+$$
+We'll define $A_{n}=a+ \frac{1}{n}$ . Note that $A_{1}\supseteq A_{2}\supseteq\ldots$ so 
+$$
+	\lim_{ n \to \infty } \mathbb{P}\left( A_{n} \right) = \mathbb{P}\left( \bigcap^\infty_{n=1} A_{n} \right)\underset{ \left( * \right)  }{ = } \mathbb{P}\left( X\leq a \right) =F_{X}\left( a \right) 
+$$
+$\left( * \right): x\leq a+ \frac{1}{n} \forall n\iff x\leq a$
+
+> [!TODO] What?
+> I feel like I totally lost the entire calc argument here
+
