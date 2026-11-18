@@ -104,7 +104,7 @@ $$
 $$
 We claim $\left( B_{n}\cap B_{m} = \emptyset \right)$ and therefore
 $$
-	\mathbb{P}\left( \bigcup^\infty_{n=1}A_{n} \right)  =\mathbb{P}\left( \bigcup^\infty_{n=1}B_{n} \right) \underset{ B\text{ is disjoint} }{ = } \sum_{n=1}^{\infty}  \mathbb{P}\left( B_{n} \right) \underset{ B_{n}\subseteq A_{n} }{ \leq } \mathbb{P}\left( A_{n} \right) 
+	\mathbb{P}\left( \bigcup^\infty_{n=1}A_{n} \right)  =\mathbb{P}\left( \bigcup^\infty_{n=1}B_{n} \right) \underset{ B\text{ is disjoint} }{ = } \sum_{n=1}^{\infty}  \mathbb{P}\left( B_{n} \right) \underset{ B_{n}\subseteq A_{n} }{ \leq } \sum_{n=1}^{\infty}   \mathbb{P}\left( A_{n} \right) 
 $$
 ## Chain of subsets
 ### Claim
