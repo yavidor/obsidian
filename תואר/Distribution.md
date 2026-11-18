@@ -169,7 +169,7 @@ $$
 
 \end{document}
 ```
-## Theorem
+## Theorem - CDF Properties
 The CDF always satisfies
 1. $F_{X}$ is non-decreasing
 2. $\displaystyle \lim_{ t \to \infty }F_{X}\left( t \right)=1$
@@ -220,3 +220,25 @@ $$
 	\end{gather}
 $$
 $\left( * \right) \exists n. x\leq a-\frac{1}{n} \iff x<a$
+#### Corollary
+$$
+	\mathbb{P}\left( X=a \right) =\mathbb{P}\left( X\leq a \right) -\mathbb{P}\left( X<a \right)  = \lim_{ t \to a^{+} } F_{X}\left( t \right) -\lim_{ t \to a^{-} } F_{X}\left( t \right) 
+$$
+Which can be called "the jump at $a$" (but that's a not very formal term)
+##### Corollary to to corollary
+$$
+	\mathbb{P}\left( X=a \right) =0 \iff F_{X}\text{ is continous at }a
+$$
+## Theorem
+Let $g:\mathbb{R}\to \left[ 0,1 \right]$ be a function that satisfies the ${4}$ conditions of the [[#Theorem - CDF Properties|Theorem from earlier]]. Then there exists a probability space $\left\{ \Omega, \mathcal{F}, \mathbb{P}\right\}$ and a random variable $X:\Omega\to \mathbb{R}$ such that $F_{X}=g$
+### Proof
+Assume (for simplicity, it does ruin the proof but we do not care), that's $g$ is strongly increasing and continuous.
+so from calculus we know that $g:\mathbb{R}\to \left[ 0,1 \right]$ is a bijection.
+Take $\left( \Omega,\mathcal{F},\mathbb{P} \right)=\left( \left[ 0,1 \right],\mathcal{B},\text{uniform} \right)$
+and $X:\left[ 0,1 \right]\to \mathbb{R}$ to be $X\left( \omega \right)=g^{-1}\left( \omega \right)$ (And $X\left( 0 \right)=X\left( 1 \right)=\text{whatever}$)
+Now
+$$
+	\begin{gather}
+	F_{X}\left( t \right) =\mathbb{P}\left( X\leq t \right) =\mathbb{P}\left( \left\{ \omega \in\underbrace{ \Omega }_{ \left[ 0,1 \right]  }: g^{-1}\left( \omega \right) \leq t \right\}  \right) = \mathbb{P}\left( \left[ 0,g\left( t \right)  \right]  \right) = \frac{g\left( t \right) -0}{1-0}= g\left( t \right) 
+	\end{gather}
+$$
