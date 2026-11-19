@@ -233,6 +233,29 @@ $$
 Let $g:\mathbb{R}\to \left[ 0,1 \right]$ be a function that satisfies the ${4}$ conditions of the [[#Theorem - CDF Properties|Theorem from earlier]]. Then there exists a probability space $\left\{ \Omega, \mathcal{F}, \mathbb{P}\right\}$ and a random variable $X:\Omega\to \mathbb{R}$ such that $F_{X}=g$
 ### Proof
 Assume (for simplicity, it does ruin the proof but we do not care), that's $g$ is strongly increasing and continuous.
+```tikz
+\begin{document}
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Shape: Axis 2D [id:dp7473467799478508] 
+\draw  (29,261.3) -- (573,261.3)(83.4,3) -- (83.4,290) (566,256.3) -- (573,261.3) -- (566,266.3) (78.4,10) -- (83.4,3) -- (88.4,10)  ;
+%Straight Lines [id:da8223930873778413] 
+\draw [color={rgb, 255:red, 80; green, 227; blue, 194 }  ,draw opacity=1 ][fill={rgb, 255:red, 80; green, 227; blue, 194 }  ,fill opacity=1 ]   (83.4,261.3) -- (172,261.3) ;
+%Curve Lines [id:da9011004847419352] 
+\draw [color={rgb, 255:red, 80; green, 227; blue, 194 }  ,draw opacity=1 ]   (96,271.4) .. controls (106,263.9) and (132.75,238.4) .. (195.38,233.9) .. controls (258,229.4) and (301,172.4) .. (378,178.4) .. controls (455,184.4) and (605,70.4) .. (660,85.4) ;
+
+
+
+
+\end{tikzpicture}
+
+\end{document}
+```
 so from calculus we know that $g:\mathbb{R}\to \left[ 0,1 \right]$ is a bijection.
 Take $\left( \Omega,\mathcal{F},\mathbb{P} \right)=\left( \left[ 0,1 \right],\mathcal{B},\text{uniform} \right)$
 and $X:\left[ 0,1 \right]\to \mathbb{R}$ to be $X\left( \omega \right)=g^{-1}\left( \omega \right)$ (And $X\left( 0 \right)=X\left( 1 \right)=\text{whatever}$)
@@ -242,3 +265,10 @@ $$
 	F_{X}\left( t \right) =\mathbb{P}\left( X\leq t \right) =\mathbb{P}\left( \left\{ \omega \in\underbrace{ \Omega }_{ \left[ 0,1 \right]  }: g^{-1}\left( \omega \right) \leq t \right\}  \right) = \mathbb{P}\left( \left[ 0,g\left( t \right)  \right]  \right) = \frac{g\left( t \right) -0}{1-0}= g\left( t \right) 
 	\end{gather}
 $$
+## Theorem
+If $X,Y$ are random variables and $F_{X}=F_{Y}$ then $\mathbb{P}_{X}= \mathbb{P}_{Y}$
+$$
+	\forall A\subseteq \mathbb{R}.\mathbb{P}\left( X\in A \right) =\mathbb{P}\left( Y\in A \right) 
+$$
+
+FOr $A$ nice enoughs
