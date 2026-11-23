@@ -50,3 +50,20 @@ $\eta$ Reduction takes an abstraction $F$ and wraps it in another abstraction
 $$
 F \to_{\eta} (\lambda x.F~x)
 $$
+# Pairs
+
+> [!WARNING] Absolutelier guessing
+> While we did make pairs out of function in [[Scheme Glossary|scheme]], we did not talk about in $\lambda$-calculus terms
+
+A pair $\left( x,y \right)$ is defined as follows
+$$
+(\lambda p.p~x~y)
+$$
+And then to "get" the first one you do
+$$
+	\left(  \lambda p. p~\left( \lambda xy.x \right)  \right)
+$$
+And for the second you do
+$$
+	\left(  \lambda p. p~\left( \lambda xy.y \right)  \right)
+$$
