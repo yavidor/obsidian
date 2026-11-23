@@ -17,7 +17,7 @@ $$
 Or in other words, if $A,B$ are $\Lambda$ objects, then $\underbrace{ \left( \lambda x.A \right) }_{ abs } ~B$ is also a $\Lambda$ object, note that $\left( \lambda x.A \right)$ is an abstraction
 
 # Properties
-## Right-Associatity of Abstraction
+## Right-Associativity of Abstraction
 $$
 	\left( \lambda xyz.M \right) \equiv\lambda x.\left( \lambda yz.M \right) \equiv\lambda x.\left( \lambda y.\left( \lambda z.M \right)  \right) 
 $$
@@ -29,7 +29,7 @@ Every abstraction has an arity of ${1}$
 > Just like how addition has an arity of ${2}$ and yet $1 + 2 + 3$ is valid
 > since $1 + 2 + 3\equiv \left( 1+2 \right)+3$
 
-## Left-Associativity
+## Left-Associativity of Application
 $$
 	\left( A ~ B ~ C ~ D \right)  \equiv \left( \left( A~B~C \right)~ D \right) \equiv \left( \left( \left( A~B \right) ~C \right) ~D \right) 
 $$
@@ -40,4 +40,13 @@ For example
 $\beta$ Reduction takes an object that is an application of an abstraction $F$ to an object $A$, and "binds" $A$ and applies $F$, for example
 $$
 \left(	\left( \lambda x.M_{x} \right) ~A\right) \to_{\beta} M_{A}
+$$
+## $\eta$ Reduction
+
+> [!warning] Absolute guessing
+> I don't know the formal definition, this is what I understand
+
+$\eta$ Reduction takes an abstraction $F$ and wraps it in another abstraction
+$$
+F \to_{\eta} (\lambda x.F~x)
 $$
