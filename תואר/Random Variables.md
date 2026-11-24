@@ -59,4 +59,10 @@ This $f$ is called the <u>density</u> of $X$, we write $f_{X}$ .
 ## Remarks
 - If $X$ is continuous, the $F_{X}$ is [[רציפות|continuous]], which means that $\forall a\in \mathbb{R}.\mathbb{P}\left( X=a \right)=0$
 - From calculus, if $F_{X}$ is continuously differentiable then $\left( \star  \right)$ happens with $f=F_{X}'$. Same if $F_{X}$ is continuous and piece-wise continuously [[נגזרת|differentiable]]. (All our examples will be of this form (((The piece-wise continuously differentiable))))
-- 
+- For all $a<b$ 
+  $$
+	\begin{gather}
+  	\mathbb{P}\left( a\leq X\leq b \right) \underset{ Cont. }{ = }\mathbb{P}\left( a<X<b \right)  = \mathbb{P}\left( X\leq b \right) -\mathbb{P}\left( X\leq a \right) \\
+	= \int_{-\infty}^{b}f_{X}-\int_{-\infty}^{a}f_{X}= \int_{a}^{b} f_{X} 
+	\end{gather}
+  $$
