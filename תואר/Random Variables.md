@@ -49,3 +49,4 @@ $$
 - If $\left( \Omega,\mathbb{P} \right)$ is a [[Discrete Probability Space]], then every $X:\Omega\to \mathbb{R}$ is discrete.
 - But discrete r.v's exist also on uncountable probability spaces (general proc. spaces that are not discrete)
 - If $X$ is discrete than the [[Distribution#The Cumulative Distribution Function|CDF]] $F_{X}\left( t \right)=\mathbb{P}\left( X\leq t \right)$ is a "step function" (maybe with countably many "jumps")
+- If $X$ is discrete, to describe $\mathbb{P}_{X}$ it's enough to say what $C$ is and $\forall a\in C$ what is $\mathbb{P}\left( X=a \right)=\mathbb{P}_{X}\left( \left\{ a \right\} \right)=p_{X}\left( a \right)$. ($p_{X}$ is sometimes called the probability mass function "PMF")

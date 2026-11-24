@@ -72,3 +72,17 @@ And for the second you do
 $$
 	\left(  \lambda p. p~\left( \lambda xy.y \right)  \right)
 $$
+# Natural Numbers
+
+> [!DANGER] Absolutliest guesing
+> That's just a thought I had after [[תואר/סיכומים/סמסטר ג/תורת הקבוצות/הרצאה 3#דוגמה - מודל פון-נוימן|a lecture in set theory]].
+> 
+
+We can maybe chose ${0}$ arbitrary as $\left( \lambda x.x \right)$ for example, and then $n+1= n\left( n \right)$.
+so $1\equiv \left( \lambda x.x \right)~\left( \lambda x.x \right)$
+
+
+> [!FAILURE] Nope
+> That does not work, since $\left( \lambda x.x \right)~\left( \lambda x.x \right)\equiv \left( \lambda x.x \right)=1$, and I don't think we want $0\equiv1$
+
+
