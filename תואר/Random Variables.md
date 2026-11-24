@@ -51,4 +51,9 @@ $$
 - If $X$ is discrete than the [[Distribution#The Cumulative Distribution Function|CDF]] $F_{X}\left( t \right)=\mathbb{P}\left( X\leq t \right)$ is a "step function" (maybe with countably many "jumps")
 - If $X$ is discrete, to describe $\mathbb{P}_{X}$ it's enough to say what $C$ is and $\forall a\in C$ what is $\mathbb{P}\left( X=a \right)=\mathbb{P}_{X}\left( \left\{ a \right\} \right)=p_{X}\left( a \right)$. ($p_{X}$ is sometimes called the probability mass function "PMF")
 # Continuous random variables
-A random variable $X$ 
+A random variable $X$ is called <u>continuous</u> if there is a function $f:\mathbb{R}\to \mathbb{R}$ such that
+$$
+	F_{X}\left( t \right) =\mathbb{P}\left( X\leq t \right) = \int_{-\infty}^{t} f\left( y \right)  \, dy 
+$$
+This $f$ is called the <u>density</u> of $X$, we write $f_{X}$ .
+## Remarks
