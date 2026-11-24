@@ -58,4 +58,5 @@ $$
 This $f$ is called the <u>density</u> of $X$, we write $f_{X}$ .
 ## Remarks
 - If $X$ is continuous, the $F_{X}$ is [[רציפות|continuous]], which means that $\forall a\in \mathbb{R}.\mathbb{P}\left( X=a \right)=0$
+- From calculus, if $F_{X}$ is continuously differentiable then $\left( \star  \right)$ happens with $f=F_{X}'$. Same if $F_{X}$ is continuous and piece-wise continuously [[נגזרת|differentiable]]. (All our examples will be of this form (((The piece-wise continuously differentiable))))
 - 
