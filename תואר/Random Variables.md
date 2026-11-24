@@ -53,7 +53,9 @@ $$
 # Continuous random variables
 A random variable $X$ is called <u>continuous</u> if there is a function $f:\mathbb{R}\to \mathbb{R}$ such that
 $$
-	F_{X}\left( t \right) =\mathbb{P}\left( X\leq t \right) = \int_{-\infty}^{t} f\left( y \right)  \, dy 
+(\star)\quad	F_{X}\left( t \right) =\mathbb{P}\left( X\leq t \right) = \int_{-\infty}^{t} f\left( y \right)  \, dy 
 $$
 This $f$ is called the <u>density</u> of $X$, we write $f_{X}$ .
 ## Remarks
+- If $X$ is continuous, the $F_{X}$ is [[רציפות|continuous]], which means that $\forall a\in \mathbb{R}.\mathbb{P}\left( X=a \right)=0$
+- 
