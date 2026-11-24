@@ -14,7 +14,7 @@ Variables are an term in $\Lambda$, therefore $vars \subseteq\Lambda$
 $$
 	 \forall M\in\Lambda,\forall x \in vars:\left( \lambda x.M \right) \in\Lambda
 $$
-Or in other words, if $M$ is a $\Lambda$ term and $x$ is a variable, $\left( \lambda x.m \right)$ is also a $\Lambda$ term
+Or in other words, if $M$ is a $\Lambda$ term and $x$ is a variable, $\left( \lambda x.M \right)$ is also a $\Lambda$ term
 # Application
 $$
 	\forall A,B \in \Lambda, \forall x \in vars: \left( \left( \lambda x.A \right) ~B \right)  \in \Lambda
