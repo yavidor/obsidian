@@ -40,7 +40,7 @@ $$
 	\mathbb{P}\left( a<X<b \right) = \mathbb{P}\left( \left\{ \omega \in \Omega:a<X\left( \omega \right) <b \right\}  \right) 
 $$
 There are more examples [[תואר/סיכומים/סמסטר ג/הסתברות/הרצאה 5|here]]
-# Discrete random variable
+# Discrete random variables
 A Random Variable $X$ is <u>discrete</u> if $\exists c\subseteq \mathbb{R}$ at most countable such that 
 $$
 	\mathbb{P}\left( X\in C \right) =1
@@ -50,3 +50,5 @@ $$
 - But discrete r.v's exist also on uncountable probability spaces (general proc. spaces that are not discrete)
 - If $X$ is discrete than the [[Distribution#The Cumulative Distribution Function|CDF]] $F_{X}\left( t \right)=\mathbb{P}\left( X\leq t \right)$ is a "step function" (maybe with countably many "jumps")
 - If $X$ is discrete, to describe $\mathbb{P}_{X}$ it's enough to say what $C$ is and $\forall a\in C$ what is $\mathbb{P}\left( X=a \right)=\mathbb{P}_{X}\left( \left\{ a \right\} \right)=p_{X}\left( a \right)$. ($p_{X}$ is sometimes called the probability mass function "PMF")
+# Continuous random variables
+A random variable $X$ 
