@@ -92,7 +92,7 @@ $$
 
 There are more examples [[תואר/סיכומים/סמסטר ג/הסתברות/הרצאה 5|here]]
 
-# Definition - The Cumulative Distribution Function
+# The Cumulative Distribution Function
 Let $X$ be a random variable, the <u>Comulative Distribution Function</u> (CDF) of $X$ is the function
 $$
 \begin{gather}
