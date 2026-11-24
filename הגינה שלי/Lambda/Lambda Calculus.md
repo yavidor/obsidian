@@ -12,7 +12,7 @@ Variables are an term in $\Lambda$, therefore $vars \subseteq\Lambda$
 
 # Abstraction
 $$
-	 \forall M\in\Lambda,\forall x \in vars:\left( \lambda x.m \right) \in\Lambda
+	 \forall M\in\Lambda,\forall x \in vars:\left( \lambda x.M \right) \in\Lambda
 $$
 Or in other words, if $M$ is a $\Lambda$ term and $x$ is a variable, $\left( \lambda x.m \right)$ is also a $\Lambda$ term
 # Application
