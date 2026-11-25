@@ -229,7 +229,7 @@ Which can be called "the jump at $a$" (but that's a not very formal term)
 $$
 	\mathbb{P}\left( X=a \right) =0 \iff F_{X}\text{ is continous at }a
 $$
-## Theorem
+## Theorem - Every CDF has a random variable
 Let $g:\mathbb{R}\to \left[ 0,1 \right]$ be a function that satisfies the ${4}$ conditions of the [[#Theorem - CDF Properties|Theorem from earlier]]. Then there exists a probability space $\left\{ \Omega, \mathcal{F}, \mathbb{P}\right\}$ and a random variable $X:\Omega\to \mathbb{R}$ such that $F_{X}=g$
 ### Proof
 Assume (for simplicity, it does ruin the proof but we do not care), that's $g$ is strongly increasing and continuous.

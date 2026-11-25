@@ -70,7 +70,11 @@ This $f$ is called the <u>density</u> of $X$, we write $f_{X}$ .
   $$
   f_{X}\left( a \right) = \lim_{ \varepsilon \to 0^{+} } \left( \frac{1}{2\varepsilon} \int_{a-\varepsilon}^{a+\varepsilon} f_{X}  \right)   = \lim_{ \varepsilon \to 0^{+} } \frac{\mathbb{P}\left( a-\varepsilon<X<a+\varepsilon \right) }{2\varepsilon}
   $$
-  Not that we always have $f_{X}\geq0$, but we can have $f_{X}\left( a \right)>1$ for some points $a\in \mathbb{R}$.
+  Note that we always have $f_{X}\geq0$, but we can have $f_{X}\left( a \right)>1$ for some points $a\in \mathbb{R}$.
+  - 
+    $$
+	\int_{-\infty}^{\infty} f_{X} = \lim_{ t \to \infty } F_{X}\left( t \right) =1
+	$$
 ## Example
 We say $X$ is uniform in $\left[ a,b \right]$ and write $X\sim Uni\left[ a,b \right]$ if $X$ is a continuous r.v with density
 ```tikz
@@ -112,3 +116,9 @@ We say $X$ is uniform in $\left[ a,b \right]$ and write $X\sim Uni\left[ a,b \ri
 \end{document}
 
 ```
+## Proposition
+If $g:\mathbb{R}\to \left[ 0,\infty \right)$ is piece-wise continuous and $\int_{-\infty}^{\infty} g=1$ than there exists a cont. random variable $X$ with $f_{X}=g$
+### Proof
+Define $G\left( t \right)= \int_{-\infty}^{t} g$. $G$ is cont, non-decreasing and $\lim_{ t \to -\infty }G\left( t \right)=0$.
+From the assumption, $\lim_{ t \to \infty }G\left( t \right)=\int_{-\infty}^{\infty} g=1$
+Therefore there exists a random variable $X$ with CDF $G$ (from the theorem we proved [[Distribution#Theorem - Every CDF has a random variable|here]]), and then by definition $X$ is cont. with a density function $g$.
