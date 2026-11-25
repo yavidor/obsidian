@@ -129,7 +129,7 @@ If $a<t<b$ (the only scenario that is interesting) then
 $$
 	F_{X}\left( t \right) = \int_{-\infty}^{t} f_{X} = \int_{a}^{t} \frac{1}{b-a} = \frac{t-a}{b-a}
 $$
-## Example
+## Exponential random variables
 $X$ is <u>exponential</u> with parameter $\lambda>0$ if $X$ has density
 $$
 	f_{X}\left( a \right) = \begin{cases}

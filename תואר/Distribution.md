@@ -271,4 +271,4 @@ $$
 	\forall A\subseteq \mathbb{R}.\mathbb{P}\left( X\in A \right) =\mathbb{P}\left( Y\in A \right) 
 $$
 
-FOr $A$ nice enoughs
+For $A$ nice enoughs
