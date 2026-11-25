@@ -76,7 +76,13 @@ This $f$ is called the <u>density</u> of $X$, we write $f_{X}$ .
 	\int_{-\infty}^{\infty} f_{X} = \lim_{ t \to \infty } F_{X}\left( t \right) =1
 	$$
 ## Example
-We say $X$ is uniform in $\left[ a,b \right]$ and write $X\sim Uni\left[ a,b \right]$ if $X$ is a continuous r.v with density
+We say $X$ is <u>uniform</u> in $\left[ a,b \right]$ and write $X\sim Uni\left[ a,b \right]$ if $X$ is a continuous r.v with density
+$$
+	f_{X}\left( t \right) = \begin{cases}
+	\frac{1}{b-a} & a<y<b   \\
+	0 & otherwise
+	\end{cases}
+$$
 ```tikz
 
 \begin{document}
@@ -116,6 +122,31 @@ We say $X$ is uniform in $\left[ a,b \right]$ and write $X\sim Uni\left[ a,b \ri
 \end{document}
 
 ```
+Let's calculate the CDF $F_{X}$.
+If $t<a$ then $F_{X}\left( t \right)= \mathbb{P}\left( X\leq t \right)=0$.
+If $t>b$ then $F_{X}\left( t \right)=\mathbb{P}\left( X\leq t \right)=1$
+If $a<t<b$ (the only scenario that is interesting) then
+$$
+	F_{X}\left( t \right) = \int_{-\infty}^{t} f_{X} = \int_{a}^{t} \frac{1}{b-a} = \frac{t-a}{b-a}
+$$
+## Example
+$X$ is <u>exponential</u> with parameter $\lambda>0$ if $X$ has density
+$$
+	f_{X}\left( a \right) = \begin{cases}
+	\lambda e^{ -\lambda a } & a\geq 0 \\
+	0 & a < 0
+	\end{cases}
+$$
+We write $X \sim Exp\left( \lambda \right)$.
+what is $F_{X}$?
+For $t>0$
+$$
+	F_{X}\left( t \right) = \int_{-\infty}^{t} f_{x}= \int_{0}^{t} e^{ -\lambda a }\,da = -e^{ -\lambda a }\bigg|^t_{0} = 1-e^{ -\lambda t }
+$$
+But that one is annoying, so peopl mostly use
+$$
+	\mathbb{P}\left( X>t \right) = e^{ -\lambda t }
+$$
 ## Proposition
 If $g:\mathbb{R}\to \left[ 0,\infty \right)$ is piece-wise continuous and $\int_{-\infty}^{\infty} g=1$ than there exists a cont. random variable $X$ with $f_{X}=g$
 ### Proof
