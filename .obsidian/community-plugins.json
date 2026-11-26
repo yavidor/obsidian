@@ -14,5 +14,6 @@
   "easy-tikz",
   "obsidian-tikzjax",
   "typst",
-  "pseudocode-in-obs"
+  "pseudocode-in-obs",
+  "frontmatter-modified-date"
 ]
