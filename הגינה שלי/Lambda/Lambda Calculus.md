@@ -5,6 +5,8 @@ tags:
   - אישי
 cssclasses:
   - ltr
+modified: 2026-11-27T17:33:09+02:00
+created: 2026-11-15T12:10:53+02:00
 ---
 We'll call the (countably) infinite set of variables $vars$
 We define $\Lambda$ to be the space of all valid lambda terms
