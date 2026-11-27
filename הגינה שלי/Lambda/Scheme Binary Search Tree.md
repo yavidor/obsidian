@@ -2,6 +2,8 @@
 permalink: c1bec893-829c-49e1-96c5-e767502b5f29
 cssclasses:
   - ltr
+modified: 2026-11-27T18:41:03+02:00
+created: 2026-11-15T12:10:53+02:00
 ---
 # The code
 > [!TODO] Github snippet
@@ -74,6 +76,5 @@ Removing a value is not as straight-forward as inserting one.
 Since the value can be anywhere in the tree, to remove a value that's not in a leaf we need to find the value, delete and set the right child of the deleted node as the instead
 
 # Balance
-
 > [!TODO] Find a better way
 > Find a better/faster way to balance

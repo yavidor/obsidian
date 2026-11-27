@@ -2,6 +2,8 @@
 permalink: c397139a-7eea-48bf-80f8-f2b1e183708b
 cssclasses:
   - ltr
+modified: 2026-11-27T18:39:25+02:00
+created: 2026-11-15T12:10:53+02:00
 ---
 ```scheme
 (define Y
@@ -30,7 +32,6 @@ $$
 $$
 	\left( Z\,\, f \right) = \left( \lambda x\quad f \left( \lambda n \left( \left( x \ \ \ x \right) \ \ \ n \right)  \right)  \right) \left( \lambda x\quad f \left( \lambda n \left( \left( x \ \ \ x \right) \ \ \ n \right)  \right)  \right) 
 $$
-
 $$
 	def: F = \left( \lambda x\quad f\left( \lambda n\left( \left( x\ \ \ x \right) \quad n \right)  \right)  \right) 
 $$

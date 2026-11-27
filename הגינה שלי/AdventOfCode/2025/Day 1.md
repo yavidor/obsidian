@@ -4,6 +4,9 @@ tags:
   - אישי
   - מדמח
   - aoc
+permalink: 7bae38fd-1bd9-40fc-b102-555ee5ea99b9
+modified: 2026-11-27T18:41:41+02:00
+created: 2026-11-15T12:10:53+02:00
 ---
 Since my goals is to get better with the restrictions posed by the course #מבוא-למדעי-המחשב I will not use `strlib.h`, which is not really a big deal. Mostly writing some of the functions myself, pretty _trivial_.
 

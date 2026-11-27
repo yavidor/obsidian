@@ -1,9 +1,11 @@
 ---
 permalink: 070612ed-b139-43ce-9d62-8e15d4980a09
+modified: 2026-11-27T18:39:53+02:00
+created: 2026-11-15T12:10:53+02:00
 ---
 # 11-10-2026
 ## Length
-```scheme title:length
+```scheme
 (define list-length
         (lambda (l) 
             (if (null? l)
@@ -66,5 +68,3 @@ permalink: 070612ed-b139-43ce-9d62-8e15d4980a09
        acc
       (reverse-list (cdr l) (cons (car l) acc)))))
 ```
-
-# 12-10-2026

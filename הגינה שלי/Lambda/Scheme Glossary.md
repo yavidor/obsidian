@@ -2,6 +2,8 @@
 permalink: f53a88a2-57b7-4abe-996c-44fea88f4fe1
 cssclasses:
   - ltr
+modified: 2026-11-27T18:40:06+02:00
+created: 2026-11-15T12:10:53+02:00
 ---
 # Primitives
 - Number

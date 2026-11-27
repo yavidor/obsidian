@@ -4,6 +4,9 @@ tags:
   - אישי
   - מדמח
   - aoc
+permalink: 5f696db8-ed04-46f9-92f5-df8059ca67f8
+modified: 2026-11-27T18:42:20+02:00
+created: 2026-11-15T12:10:53+02:00
 ---
 # Part 1
 The first hard part was reading the numbers, it wasn't _hard_, but it included changing some utils functions, and I had to also consider day 1 and how changing the utils affects it, this will probably be a bigger problem with each passing day.
