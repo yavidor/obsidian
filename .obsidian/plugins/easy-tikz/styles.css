@@ -1,5 +1,5 @@
 /* ---- src/styles.css ---- */
-/* Easy TikZ: base styles. Inline note charts, renderer support and the
+/* Easy Graphs Charts and TikZ: base styles. Inline note charts, renderer support and the
    design tokens shared by the editor UI. Component styles live in
    src/ui/*.css; scripts/build-css.mjs concatenates everything into the
    styles.css Obsidian loads. */
@@ -211,6 +211,24 @@ body.etz-export-colours {
     --etz-magenta: #d63384;
 }
 
+/* 6.1: the clean chart look (src/look.ts): the grid's ink (drawn at a low
+   opacity, about #eceef3 on white), the axis lines, the numbers and the
+   line around value pills, in the light and the dark theme. The export
+   uses the light values. */
+body {
+    --etz-clean-grid: #61719b;
+    --etz-clean-axis: #b4b7c2;
+    --etz-clean-tick: #8b8d98;
+    --etz-clean-pill-line: #e3e4ea;
+}
+
+body.theme-dark {
+    --etz-clean-grid: #aab4d2;
+    --etz-clean-axis: #5d606b;
+    --etz-clean-tick: #8d909c;
+    --etz-clean-pill-line: #3c3e45;
+}
+
 /* Turns any CSS colour into rgb() for 3D shading (resolveCssColor). */
 .etz-color-probe {
     display: none;
@@ -234,6 +252,204 @@ body.etz-export-colours {
     top: -99999px;
     visibility: hidden;
     pointer-events: none;
+}
+
+/* ---- src/ui/addpicker.css ---- */
+/* The + Add picker (src/ui/addPicker.ts): a search field on top, the groups
+   on the left, the items of one group (or every match) on the right, a line
+   with the keys at the bottom. Theme colours only. */
+.etz-picker {
+    position: fixed;
+    z-index: var(--layer-menu);
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 16px);
+    overflow: hidden;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: var(--radius-m);
+    background-color: var(--background-primary);
+    box-shadow: var(--shadow-l);
+}
+
+.etz-picker-search {
+    display: flex;
+    flex: 0 0 auto;
+    gap: 8px;
+    align-items: center;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--background-modifier-border);
+    color: var(--text-muted);
+}
+
+.etz-picker input.etz-picker-input {
+    flex: 1 1 auto;
+    min-width: 0;
+    height: auto;
+    padding: 2px 0;
+    border: none;
+    background: none;
+    box-shadow: none;
+    color: var(--text-normal);
+    font-size: var(--font-ui-medium);
+}
+
+.etz-picker-body {
+    display: grid;
+    flex: 1 1 auto;
+    grid-template-columns: 190px minmax(0, 1fr);
+    height: min(340px, calc(100vh - 140px));
+    min-height: 0;
+}
+
+.etz-picker-body.is-single {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.etz-picker-rail {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-height: 0;
+    padding: 6px;
+    overflow-y: auto;
+    border-right: 1px solid var(--background-modifier-border);
+    background-color: var(--background-secondary);
+}
+
+button.etz-picker-group {
+    display: grid;
+    grid-template-columns: 18px minmax(0, 1fr) auto;
+    gap: 8px;
+    align-items: center;
+    height: auto;
+    padding: 6px 8px;
+    border: none;
+    border-radius: var(--radius-s);
+    background: none;
+    box-shadow: none;
+    color: var(--text-muted);
+    font-size: var(--font-ui-small);
+    text-align: start;
+    white-space: normal;
+    cursor: pointer;
+}
+
+button.etz-picker-group:hover {
+    background-color: var(--background-modifier-hover);
+    color: var(--text-normal);
+}
+
+button.etz-picker-group.is-on {
+    background-color: var(--etz-accent-tint);
+    color: var(--text-normal);
+    font-weight: 600;
+}
+
+/* A group's name wraps by itself, whatever a theme says about button text. */
+button.etz-picker-group .etz-picker-group-title {
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: break-word;
+}
+
+.etz-picker-count {
+    color: var(--text-faint);
+    font-size: var(--font-ui-smaller);
+    font-variant-numeric: tabular-nums;
+}
+
+.etz-picker-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-height: 0;
+    padding: 6px;
+    overflow-y: auto;
+}
+
+.etz-picker-heading {
+    padding: 8px 8px 2px;
+    color: var(--text-muted);
+    font-size: var(--font-ui-smaller);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.etz-picker-item {
+    display: grid;
+    grid-template-columns: 18px minmax(0, 1fr);
+    gap: 10px;
+    align-items: start;
+    padding: 6px 8px;
+    border-radius: var(--radius-s);
+    cursor: pointer;
+}
+
+.etz-picker-item.is-selected {
+    background-color: var(--background-modifier-hover);
+}
+
+.etz-picker-icon {
+    display: flex;
+    color: var(--text-muted);
+}
+
+.etz-picker-item .etz-picker-icon {
+    margin-top: 2px;
+}
+
+.etz-picker-icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+.etz-picker-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.etz-picker-label {
+    color: var(--text-normal);
+}
+
+.etz-picker-hint {
+    color: var(--text-muted);
+    font-size: var(--font-ui-smaller);
+    line-height: 1.35;
+}
+
+.etz-picker-empty {
+    padding: 12px 8px;
+    color: var(--text-muted);
+}
+
+.etz-picker-foot {
+    flex: 0 0 auto;
+    padding: 6px 12px;
+    border-top: 1px solid var(--background-modifier-border);
+    color: var(--text-faint);
+    font-size: var(--font-ui-smaller);
+}
+
+@media (max-width: 520px) {
+    .etz-picker-body {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: auto minmax(0, 1fr);
+    }
+
+    .etz-picker-rail {
+        flex-direction: row;
+        overflow-x: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--background-modifier-border);
+    }
+
+    button.etz-picker-group {
+        grid-template-columns: 18px auto auto;
+        white-space: nowrap;
+    }
 }
 
 /* ---- src/ui/ai.css ---- */
@@ -476,10 +692,11 @@ body.etz-export-colours {
     font-weight: 600;
 }
 
-.etz-build-start input.etz-input.etz-expr-input {
-    height: 36px;
-    padding: 0 10px;
-    font-size: 14px;
+.etz-expr.etz-build-start {
+    --etz-expr-h1: 36px;
+    --etz-expr-lh: 22px;
+    --etz-expr-pad-x: 10px;
+    --etz-expr-font: 14px;
 }
 
 .etz-build-empty-sub {
@@ -589,6 +806,14 @@ button.etz-build-example:focus-visible {
     line-height: 1.35;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
+}
+
+/* The texts of a tile wrap by themselves: a theme that keeps button text on one line must not push them out of the tile. */
+button.etz-build-example .etz-build-example-title,
+button.etz-build-example .etz-build-example-desc {
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: break-word;
 }
 
 .etz-build-empty-links {
@@ -968,6 +1193,20 @@ input.etz-input.etz-number.etz-dock-pop-input {
     width: 100%;
 }
 
+/* Connect with others (5.0): the chip and one muted line on what it does. */
+.etz-dock-connect {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+}
+
+.etz-dock-connect-desc {
+    color: var(--text-muted);
+    font-size: var(--font-ui-smaller);
+    line-height: 1.35;
+}
+
 button.etz-btn.etz-dock-delete {
     align-self: flex-start;
     color: var(--text-error);
@@ -1140,6 +1379,7 @@ svg.etz-drag-layer {
 }
 
 .is-live input.etz-input,
+.is-live textarea.etz-input,
 input.etz-input.is-live {
     background-color: color-mix(in srgb, var(--interactive-accent) 8%, var(--background-modifier-form-field));
 }
@@ -1174,6 +1414,278 @@ input.etz-input.is-live {
     }
 }
 
+/* ---- src/ui/formula.css ---- */
+/* The chart of a formula (src/ui/formulaHover.ts): a card next to the
+   formula under the pointer (6.0.1, clean look). The chart, the sliders of
+   its letters, one grey line with the n = 1 / n = 2 switch, and the two
+   buttons small at the bottom right; close (x) over the chart's corner on
+   hover or focus, always on touch screens. Theme colours only, so the dark
+   theme follows; a short fade in, none with reduced motion. */
+.etz-formula-pop {
+    position: fixed;
+    z-index: var(--layer-popover);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: min(380px, calc(100vw - 16px));
+    padding: 8px;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 14px;
+    background-color: var(--background-primary);
+    box-shadow:
+        0 14px 36px -12px color-mix(in srgb, var(--background-modifier-box-shadow, rgba(0, 0, 0, 0.3)) 75%, transparent),
+        0 2px 6px color-mix(in srgb, var(--background-modifier-box-shadow, rgba(0, 0, 0, 0.3)) 20%, transparent);
+    color: var(--text-normal);
+    animation: etz-formula-in 140ms ease-out;
+}
+
+.etz-formula-pop.is-above {
+    animation-name: etz-formula-in-above;
+}
+
+@keyframes etz-formula-in {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+}
+
+@keyframes etz-formula-in-above {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .etz-formula-pop,
+    .etz-formula-pop.is-above {
+        animation: none;
+    }
+
+    .etz-formula-pop button.etz-formula-close {
+        transition: none;
+    }
+}
+
+/* Close: over the chart's top right corner, shown on hover or keyboard focus, always where nothing hovers. */
+.etz-formula-pop button.etz-formula-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: 0;
+    border-radius: 6px;
+    background-color: color-mix(in srgb, var(--background-primary) 90%, transparent);
+    box-shadow: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 150ms ease;
+}
+
+.etz-formula-pop:hover button.etz-formula-close,
+.etz-formula-pop:focus-within button.etz-formula-close,
+.etz-formula-pop.is-touch button.etz-formula-close {
+    opacity: 1;
+}
+
+@media (hover: none) {
+    .etz-formula-pop button.etz-formula-close {
+        opacity: 1;
+    }
+}
+
+.etz-formula-pop button.etz-formula-close:hover {
+    background-color: var(--background-modifier-hover);
+    color: var(--text-normal);
+}
+
+.etz-formula-close-icon {
+    display: inline-flex;
+}
+
+.etz-formula-close-icon svg {
+    width: 14px;
+    height: 14px;
+    stroke-width: 2px;
+}
+
+.etz-formula-chart {
+    overflow: hidden;
+    cursor: grab;
+    touch-action: none;
+    border-radius: 7px;
+}
+
+.etz-formula-chart svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.etz-formula-chart .tikz-3d-root {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+}
+
+.etz-formula-chart:active {
+    cursor: grabbing;
+}
+
+/* The sliders of the formula's letters: as the strip under a chart in a note (inline.css). */
+.etz-formula-sliders {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0 6px;
+}
+
+.etz-formula-slider {
+    display: grid;
+    grid-template-columns: minmax(1.2em, auto) minmax(0, 1fr);
+    gap: 10px;
+    align-items: center;
+}
+
+.etz-formula-slider .etz-slider {
+    height: 26px;
+}
+
+.etz-formula-name {
+    color: var(--text-normal);
+    font-family: 'STIX Two Text', STIXGeneral, 'Latin Modern Roman', 'Cambria Math', Cambria, 'Times New Roman', serif;
+    font-size: 15px;
+    font-style: italic;
+    text-align: center;
+}
+
+/* One grey line, with the n switch at its left. */
+.etz-formula-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px 10px;
+    padding: 2px 4px 0;
+}
+
+.etz-formula-from {
+    flex: 1 1 12em;
+    min-width: 0;
+    color: var(--text-faint);
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.etz-formula-switch + .etz-formula-from {
+    text-align: right;
+}
+
+.etz-formula-from-math mjx-container {
+    color: var(--text-muted);
+}
+
+.etz-formula-switch {
+    display: inline-flex;
+    flex: 0 0 auto;
+    padding: 2px;
+    border-radius: 7px;
+    background-color: var(--background-modifier-hover);
+}
+
+.etz-formula-switch button.etz-formula-n {
+    height: 22px;
+    padding: 0 9px;
+    border: 0;
+    border-radius: 5px;
+    background-color: transparent;
+    box-shadow: none;
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.etz-formula-switch button.etz-formula-n[aria-pressed='true'] {
+    background-color: var(--background-primary);
+    box-shadow: 0 1px 2px color-mix(in srgb, var(--background-modifier-box-shadow, rgba(0, 0, 0, 0.3)) 50%, transparent);
+    color: var(--text-normal);
+}
+
+/* Open in the editor (quiet) and Insert chart (the accent, soft). */
+.etz-formula-acts {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+    padding: 2px 4px 2px;
+}
+
+.etz-formula-acts button.etz-btn.mod-sm {
+    height: 26px;
+    padding: 0 10px;
+    border: 0;
+    border-radius: 7px;
+    box-shadow: none;
+    font-size: 12.5px;
+    font-weight: 600;
+}
+
+.etz-formula-acts button.etz-btn.mod-ghost {
+    background-color: var(--background-modifier-hover);
+    color: var(--text-normal);
+}
+
+.etz-formula-acts button.etz-btn.mod-ghost:hover {
+    background-color: var(--background-modifier-active-hover, var(--background-modifier-hover));
+}
+
+.etz-formula-acts button.etz-btn.mod-cta {
+    background-color: var(--etz-accent-tint);
+    color: var(--text-accent);
+}
+
+.etz-formula-acts button.etz-btn.mod-cta:hover {
+    background-color: color-mix(in srgb, var(--interactive-accent) 22%, transparent);
+    color: var(--text-accent-hover, var(--text-accent));
+}
+
+.etz-formula-pop button.etz-formula-close:focus-visible,
+.etz-formula-switch button.etz-formula-n:focus-visible,
+.etz-formula-acts button.etz-btn:focus-visible {
+    outline: 2px solid var(--interactive-accent);
+    outline-offset: 2px;
+    box-shadow: none;
+}
+
+/* Formulas with a chart in notes (setting Highlight formulas in notes, a
+   class on the body): a dotted line under the inline ones, and a tint under
+   the pointer and while their card is open. */
+/* Inline: .math-inline in Reading view, a bare span.math in Live Preview. */
+/* The dotted line under the formula itself (also under the lower part of a fraction), or, in a block of
+   rows, under each row that opens a chart (on its cells: a row's background is placed by the table). A
+   background, so the line takes no room. */
+body.etz-formula-marks .math[data-etz-mark='1'] mjx-math,
+body.etz-formula-marks .math[data-etz-mark='rows'] :is(mjx-mtr, mjx-mlabeledtr)[data-etz-mark='1'] > mjx-mtd {
+    background-image: linear-gradient(to right, color-mix(in srgb, var(--interactive-accent) 70%, transparent) 50%, transparent 50%);
+    background-position: left bottom;
+    background-repeat: repeat-x;
+    background-size: 4px 1.5px;
+}
+
+body.etz-formula-marks .math[data-etz-mark='1']:hover,
+body.etz-formula-marks .math.etz-formula-open,
+body.etz-formula-marks .math[data-etz-mark='rows'] :is(mjx-mtr, mjx-mlabeledtr)[data-etz-mark='1']:hover > mjx-mtd,
+body.etz-formula-marks :is(mjx-mtr, mjx-mlabeledtr).etz-formula-open > mjx-mtd {
+    border-radius: var(--radius-s);
+    background-color: color-mix(in srgb, var(--interactive-accent) 12%, transparent);
+}
+
 /* ---- src/ui/help.css ---- */
 /* Help tab (src/ui/helpPanel.ts): the guides browser, the guide reader and
    the reference. Text stays selectable so formulas can be copied into
@@ -1184,7 +1696,8 @@ input.etz-input.is-live {
     /* Containing block for the screen-reader-only labels inside: positioned
        against the modal instead, they would give it a scrollable overflow. */
     position: relative;
-    max-width: 720px;
+    max-width: 980px;
+    margin: 0 auto;
     color: var(--text-normal);
     font-size: var(--etz-font);
     line-height: 1.55;
@@ -1214,7 +1727,7 @@ input.etz-input.is-live {
 }
 
 .etz-help-browse {
-    gap: 24px;
+    gap: 30px;
 }
 
 .etz-help-results {
@@ -1990,6 +2503,506 @@ button.etz-btn.etz-help-example-btn {
     flex: 0 0 auto;
 }
 
+/* ---------------------------------------------------------------- 5.1, 6.0: home
+   Start here, the chart language beside a small picture, New in 6, topic
+   sections of four tiles that open the rest in place (src/guides/home.ts),
+   and the reference as a compact list. Calm: space between the parts, not
+   lines; one tile size per part; a part is at most two rows of tiles until
+   "Show all". */
+.etz-help-home-part {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+}
+
+.etz-help-label {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: var(--etz-font-meta);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.etz-help-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+/* A part's heading and its one line; Show all (and the AI link) at the right. */
+.etz-help-part-head {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 12px;
+    align-items: flex-end;
+    justify-content: space-between;
+    min-width: 0;
+}
+
+.etz-help-part-titles {
+    display: flex;
+    flex: 1 1 260px;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+}
+
+h3.etz-help-part-title {
+    margin: 0;
+    color: var(--text-normal);
+    font-size: 15px;
+    font-weight: 650;
+    line-height: 1.3;
+}
+
+.etz-help-part-about {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: var(--etz-font-small);
+    line-height: 1.4;
+}
+
+.etz-help-part-head > button.etz-btn.etz-help-part-link {
+    flex: 0 0 auto;
+}
+
+.etz-help-starts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+button.etz-help-start {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 2px;
+    height: auto;
+    padding: 10px 12px;
+    border: 1px solid transparent;
+    border-radius: var(--etz-radius-m);
+    background-color: var(--background-secondary);
+    box-shadow: none;
+    text-align: start;
+    white-space: normal;
+    cursor: pointer;
+    transition: border-color var(--etz-transition);
+}
+
+button.etz-help-start:hover {
+    border-color: var(--etz-accent-border);
+    background-color: var(--background-secondary);
+}
+
+button.etz-help-start:focus-visible {
+    box-shadow: var(--etz-focus-ring);
+}
+
+.etz-help-start-title,
+.etz-help-tile-title {
+    color: var(--text-normal);
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+.etz-help-start-summary,
+.etz-help-tile-summary {
+    color: var(--text-muted);
+    font-size: var(--etz-font-small);
+    line-height: 1.4;
+}
+
+.etz-help-tile-meta {
+    color: var(--text-faint);
+    font-size: var(--etz-font-meta);
+    font-weight: 600;
+}
+
+/* The texts of a card wrap by themselves: a theme that keeps button text on one line must not push them out of the card. */
+.etz-help button.etz-help-start > span,
+.etz-help button.etz-help-tile span,
+.etz-help button.etz-help-topic > span,
+.etz-help button.etz-help-card span {
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: break-word;
+}
+
+/* The chart language: a small card, the words beside a small picture. */
+.etz-help-feature {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    overflow: hidden;
+    border-radius: var(--etz-radius-l);
+    background-color: var(--background-secondary);
+}
+
+.etz-help-feature-side {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+    padding: 12px 14px;
+}
+
+.etz-help-feature-title {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 650;
+    line-height: 1.3;
+}
+
+.etz-help-feature-side > .etz-help-p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: var(--etz-font-small);
+}
+
+.etz-help-feature .etz-help-words {
+    padding: 4px 0;
+    border-color: transparent;
+    font-size: var(--etz-font-meta);
+    line-height: 1.55;
+}
+
+.etz-help-feature-chart,
+.etz-help-tile-chart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    background-color: var(--background-primary);
+}
+
+.etz-help-feature-chart {
+    min-height: 150px;
+    margin: 8px 8px 8px 0;
+    padding: 6px;
+    border-radius: var(--etz-radius-m);
+}
+
+.etz-help-feature-chart > svg,
+.etz-help-tile-chart > svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+}
+
+/* Tiles: a framed chart with its title and a line under it, no box around the text. */
+.etz-help-tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 14px 12px;
+}
+
+/* The sections and New in 6: four tiles in a row, two at narrow widths, so four tiles are at most two rows. */
+.etz-help-tiles.mod-section,
+.etz-help-tiles.mod-large {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+button.etz-help-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 0;
+    height: auto;
+    padding: 0;
+    border: 0;
+    border-radius: var(--etz-radius-m);
+    background-color: transparent;
+    box-shadow: none;
+    text-align: start;
+    white-space: normal;
+    cursor: pointer;
+}
+
+button.etz-help-tile:hover {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+button.etz-help-tile:focus-visible {
+    box-shadow: var(--etz-focus-ring);
+}
+
+.etz-help-tile-chart {
+    aspect-ratio: 3 / 2;
+    /* The box keeps its ratio whatever the picture's own size: every title of a row starts at the same height. */
+    min-height: 0;
+    overflow: hidden;
+    padding: 4px;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: var(--etz-radius-m);
+    transition: border-color var(--etz-transition);
+}
+
+button.etz-help-tile:hover > .etz-help-tile-chart {
+    border-color: var(--etz-accent-border);
+}
+
+/* New in 6: taller charts. */
+.etz-help-tiles.mod-large .etz-help-tile-chart {
+    aspect-ratio: 4 / 3;
+}
+
+.etz-help-tiles.mod-large .etz-help-tile-title {
+    font-size: 15px;
+}
+
+.etz-help-tile-chart.is-fallback,
+.etz-help-feature-chart.is-fallback {
+    background-color: var(--background-secondary);
+}
+
+.etz-help-tile-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 7px 2px 0;
+}
+
+/* Two lines of summary at most: the tiles of a row stay one size. */
+.etz-help-tiles.mod-section .etz-help-tile-summary,
+.etz-help-tiles.mod-large .etz-help-tile-summary {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+/* The reference: a compact list of links, three columns where they fit. */
+.etz-help-topics.mod-compact {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0 12px;
+}
+
+.etz-help-topics.mod-compact button.etz-help-topic {
+    padding: 5px 8px;
+    border-color: transparent;
+    border-radius: var(--etz-radius-s);
+}
+
+.etz-help-topics.mod-compact button.etz-help-topic:hover {
+    border-color: transparent;
+    background-color: var(--background-modifier-hover);
+}
+
+.etz-help-topics.mod-compact .etz-help-topic-about {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.etz-help .etz-help-topics.mod-compact button.etz-help-topic > span.etz-help-topic-about {
+    white-space: nowrap;
+}
+
+@container etz-help (max-width: 639px) {
+    .etz-help-tiles.mod-section,
+    .etz-help-tiles.mod-large {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@container etz-help (max-width: 399px) {
+    .etz-help-tiles.mod-section,
+    .etz-help-tiles.mod-large {
+        gap: 12px 10px;
+    }
+
+    .etz-help-tiles.mod-section .etz-help-tile-summary,
+    .etz-help-tiles.mod-large .etz-help-tile-summary {
+        -webkit-line-clamp: 3;
+    }
+
+    .etz-help-tiles.mod-section .etz-help-tile-meta,
+    .etz-help-tiles.mod-large .etz-help-tile-meta {
+        display: none;
+    }
+
+    .etz-help-tiles.mod-large .etz-help-tile-chart {
+        aspect-ratio: 1 / 1;
+    }
+}
+
+/* ------------------------------------------------------- the chart in words */
+.etz-help-words {
+    overflow-x: auto;
+    padding: 8px 0;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: var(--etz-radius-s);
+    background-color: var(--background-primary);
+    font-family: var(--etz-font-mono);
+    font-size: var(--etz-font-small);
+    line-height: 1.65;
+}
+
+.etz-help-words-line {
+    padding: 0 10px;
+    border-left: 3px solid transparent;
+    white-space: pre;
+}
+
+.etz-help-words-line.is-new {
+    border-left-color: var(--interactive-accent);
+    background-color: var(--etz-accent-tint);
+}
+
+.etz-help-words-verb {
+    color: var(--text-accent);
+    font-weight: 600;
+}
+
+.etz-help-words-tex {
+    color: var(--color-blue);
+}
+
+.etz-help-words-str {
+    color: var(--color-green);
+}
+
+.etz-help-words-new {
+    margin-left: 10px;
+    color: var(--text-accent);
+    font-family: var(--font-interface);
+    font-size: 0.8em;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+/* ------------------------------------------------- a guide, one step at a time */
+.etz-help-step-count {
+    color: var(--text-muted);
+    font-size: var(--etz-font-small);
+    font-variant-numeric: tabular-nums;
+}
+
+.etz-help-progress {
+    display: flex;
+    gap: 4px;
+    margin: 4px 0 14px;
+}
+
+.etz-help-progress > span {
+    flex: 1 1 0;
+    height: 4px;
+    border-radius: 2px;
+    background-color: var(--background-modifier-border);
+}
+
+.etz-help-progress > span.is-done {
+    background-color: var(--interactive-accent);
+}
+
+.etz-help-stage {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    grid-template-areas:
+        'chart top'
+        'chart words';
+    gap: 12px 18px;
+    align-items: start;
+}
+
+.etz-help-stage-top,
+.etz-help-stage-chart,
+.etz-help-stage-words {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+}
+
+.etz-help-stage-top {
+    grid-area: top;
+}
+
+.etz-help-stage-chart {
+    grid-area: chart;
+}
+
+.etz-help-stage-words {
+    grid-area: words;
+}
+
+.etz-help-stage-top > .etz-help-step-title {
+    margin: 0;
+    font-size: 1.15em;
+    text-wrap: balance;
+}
+
+.etz-help-stage-top .etz-help-p {
+    margin: 0;
+}
+
+.etz-help-outcomes {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    color: var(--text-muted);
+    font-size: var(--etz-font-small);
+}
+
+.etz-help-nav {
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 16px;
+    padding: 10px 0;
+    border-top: 1px solid var(--background-modifier-border);
+    background-color: var(--background-primary);
+}
+
+.etz-help-keys {
+    color: var(--text-faint);
+    font-size: var(--etz-font-meta);
+}
+
+@container etz-help (max-width: 620px) {
+    .etz-help-feature {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .etz-help-stage {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: auto;
+        grid-template-areas:
+            'top'
+            'chart'
+            'words';
+    }
+
+    .etz-help-feature-chart {
+        min-height: 130px;
+        margin: 0 8px 8px;
+    }
+
+    .etz-help-keys {
+        display: none;
+    }
+}
+
+/* At phone width the chart language card is its words alone (6.0: a small card). */
+@container etz-help (max-width: 399px) {
+    .etz-help-feature-chart {
+        display: none;
+    }
+}
+
 /* ---- src/ui/inline.css ---- */
 /* Charts rendered in notes (main.ts InlineChart). The outer wrapper only
    carries the width and the alignment; the chart box inside it keeps the
@@ -2098,16 +3111,17 @@ button.etz-btn.etz-help-example-btn {
 
 /* ------------------------------------------------------ slider strip */
 
+/* 6.0.1, clean look: no box. Per row the slider's name in math italic, a
+   thin track in the accent colour with a round knob, and the value at the
+   end in small grey numbers (still a field: click it to type a value). The
+   card of a formula (formula.css) uses the same slider. */
 .etz-inline-strip {
     position: relative;
     display: flex;
     align-items: flex-start;
     gap: 4px;
-    margin-top: 6px;
+    margin-top: 4px;
     padding: 2px 2px 2px 10px;
-    border: 1px solid var(--background-modifier-border);
-    border-radius: var(--etz-radius-l);
-    background-color: var(--background-primary-alt);
     cursor: default;
 }
 
@@ -2121,33 +3135,142 @@ button.etz-btn.etz-help-example-btn {
 .etz-inline-row {
     display: flex;
     align-items: center;
-    gap: 8px;
-    height: 24px;
+    gap: 12px;
+    height: 28px;
 }
 
 .etz-inline-name {
-    flex: 0 0 40px;
-    width: 40px;
+    flex: 0 0 auto;
+    min-width: 1.1em;
+    max-width: 72px;
     overflow: hidden;
-    color: var(--text-muted);
-    font-family: var(--font-monospace);
-    font-size: 11px;
+    color: var(--text-normal);
+    font-family: 'STIX Two Text', STIXGeneral, 'Latin Modern Roman', 'Cambria Math', Cambria, 'Times New Roman', serif;
+    font-size: 15px;
+    font-style: italic;
+    line-height: 1;
+    text-align: center;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
 
 .etz-inline-row .etz-slider {
-    gap: 8px;
-    height: 24px;
+    gap: 12px;
+    height: 28px;
 }
 
 .etz-inline-row input.etz-input.etz-slider-number {
-    flex: 0 0 48px;
-    width: 48px;
-    height: 20px;
+    flex: 0 0 52px;
+    width: 52px;
+    height: 22px;
     padding: 0 4px;
-    font-size: 11px;
+    border: 1px solid transparent;
+    border-radius: var(--etz-radius-s);
+    background-color: transparent;
+    box-shadow: none;
+    color: var(--text-muted);
+    font-size: 12.5px;
     font-variant-numeric: tabular-nums;
+    text-align: right;
+}
+
+.etz-inline-row input.etz-input.etz-slider-number:hover {
+    border-color: var(--background-modifier-border);
+}
+
+.etz-inline-row input.etz-input.etz-slider-number:focus {
+    border-color: var(--interactive-accent);
+    background-color: var(--background-primary);
+    box-shadow: none;
+    color: var(--text-normal);
+}
+
+/* The thin track: the accent up to the knob, a faint line after it. */
+.etz-inline-strip input.etz-slider-input[type='range'],
+.etz-formula-sliders input.etz-slider-input[type='range'] {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 18px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.etz-inline-strip input.etz-slider-input[type='range']::-webkit-slider-runnable-track,
+.etz-formula-sliders input.etz-slider-input[type='range']::-webkit-slider-runnable-track {
+    height: 3px;
+    border-radius: 3px;
+    background:
+        linear-gradient(var(--interactive-accent), var(--interactive-accent)) 0 / calc(var(--slider-fill-ratio, 0) * 100%) 100% no-repeat,
+        var(--background-modifier-border);
+}
+
+.etz-inline-strip input.etz-slider-input[type='range']::-webkit-slider-thumb,
+.etz-formula-sliders input.etz-slider-input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    position: relative;
+    top: 0;
+    width: 16px;
+    height: 16px;
+    margin-top: -6.5px;
+    border: 1.5px solid var(--interactive-accent);
+    border-radius: 50%;
+    background: var(--slider-thumb-background, white);
+    box-shadow: 0 1px 3px color-mix(in srgb, var(--background-modifier-box-shadow, rgba(0, 0, 0, 0.3)) 60%, transparent);
+    opacity: 1;
+    cursor: grab;
+}
+
+/* Obsidian's own slider turns the knob's ring grey on keyboard focus: here it stays the accent, with the ring of :focus-visible below. */
+.etz-inline-strip input.etz-slider-input[type='range']:focus-visible::-webkit-slider-thumb,
+.etz-formula-sliders input.etz-slider-input[type='range']:focus-visible::-webkit-slider-thumb {
+    border-color: var(--interactive-accent);
+    box-shadow: 0 1px 3px color-mix(in srgb, var(--background-modifier-box-shadow, rgba(0, 0, 0, 0.3)) 60%, transparent);
+}
+
+.etz-inline-strip input.etz-slider-input[type='range']:active::-webkit-slider-thumb,
+.etz-formula-sliders input.etz-slider-input[type='range']:active::-webkit-slider-thumb {
+    cursor: grabbing;
+}
+
+.etz-inline-strip input.etz-slider-input[type='range']::-moz-range-track,
+.etz-formula-sliders input.etz-slider-input[type='range']::-moz-range-track {
+    height: 3px;
+    border-radius: 3px;
+    background: var(--background-modifier-border);
+}
+
+.etz-inline-strip input.etz-slider-input[type='range']::-moz-range-progress,
+.etz-formula-sliders input.etz-slider-input[type='range']::-moz-range-progress {
+    height: 3px;
+    border-radius: 3px;
+    background: var(--interactive-accent);
+}
+
+.etz-inline-strip input.etz-slider-input[type='range']::-moz-range-thumb,
+.etz-formula-sliders input.etz-slider-input[type='range']::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border: 1.5px solid var(--interactive-accent);
+    border-radius: 50%;
+    background: var(--slider-thumb-background, white);
+}
+
+.etz-inline-strip input.etz-slider-input[type='range']:focus-visible,
+.etz-formula-sliders input.etz-slider-input[type='range']:focus-visible {
+    outline: 2px solid var(--interactive-accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+    box-shadow: none;
+}
+
+.etz-formula-sliders .etz-slider-value {
+    min-width: 3ch;
+    color: var(--text-muted);
+    font-size: 12.5px;
 }
 
 .etz-inline-rows > button.etz-btn.etz-inline-more {
@@ -2157,7 +3280,24 @@ button.etz-btn.etz-help-example-btn {
 }
 
 button.etz-icon-btn.etz-inline-reset {
-    margin-top: 1px;
+    margin-top: 3px;
+}
+
+/* A PDF export or a printout shows the chart as it stands, without its sliders: they only work in the note. */
+@media print {
+    .etz-inline-strip {
+        display: none;
+    }
+}
+
+/* Connect with others (5.0): muted when off, the accent when on. */
+button.etz-icon-btn.etz-inline-link {
+    flex: 0 0 auto;
+    color: var(--text-faint);
+}
+
+button.etz-icon-btn.etz-inline-link.is-on {
+    color: var(--interactive-accent);
 }
 
 /* The chart under a block being edited in Live Preview (src/live.ts): it
@@ -2213,8 +3353,16 @@ button.etz-icon-btn.etz-inline-reset {
     box-shadow: none;
 }
 
+/* ---- src/ui/iterate.css ---- */
+/* 6.0 E: the picture of a coloured plane or a bifurcation diagram (src/iterate/paint.ts). */
+.etz-pixels-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
 /* ---- src/ui/kit.css ---- */
-/* Easy TikZ UI kit (src/ui/kit.ts). Obsidian colour variables only, so
+/* Easy Graphs Charts and TikZ UI kit (src/ui/kit.ts). Obsidian colour variables only, so
    light and dark themes (and community themes) follow automatically.
    Sizes come from the --etz-* tokens on .tikz-modal / .etz-tokens
    (src/styles.css). Selectors on buttons and inputs carry the element
@@ -2490,6 +3638,12 @@ button.etz-chip[aria-pressed='true']:focus-visible {
     box-shadow: var(--etz-focus-ring);
 }
 
+/* A chip that does nothing now (Axis labels with no axes, Equal scale in polar): faded, as a disabled segment. */
+button.etz-chip:disabled {
+    opacity: 0.45;
+    cursor: default;
+}
+
 .etz-chip-check {
     display: none;
 }
@@ -2533,12 +3687,12 @@ input.etz-input.etz-number {
 }
 
 input.etz-input.is-error,
-.etz-expr.is-error input.etz-input {
+.etz-expr.is-error .etz-input {
     border-color: var(--text-error);
 }
 
 input.etz-input.is-error:focus,
-.etz-expr.is-error input.etz-input:focus {
+.etz-expr.is-error .etz-input:focus {
     border-color: var(--text-error);
     box-shadow: 0 0 0 2px color-mix(in srgb, var(--text-error) 30%, transparent);
 }
@@ -2560,12 +3714,137 @@ select.etz-select.is-missing {
 
 /* --------------------------------------------------- expression input */
 
+/* 6.2.2: the field is a text area of one line that grows with a long
+   formula (exprInput sets --etz-expr-h from its mirror). One line is as
+   tall as the other controls; the mirror over it has the same font,
+   padding and border, so it wraps at the same places. */
 .etz-expr {
+    --etz-expr-h1: var(--etz-control-h);
+    --etz-expr-lh: 18px;
+    --etz-expr-pad-x: 8px;
+    --etz-expr-pad-y: calc((var(--etz-expr-h1) - var(--etz-expr-lh)) / 2 - var(--input-border-width, 1px));
+    --etz-expr-font: var(--etz-font-mono);
     display: flex;
     flex-direction: column;
     gap: 4px;
     min-width: 0;
     width: 100%;
+}
+
+.etz-expr-box {
+    position: relative;
+    min-width: 0;
+}
+
+textarea.etz-input.etz-expr-input {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    height: var(--etz-expr-h, var(--etz-expr-h1));
+    min-height: var(--etz-expr-h1);
+    box-sizing: border-box;
+    margin: 0;
+    padding: var(--etz-expr-pad-y) var(--etz-expr-pad-x);
+    font-family: var(--font-monospace);
+    font-size: var(--etz-expr-font);
+    line-height: var(--etz-expr-lh);
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    word-break: normal;
+    overflow: hidden;
+    resize: none;
+}
+
+/* A placeholder longer than the field ends at its edge, on the one line. */
+textarea.etz-input.etz-expr-input::placeholder {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.etz-expr.is-scrolling textarea.etz-input.etz-expr-input {
+    overflow-y: auto;
+}
+
+textarea.etz-input.etz-expr-input:focus,
+textarea.etz-input.etz-expr-input:focus-visible {
+    border-color: var(--background-modifier-border-focus);
+    box-shadow: var(--etz-focus-ring);
+}
+
+.etz-expr.is-error textarea.etz-input.etz-expr-input:focus {
+    border-color: var(--text-error);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--text-error) 30%, transparent);
+}
+
+.etz-expr-layer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.etz-expr-mirror {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    box-sizing: border-box;
+    padding: var(--etz-expr-pad-y) calc(var(--etz-expr-pad-x) + var(--etz-expr-bar, 0px)) var(--etz-expr-pad-y) var(--etz-expr-pad-x);
+    border-color: transparent;
+    border-style: solid;
+    border-width: var(--etz-expr-bw, var(--input-border-width, 1px));
+    color: transparent;
+    font-family: var(--font-monospace);
+    font-size: var(--etz-expr-font);
+    line-height: var(--etz-expr-lh);
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    word-break: normal;
+    transform: translateY(var(--etz-expr-scroll, 0px));
+    user-select: none;
+}
+
+/* The bracket at the caret and the one that matches it. */
+.etz-expr-pair {
+    border-radius: 2px;
+    background-color: color-mix(in srgb, var(--interactive-accent) 20%, transparent);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--interactive-accent) 60%, transparent);
+}
+
+/* The typeset formula under a long one: small, muted, no focus, no clicks. */
+.etz-expr-math {
+    min-width: 0;
+    padding: 0 calc(var(--etz-expr-pad-x) + var(--input-border-width, 1px));
+    overflow: hidden;
+    color: var(--text-muted);
+    font-size: var(--etz-font-small);
+    line-height: 1.25;
+    pointer-events: none;
+    user-select: none;
+}
+
+.etz-expr-math.is-stale {
+    opacity: 0.45;
+}
+
+/* Wider than the field even when shrunk: it scrolls sideways (the focus stays in the field). */
+.etz-expr-math.is-wide {
+    overflow-x: auto;
+    pointer-events: auto;
+    scrollbar-width: thin;
+}
+
+.etz-expr-math-inner {
+    width: max-content;
+    zoom: var(--etz-expr-math-zoom, 1);
+}
+
+.etz-expr-math mjx-container {
+    margin: 0;
 }
 
 .etz-expr-msg {
@@ -3164,6 +4443,17 @@ input.etz-input.etz-dialog-input {
     }
 }
 
+/* 6.2.1: Open an example: the example search, a name with its description under it. */
+.etz-example-suggestion-title {
+    color: var(--text-normal);
+}
+
+.etz-example-suggestion-desc {
+    color: var(--text-muted);
+    font-size: var(--font-ui-smaller);
+    margin-top: 2px;
+}
+
 /* ---- src/ui/layers.css ---- */
 /* Layer cards (src/ui/layerCards.ts): bodies of the region, curve, points,
    segment, plane and text label cards. The card shell and every control
@@ -3377,6 +4667,37 @@ input.etz-input.etz-dialog-input {
     color: var(--text-error);
 }
 
+/* ---- src/ui/live.css ---- */
+/* A live chart (src/ui/liveChart.ts): What's new slides and Help steps. The
+   box keeps the chart's own proportions; the picture fills it. The slider
+   strip is the strip of a chart in a note (.etz-inline-strip). */
+.etz-live-chart {
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: var(--etz-radius-m);
+    aspect-ratio: var(--etz-live-aspect, 1.25);
+}
+
+.etz-live-chart > svg.etz-live-svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+}
+
+.etz-inline-strip.etz-live-strip {
+    margin-top: 0;
+}
+
+button.etz-icon-btn.etz-live-play {
+    margin-top: 3px;
+}
+
+button.etz-icon-btn.etz-live-play[aria-pressed='true'] {
+    color: var(--interactive-accent);
+}
+
 /* ---- src/ui/motion.css ---- */
 /* Objects new to a chart pop in (src/motion.ts): curves draw themselves,
    points pop, regions, guides and labels fade up. The script sets the
@@ -3399,6 +4720,283 @@ input.etz-input.etz-dialog-input {
 .etz-pop.etz-pop-rise {
     opacity: var(--etz-pop-o, 1);
     translate: 0 var(--etz-pop-y, 0px);
+}
+
+/* ---- src/ui/motion6.css ---- */
+/* Motion (6.0, src/motion6/player.ts): Play and the steps, and the clock's
+   Pause / Play. In a note they are the first row of the strip under the
+   chart (print hides the strip); in the editor a bar over the preview. */
+.etz-motion6-row {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    height: 24px;
+}
+
+.etz-motion6-step {
+    margin: 0 6px 0 4px;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+/* A pressed clock button is a paused clock: it reads like any other off state. */
+.etz-motion6-row button.etz-icon-btn.etz-motion6-clock[aria-pressed='true'] {
+    color: var(--text-muted);
+    background-color: transparent;
+}
+
+/* A strip with only the player's row has no reset button: no room kept for it. */
+.etz-inline-strip.etz-motion6-strip {
+    padding-right: 6px;
+}
+
+/* The editor: a bar over the preview, bottom left (the pill sits bottom right). */
+.etz-motion6-bar {
+    position: absolute;
+    bottom: 10px;
+    left: 12px;
+    padding: 3px 6px 3px 3px;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 999px;
+    background-color: var(--background-primary);
+    box-shadow: var(--shadow-s);
+}
+
+.etz-motion6-bar .etz-motion6-row {
+    height: 26px;
+}
+
+/* The step of an object on its card (shown while the chart has steps). */
+.etz-motion6-steprow input.etz-motion6-stepinput {
+    width: 56px;
+}
+
+/* 6.0 F4: the live canvas of a chart, over the plot (src/motion6/live.ts); pointers go to the chart under it.
+   No padding or border: the canvases must fill it exactly (one canvas pixel per screen pixel). */
+.etz-motion-layer {
+    pointer-events: none;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    overflow: hidden;
+}
+
+.etz-motion-box {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.etz-motion-canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+/* ---- src/ui/notes6.css ---- */
+/* Notes and interaction (6.0 B): the menu of Ask the curve (src/notes6/askMenu.ts) and the
+   faint answer it shows; the parts of the hover card for sets, maps and inequalities. */
+
+/* ------------------------------------------------------------ Ask the curve */
+
+.etz-ask-menu {
+    position: fixed;
+    top: var(--etz-ask-top, 0);
+    left: var(--etz-ask-left, 0);
+    z-index: var(--layer-menu);
+    width: 280px;
+    max-width: calc(100vw - 16px);
+    max-height: min(70vh, 520px);
+    display: flex;
+    flex-direction: column;
+    padding: 6px;
+    background-color: var(--background-primary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 10px;
+    box-shadow: var(--shadow-l);
+    color: var(--text-normal);
+}
+
+.etz-ask-title {
+    padding: 6px 8px 4px;
+    font-size: var(--etz-font-small);
+    font-weight: 600;
+    color: var(--text-normal);
+    overflow-wrap: anywhere;
+}
+
+.etz-ask-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+.etz-ask-group {
+    padding: 8px 8px 2px;
+    font-size: var(--etz-font-meta);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+button.etz-ask-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 9px;
+    width: 100%;
+    height: auto;
+    min-height: 30px;
+    padding: 6px 8px;
+    border: 0;
+    border-radius: var(--etz-radius-m);
+    background-color: transparent;
+    box-shadow: none;
+    color: var(--text-normal);
+    font-size: var(--etz-font);
+    font-weight: 500;
+    line-height: 1.25;
+    text-align: left;
+    white-space: normal;
+    cursor: pointer;
+}
+
+button.etz-ask-item:hover,
+button.etz-ask-item:focus-visible {
+    background-color: var(--etz-accent-tint);
+    outline: none;
+}
+
+.etz-ask-box {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--text-muted);
+    border-radius: 4px;
+    font-size: 11px;
+    line-height: 1;
+    color: var(--text-on-accent);
+}
+
+button.etz-ask-item[aria-checked='true'] .etz-ask-box {
+    background-color: var(--interactive-accent);
+    border-color: var(--interactive-accent);
+}
+
+.etz-ask-empty,
+.etz-ask-hint {
+    padding: 6px 8px;
+    font-size: var(--etz-font-meta);
+    color: var(--text-faint);
+}
+
+/* The answer a question would add, shown faintly while the question is pointed at. */
+.etz-ask-faint {
+    opacity: 0.42;
+}
+
+/* The chart under a block in Live Preview answers questions: its curves are clickable. */
+.etz-inline-live .etz-inline-box.etz-askable {
+    cursor: pointer;
+}
+
+.etz-inline-live .etz-inline-box.etz-askable:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--background-modifier-border-focus);
+}
+
+/* ---- src/ui/python.css ---- */
+/* 6.0 P: the code area of a python block's card (src/python/cards.ts). */
+.etz-python-editor {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: var(--etz-radius-m, 6px);
+    background: var(--background-primary-alt);
+    overflow-x: auto;
+}
+
+.etz-python-gutter {
+    flex: 0 0 auto;
+    padding: 6px 6px 6px 8px;
+    min-width: 2.2em;
+    box-sizing: border-box;
+    text-align: right;
+    white-space: pre;
+    font-family: var(--font-monospace);
+    font-size: var(--etz-font-mono, 12px);
+    line-height: 1.5;
+    color: var(--text-faint);
+    user-select: none;
+    border-right: 1px solid var(--background-modifier-border);
+    /* The line of a problem: a red band behind its number. */
+    background-image: linear-gradient(var(--background-modifier-error), var(--background-modifier-error));
+    background-repeat: no-repeat;
+    background-size: 100% 1.5em;
+    background-position: 0 calc(6px + var(--etz-python-problem-line, -10) * 1.5em);
+}
+
+textarea.etz-python-code {
+    flex: 1 1 auto;
+    min-width: 0;
+    margin: 0;
+    padding: 6px 8px;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+    font-family: var(--font-monospace);
+    font-size: var(--etz-font-mono, 12px);
+    line-height: 1.5;
+    white-space: pre;
+    overflow-wrap: normal;
+    overflow: hidden;
+    tab-size: 4;
+    resize: none;
+    color: var(--text-normal);
+}
+
+textarea.etz-python-code:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+.etz-python-editor:focus-within {
+    border-color: var(--interactive-accent);
+}
+
+textarea.etz-python-code.is-invalid {
+    background: transparent;
+}
+
+.etz-python-problem {
+    margin-top: 4px;
+    font-size: var(--font-ui-smaller);
+    color: var(--text-error);
+    font-family: var(--font-monospace);
+    white-space: pre-wrap;
+}
+
+.etz-python-info {
+    margin-top: 4px;
+    font-size: var(--font-ui-smaller);
+    color: var(--text-muted);
 }
 
 /* ---- src/ui/shell.css ---- */
@@ -3840,6 +5438,29 @@ button.etz-status-chip:focus-visible {
     display: none;
 }
 
+/* The Help tab (5.1) takes the whole editor: its steps draw their own live charts. */
+.etz-shell.is-help {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+    grid-template-areas: 'editor';
+}
+
+.etz-shell.is-help > .etz-stage,
+.etz-shell.is-help > .etz-shell-dock,
+.etz-shell.is-help > .etz-actionbar {
+    display: none;
+}
+
+.etz-shell.is-help .etz-editor {
+    border-top: none;
+    border-right: none;
+}
+
+/* Obsidian's close button sits at the top right of the modal: the header's menu keeps clear of it. */
+.etz-shell.is-help .etz-header {
+    padding-right: 48px;
+}
+
 .etz-actionbar {
     grid-area: actions;
     display: flex;
@@ -3907,6 +5528,20 @@ button.etz-status-chip:focus-visible {
     color: var(--text-muted);
     font-size: var(--etz-font-small);
     line-height: var(--etz-control-h);
+}
+
+/* Chart, 3D view, Box Custom: the lengths x : y : z under the switch. */
+.etz-box-lengths {
+    display: flex;
+    align-items: center;
+    gap: var(--etz-gap);
+    margin-top: var(--etz-gap);
+}
+
+.etz-box-lengths .etz-box-length {
+    flex: 1 1 0;
+    min-width: 0;
+    width: 0;
 }
 
 .etz-chart-hint {
@@ -4027,20 +5662,27 @@ textarea.etz-code-textarea {
 }
 
 /* ---- src/ui/whatsnew.css ---- */
-/* "What's new" popup (src/ui/whatsNewModal.ts): title, what this release
-   brings, a live chart with its slider strip beside the lines it is written
-   in, the rest of version 4 closed under one heading, and the buttons. Theme
-   colours only, so light and dark both work; one column when the window is
-   narrow. */
+/* "What's new" popup (src/ui/whatsNewModal.ts): the name and the button
+   "Watch the film" on top, a slideshow of 6.0 (each slide a live chart in a
+   16:9 stage, then a label, a title, one line and Try it; the last slide the
+   film), and the footer with the dots, Back and Next. Theme colours only, so
+   light and dark both work. The modal is as wide as the window lets the
+   stage be 16:9 with the rest in view. */
 
-/* Title, scrolling content, and the buttons as a footer that stays in view. */
 .modal.etz-whatsnew {
     display: flex;
     flex-direction: column;
-    width: min(940px, calc(100vw - 48px));
+    width: min(960px, calc(100vw - 48px), calc((100vh - 316px) * 16 / 9 + 64px));
+    min-width: min(420px, calc(100vw - 24px));
     max-width: none;
     max-height: calc(100vh - 48px);
     overflow: hidden;
+}
+
+.is-phone .modal.etz-whatsnew {
+    width: 100%;
+    min-width: 0;
+    max-height: 100%;
 }
 
 .modal.etz-whatsnew .modal-content {
@@ -4049,8 +5691,22 @@ textarea.etz-code-textarea {
     overflow-y: auto;
 }
 
+/* ---------------------------------------------------------------- header */
+
+/* The name with its version, and the film beside it (clear of the close button). */
+.modal.etz-whatsnew .modal-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 14px;
+    padding-right: 36px;
+}
+
 .modal.etz-whatsnew .etz-whatsnew-title {
-    font-size: 26px;
+    flex: 0 1 auto;
+    min-width: 0;
+    margin: 0;
+    font-size: 24px;
     font-weight: 750;
     letter-spacing: -0.015em;
     line-height: 1.2;
@@ -4060,360 +5716,415 @@ textarea.etz-code-textarea {
     color: var(--interactive-accent);
 }
 
-p.etz-whatsnew-subtitle {
-    margin: 2px 0 18px;
+.modal.etz-whatsnew button.etz-whatsnew-film {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 8px;
+    height: auto;
+    padding: 5px 12px 5px 6px;
+    border: none;
+    border-radius: 999px;
+    background-color: var(--etz-accent-tint);
+    box-shadow: none;
+    color: var(--interactive-accent);
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.3;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.modal.etz-whatsnew button.etz-whatsnew-film:hover {
+    box-shadow: inset 0 0 0 1px var(--interactive-accent);
+}
+
+.modal.etz-whatsnew button.etz-whatsnew-film:focus-visible {
+    outline: 2px solid var(--interactive-accent);
+    outline-offset: 2px;
+}
+
+.etz-whatsnew-film-dot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: var(--interactive-accent);
+    color: var(--text-on-accent);
+}
+
+.etz-whatsnew-film-dot svg {
+    width: 11px;
+    height: 11px;
+    margin-left: 1px;
+    fill: currentColor;
+}
+
+.etz-whatsnew-film-length {
     color: var(--text-muted);
-    font-size: 14px;
-    line-height: 1.45;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
 }
 
-/* ---------------------------------------------------------------- hero */
+/* ---------------------------------------------------------------- slides */
 
-.etz-whatsnew-hero {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 28px;
-    align-items: stretch;
-}
-
-.etz-whatsnew-side {
+.etz-whatsnew-slide {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    gap: 18px;
-    min-width: 0;
+    gap: 14px;
+    padding-bottom: 12px;
 }
 
-figure.etz-whatsnew-figure {
+/* The stage: 16:9 on every slide, so the footer never moves. The chart fills it, its player or sliders under it. */
+.etz-whatsnew-stage {
     position: relative;
-    margin: 0;
-    padding: 10px 10px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    padding: 10px;
+    overflow: hidden;
     border: 1px solid var(--background-modifier-border);
     border-radius: var(--etz-radius-l);
     background-color: var(--background-primary);
 }
 
-.etz-whatsnew-chart {
-    width: 100%;
-    aspect-ratio: var(--etz-whatsnew-aspect, 1.25);
+.etz-whatsnew-stage > .etz-live-chart {
+    flex: 1 1 0;
+    min-height: 0;
+    border: none;
+    border-radius: 0;
+    aspect-ratio: auto;
 }
 
-.etz-whatsnew-chart > svg.etz-whatsnew-svg {
-    display: block;
-    width: 100%;
-    height: 100%;
-    max-width: none;
+.etz-whatsnew-stage > .etz-live-strip {
+    flex: 0 0 auto;
 }
 
-.etz-inline-strip.etz-whatsnew-strip {
-    margin-top: 6px;
+/* Ask your chart: the chart asks when a curve is clicked. */
+.etz-whatsnew-chart.etz-askable {
+    cursor: pointer;
 }
 
-button.etz-icon-btn.etz-whatsnew-play {
-    margin-top: 1px;
-}
-
-button.etz-icon-btn.etz-whatsnew-play[aria-pressed='true'] {
-    color: var(--interactive-accent);
-}
-
-figcaption.etz-whatsnew-caption {
-    margin-top: 8px;
-    padding: 0 2px;
-    color: var(--text-muted);
-    font-size: var(--etz-font-small);
-    line-height: 1.45;
+.etz-whatsnew-chart.etz-askable:focus-visible {
+    outline: 2px solid var(--interactive-accent);
+    outline-offset: -2px;
 }
 
 .etz-whatsnew-fallback {
+    margin: auto;
     padding: 24px 8px;
     color: var(--text-muted);
     font-size: var(--etz-font-small);
     text-align: center;
 }
 
-/* --------------------------------------------------------------- items */
-
-.etz-whatsnew-list {
+/* Under the stage: the label, the title and one line, and the slide's buttons. */
+.etz-whatsnew-copy {
     display: flex;
-    flex-direction: column;
-    gap: 16px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 10px 16px;
+}
+
+.etz-whatsnew-words {
+    flex: 1 1 360px;
     min-width: 0;
+    min-height: 88px;
 }
 
-/* What this release brings: three columns with the accent icons. */
-.etz-whatsnew-list.mod-new {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px 24px;
-}
-
-.etz-whatsnew-list.mod-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px 24px;
-}
-
-/* The lines the live chart is made of, beside the chart. */
-.etz-whatsnew-recipe {
-    padding: 12px 14px;
-    border: 1px solid var(--background-modifier-border);
-    border-radius: var(--etz-radius-l);
-    background-color: var(--background-primary-alt);
-}
-
-.etz-whatsnew-recipe-title {
-    margin-bottom: 6px;
-    color: var(--text-muted);
-    font-size: var(--etz-font-meta);
-    font-variant-caps: all-small-caps;
-    font-weight: 600;
+.etz-whatsnew-label {
+    display: block;
+    margin-bottom: 3px;
+    color: var(--interactive-accent);
+    font-size: 11px;
+    font-weight: 650;
     letter-spacing: 0.05em;
+    line-height: 1.4;
+    text-transform: uppercase;
 }
 
-/* The chart's block, one line per object; long lines scroll instead of being cut off. */
-pre.etz-whatsnew-text {
-    margin: 0;
-    overflow-x: auto;
+h3.etz-whatsnew-slide-title {
+    margin: 0 0 2px;
     color: var(--text-normal);
-    font-family: var(--font-monospace);
-    font-size: 11.5px;
-    line-height: 1.55;
-    white-space: pre;
+    font-size: 20px;
+    font-weight: 720;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
 }
 
-/* What this release brings: above the live chart. */
-.etz-whatsnew-new {
-    margin-bottom: 24px;
+p.etz-whatsnew-slide-text {
+    max-width: 64ch;
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.5;
 }
 
-.etz-whatsnew-item {
-    display: grid;
-    grid-template-columns: 32px minmax(0, 1fr);
-    gap: 12px;
-    align-items: start;
+.etz-whatsnew-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
-.etz-whatsnew-icon {
+/* A slide arrives calmly: the picture settles from a little larger, the words rise. */
+.etz-whatsnew-slide.is-in .etz-whatsnew-stage {
+    animation: etz-whatsnew-fade 0.45s ease-out both;
+}
+
+.etz-whatsnew-slide.is-in .etz-whatsnew-stage > * {
+    animation: etz-whatsnew-arrive 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.etz-whatsnew-slide.is-in .etz-whatsnew-copy {
+    animation: etz-whatsnew-rise 0.5s 0.08s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes etz-whatsnew-fade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes etz-whatsnew-arrive {
+    from {
+        transform: scale(1.035);
+    }
+
+    to {
+        transform: none;
+    }
+}
+
+@keyframes etz-whatsnew-rise {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* ------------------------------------------------------------------ film */
+
+/* The poster fills the stage; YouTube's player takes its place after Play. */
+.etz-whatsnew-stage.mod-film {
+    padding: 0;
+    background-color: #ffffff;
+}
+
+.modal.etz-whatsnew button.etz-whatsnew-poster {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.modal.etz-whatsnew button.etz-whatsnew-poster:focus-visible {
+    outline: 2px solid var(--interactive-accent);
+    outline-offset: -2px;
+}
+
+img.etz-whatsnew-poster-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    user-select: none;
+}
+
+.etz-whatsnew-poster-play {
+    position: absolute;
+    inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
-    border-radius: var(--etz-radius-l);
-    background-color: var(--etz-accent-tint);
-    color: var(--interactive-accent);
+    width: 84px;
+    height: 84px;
+    margin: auto;
+    border-radius: 50%;
+    background-color: rgba(34, 20, 70, 0.78);
+    box-shadow: 0 10px 30px rgba(40, 20, 90, 0.35);
+    color: #ffffff;
+    transition: transform 0.2s ease;
 }
 
-.etz-whatsnew-icon svg {
-    width: 17px;
-    height: 17px;
-    stroke-width: 1.9;
+.etz-whatsnew-poster-play svg {
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
+    fill: currentColor;
 }
 
-.etz-whatsnew-list.mod-grid .etz-whatsnew-icon {
-    width: 28px;
-    height: 28px;
-    border-radius: var(--etz-radius-m);
-    background-color: var(--background-secondary);
-    color: var(--text-muted);
+.etz-whatsnew-poster:hover .etz-whatsnew-poster-play {
+    transform: scale(1.07);
 }
 
-.etz-whatsnew-list.mod-grid .etz-whatsnew-item {
-    grid-template-columns: 28px minmax(0, 1fr);
-    gap: 10px;
-}
-
-.etz-whatsnew-list.mod-grid .etz-whatsnew-icon svg {
-    width: 15px;
-    height: 15px;
-}
-
-.etz-whatsnew-item-head {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    min-width: 0;
-}
-
-.etz-whatsnew-item-title {
-    min-width: 0;
-    color: var(--text-normal);
-    font-size: 14px;
-    font-weight: 650;
-    line-height: 1.35;
-}
-
-button.etz-btn.mod-link.etz-whatsnew-item-guide {
-    flex: 0 0 auto;
-    height: auto;
-    margin-left: auto;
-    padding: 0;
-    font-size: var(--etz-font-small);
-    line-height: 1.35;
-}
-
-.etz-whatsnew-list.mod-grid .etz-whatsnew-item-title {
-    font-size: var(--etz-font);
-}
-
-.etz-whatsnew-item-text {
-    margin-top: 2px;
-    color: var(--text-muted);
-    font-size: var(--etz-font);
-    line-height: 1.45;
-}
-
-.etz-whatsnew-list.mod-grid .etz-whatsnew-item-text {
-    font-size: var(--etz-font-small);
-}
-
-.etz-whatsnew-item-text code,
-.etz-whatsnew-caption code {
-    padding: 0 3px;
-    border-radius: var(--etz-radius-s);
-    background-color: var(--background-secondary);
-    color: var(--text-normal);
-    font-family: var(--font-monospace);
-    font-size: 0.92em;
-    white-space: nowrap;
-}
-
-/* Links to guides read as part of the sentence. */
-button.etz-btn.mod-link.etz-whatsnew-guide {
-    display: inline;
-    height: auto;
-    padding: 0;
-    font-size: inherit;
-    line-height: inherit;
-    vertical-align: baseline;
-}
-
-/* ------------------------------------------------ earlier in version 4 */
-
-details.etz-whatsnew-more {
-    margin-top: 22px;
-    padding: 14px 0 6px;
-    border-top: 1px solid var(--background-modifier-border);
-}
-
-details.etz-whatsnew-more > summary.etz-whatsnew-h {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin: 0;
-    cursor: pointer;
-    list-style: none;
-}
-
-details.etz-whatsnew-more > summary::-webkit-details-marker {
-    display: none;
-}
-
-/* A small triangle that turns when the section opens. */
-details.etz-whatsnew-more > summary::before {
-    content: '';
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 4px 0 4px 6px;
-    border-color: transparent transparent transparent currentColor;
-    transition: transform 120ms ease;
-}
-
-details.etz-whatsnew-more[open] > summary::before {
-    transform: rotate(90deg);
-}
-
-details.etz-whatsnew-more[open] > summary.etz-whatsnew-h {
-    margin-bottom: 14px;
-}
-
-/* Room for an overlay scroll bar over the links at the end of the right column. */
-details.etz-whatsnew-more > .etz-whatsnew-list {
-    padding-right: 14px;
-}
-
-details.etz-whatsnew-more > summary:hover {
-    color: var(--text-normal);
-}
-
-details.etz-whatsnew-more > summary:focus-visible {
-    border-radius: var(--etz-radius-s);
-    outline: 2px solid var(--interactive-accent);
-    outline-offset: 2px;
-}
-
-.etz-whatsnew-count {
-    padding: 0 7px;
-    border-radius: 999px;
-    background-color: var(--background-secondary);
-    color: var(--text-muted);
-    font-size: var(--etz-font-meta);
-    font-variant-caps: normal;
-    letter-spacing: 0;
-    line-height: 1.6;
-}
-
-.etz-whatsnew-h {
-    margin: 0 0 12px;
-    color: var(--text-muted);
-    font-size: 13px;
-    font-variant-caps: all-small-caps;
+.etz-whatsnew-poster-length {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    padding: 3px 8px;
+    border-radius: 5px;
+    background-color: rgba(20, 16, 34, 0.8);
+    color: #ffffff;
+    font-size: 12px;
     font-weight: 600;
-    letter-spacing: 0.05em;
-    line-height: 1.3;
+    font-variant-numeric: tabular-nums;
 }
 
-/* ------------------------------------------------------------- actions */
+/* A pixel past each edge: the stage clips the dark line YouTube's player leaves where its size is rounded. */
+iframe.etz-whatsnew-player {
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: calc(100% + 2px);
+    height: calc(100% + 2px);
+    border: none;
+    background-color: #000000;
+}
 
+/* "Open on YouTube": a small link at the end of the line. */
+a.etz-whatsnew-youtube {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    color: var(--text-accent);
+    font-size: var(--etz-font-small);
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+a.etz-whatsnew-youtube:hover {
+    text-decoration: underline;
+}
+
+.etz-whatsnew-youtube-icon {
+    display: flex;
+}
+
+.etz-whatsnew-youtube-icon svg {
+    width: 12px;
+    height: 12px;
+}
+
+/* ---------------------------------------------------------------- footer */
+
+/* Outside the scrolling content, so it stays in view: one dot per slide (the current one long), n / 7, Back and Next. */
 .etz-whatsnew-actions {
     display: flex;
     flex: 0 0 auto;
     align-items: center;
     gap: 8px;
     margin-top: 4px;
-    padding-top: 16px;
+    padding-top: 14px;
     border-top: 1px solid var(--background-modifier-border);
 }
 
-.etz-whatsnew-hint {
-    flex: 1 1 auto;
-    min-width: 0;
-    margin-right: 8px;
+.etz-whatsnew-dots {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+button.etz-whatsnew-dot {
+    width: 8px;
+    height: 8px;
+    min-height: 0;
+    padding: 0;
+    border: none;
+    border-radius: 999px;
+    background-color: var(--background-modifier-border);
+    box-shadow: none;
+    cursor: pointer;
+    transition:
+        width 250ms ease,
+        background-color 250ms ease;
+}
+
+button.etz-whatsnew-dot:hover {
+    background-color: var(--text-faint);
+}
+
+button.etz-whatsnew-dot[aria-current='step'] {
+    width: 22px;
+    background-color: var(--interactive-accent);
+}
+
+button.etz-whatsnew-dot:focus-visible {
+    outline: 2px solid var(--interactive-accent);
+    outline-offset: 2px;
+}
+
+.etz-whatsnew-counter {
+    margin-left: 4px;
     color: var(--text-faint);
     font-size: var(--etz-font-meta);
-    line-height: 1.4;
+    font-variant-numeric: tabular-nums;
 }
 
-/* -------------------------------------------------------------- narrow */
-
-@media (max-width: 1000px) {
-    .etz-whatsnew-list.mod-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+.etz-whatsnew-spacer {
+    flex: 1 1 auto;
 }
 
-@media (max-width: 760px) {
-    .etz-whatsnew-hero,
-    .etz-whatsnew-list.mod-new,
-    .etz-whatsnew-list.mod-grid {
-        grid-template-columns: minmax(0, 1fr);
+/* ---------------------------------------------------------------- narrow */
+
+@media (max-width: 560px) {
+    .modal.etz-whatsnew .etz-whatsnew-title {
+        font-size: 19px;
     }
 
-    .etz-whatsnew-actions {
-        flex-wrap: wrap;
-        justify-content: flex-end;
+    h3.etz-whatsnew-slide-title {
+        font-size: 17px;
     }
 
-    .etz-whatsnew-hint {
-        flex-basis: 100%;
-        margin: 0 0 4px;
+    .etz-whatsnew-stage {
+        padding: 6px;
+    }
+
+    .etz-whatsnew-words {
+        min-height: 0;
+    }
+
+    .etz-whatsnew-poster-play {
+        width: 60px;
+        height: 60px;
+    }
+
+    .etz-whatsnew-poster-play svg {
+        width: 22px;
+        height: 22px;
+        margin-left: 3px;
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    details.etz-whatsnew-more > summary::before {
+    .etz-whatsnew-slide.is-in .etz-whatsnew-stage,
+    .etz-whatsnew-slide.is-in .etz-whatsnew-stage > *,
+    .etz-whatsnew-slide.is-in .etz-whatsnew-copy {
+        animation: none;
+    }
+
+    button.etz-whatsnew-dot,
+    .etz-whatsnew-poster-play {
         transition: none;
     }
 }
