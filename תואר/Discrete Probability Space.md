@@ -8,6 +8,8 @@ tags:
   - הסתברות
   - תואר
   - מונחים
+modified: 2026-11-28T14:16:23+02:00
+created: 2026-11-15T12:10:53+02:00
 ---
 # Definition
 A <u>discrete probability space</u> is a pair $\left( \Omega,p \right)$ where

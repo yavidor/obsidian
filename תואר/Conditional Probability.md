@@ -9,6 +9,8 @@ uni_subjects:
   - הסתברות
 cssclasses:
   - ltr
+modified: 2026-11-28T14:16:27+02:00
+created: 2026-11-15T12:10:53+02:00
 ---
 # Definition
 Given a [[General Probability Space|Prob. Space]] $\left( \Omega,\mathcal{F},\mathbb{P} \right)$ and events $A,B$ with $\mathbb{P}\left( B \right)>0$, The prob. of $A$ *given* $B$ is 

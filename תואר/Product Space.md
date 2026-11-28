@@ -6,6 +6,8 @@ tags:
   - תואר
 uni_subjects:
   - הסתברות
+modified: 2026-11-28T14:16:46+02:00
+created: 2026-11-15T12:10:53+02:00
 ---
 # Definition/Theorem - Discrete Product Space
 Let $\left( \Omega_{1},p_{1} \right),\left( \Omega_{2},p_{2} \right)$ be [[Discrete Probability Space|discrete probability spaces]].

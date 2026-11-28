@@ -8,6 +8,8 @@ uni_subjects:
   - הסתברות
 cssclasses:
   - ltr
+modified: 2026-11-28T14:16:35+02:00
+created: 2026-11-15T12:10:53+02:00
 ---
 # Definition
 Given a [[Random Variables|random variable]] $X$. The <u>distribution</u> of $X$ is the [[פונקציה|function]]

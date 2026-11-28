@@ -12,6 +12,8 @@ aliases:
   - random variable
 cssclasses:
   - ltr
+modified: 2026-11-28T14:16:52+02:00
+created: 2026-11-15T12:10:53+02:00
 ---
 # Definition
 Let $\left( \Omega,\mathcal{F},\mathbb{P} \right)$ be a [[General Probability Space|Prob. Space]]. A <u>random variable</u> (rv) is a [[פונקציה|function]] $X:\Omega\to \mathbb{R}$ such that

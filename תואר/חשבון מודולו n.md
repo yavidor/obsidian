@@ -5,8 +5,9 @@ tags:
 uni_subjects:
   - אלגברה
 permalink: 532343c8-4d96-43be-ae47-28f12335092e
+modified: 2026-11-28T14:13:32+02:00
+created: 2026-11-15T12:10:53+02:00
 ---
-
 # הגדרה
 עבור $a,n \in \mathbb{N}$ נגדיר 
 השארית בחלוקת $a$ ב$n$ = $a(mod~n)$
