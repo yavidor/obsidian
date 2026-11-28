@@ -2,9 +2,10 @@
 tags:
   - מבוא-למדעי-המחשב
 permalink: e24cbcbf-510a-4e02-bf04-572fc8121a62
+modified: 2026-11-28T14:52:32+02:00
+created: 2026-11-15T12:10:53+02:00
 ---
 If you're not Zoe or Mark, why are you reading this?
-
 
 Hey guys! You asked for the weird question I talked about, here is a translation of the answer.
 Note, I did not understand it **AT ALL** <3
